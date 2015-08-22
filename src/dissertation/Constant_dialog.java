@@ -57,22 +57,24 @@ public class Constant_dialog extends JDialog{
 		nameJLabel.setSize(40,16);
 		typeJLabel.setSize(40,16);
 		valueJLabel.setSize(40,16);
-		name_input.setSize(14,28);
-		value_input.setSize(14, 28);
+		name_input.setSize(150,28);
+		value_input.setSize(150, 28);
 		typeJMenu.setSize(100, 20);
 		ok.setSize(75, 30);
 		delete.setSize(75, 30);
 		cancel.setSize(75, 30);
 		
-		nameJLabel.setLocation(40,10);
-		typeJLabel.setLocation(40,60);
+		nameJLabel.setLocation(40,30);
+		typeJLabel.setLocation(40,90);
 		valueJLabel.setLocation(40,150);
-		name_input.setLocation(150,10);
-		typeJMenu.setLocation(150,60);
+		name_input.setLocation(150,30);
+		typeJMenu.setLocation(150,90);
 		value_input.setLocation(150,150);
 		ok.setLocation(250, 220);
 		delete.setLocation(50, 220);
 		cancel.setLocation(150, 220);
+		
+		
 		
 		panel.add(nameJLabel);
 		panel.add(typeJLabel);
