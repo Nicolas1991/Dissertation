@@ -26,6 +26,8 @@ public class Constant_dialog extends JDialog{
 	private JMenu typeJMenu;
 	private JButton delete;
 	private JButton ok;
+	private JButton cancel;
+	
 	
 	private Constant constant = new Constant();
 
@@ -37,8 +39,10 @@ public class Constant_dialog extends JDialog{
 		typeJLabel = new JLabel("Type:");
 		valueJLabel = new JLabel("Value:");
 		typeJMenu = new JMenu();
+		constant = new Constant();
 		delete = new JButton("Delete");
 		ok = new JButton("OK");
+		cancel = new JButton("Cancel");
 		init();
 		setModal(true);
 		setSize(400, 300);
@@ -55,18 +59,20 @@ public class Constant_dialog extends JDialog{
 		valueJLabel.setSize(40,16);
 		name_input.setSize(14,28);
 		value_input.setSize(14, 28);
-		typeJMenu.setSize(103, 20);
+		typeJMenu.setSize(100, 20);
 		ok.setSize(75, 30);
 		delete.setSize(75, 30);
+		cancel.setSize(75, 30);
 		
 		nameJLabel.setLocation(40,10);
-		typeJLabel.setLocation(40,16);
-		valueJLabel.setLocation(40,16);
-		name_input.setLocation(14,28);
-		value_input.setLocation(14, 28);
-		typeJMenu.setLocation(103, 20);
+		typeJLabel.setLocation(40,60);
+		valueJLabel.setLocation(40,150);
+		name_input.setLocation(150,10);
+		typeJMenu.setLocation(150,60);
+		value_input.setLocation(150,150);
 		ok.setLocation(250, 220);
-		delete.setLocation(100, 220);
+		delete.setLocation(50, 220);
+		cancel.setLocation(150, 220);
 		
 		panel.add(nameJLabel);
 		panel.add(typeJLabel);
@@ -76,6 +82,7 @@ public class Constant_dialog extends JDialog{
 		panel.add(typeJMenu);
 		panel.add(ok);
 		panel.add(delete);
+		panel.add(cancel);
 		
 		container.add(panel);
 		
