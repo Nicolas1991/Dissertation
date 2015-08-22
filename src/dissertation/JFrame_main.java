@@ -5,6 +5,12 @@
  */
 package dissertation;
 
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
+
+import uk.ac.sheffield.vtts.model.Memory;
+import uk.ac.sheffield.vtts.model.Protocol;
+
 
 
 /**
@@ -17,12 +23,14 @@ public class JFrame_main extends javax.swing.JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String protocol_name = ""; 
+	private Protocol protocol = new Protocol();
+	private final Memory memory = new Memory();
     /**
      * Creates new form NewJFrame
      */
     public JFrame_main() {
         initComponents();
+        protocol.addMemory(new Memory());
     }
 
     /**
@@ -148,11 +156,14 @@ public class JFrame_main extends javax.swing.JFrame {
             }
         });
 
-        jTextField_protocol_name.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_protocol_nameActionPerformed(evt);
-            }
-        });
+        jTextField_protocol_name.addCaretListener(new CaretListener() {
+			
+			@Override
+			public void caretUpdate(CaretEvent e) {
+				// TODO Auto-generated method stub
+				jTextField_protocol_nameActionPerformed(e);
+			}
+		});
 
         jLabel_memory.setText("Memory:");
 
@@ -381,15 +392,16 @@ public class JFrame_main extends javax.swing.JFrame {
 
     private void jButton_GenerateXMLActionPerformed(java.awt.event.ActionEvent evt) {                                                    
         // TODO add your handling code here:
-        this.protocol_name = jTextField_protocol_name.getText();
-        System.out.println(this.protocol_name);
+        
 
         // 
         
     }                                                   
 
-    private void jTextField_protocol_nameActionPerformed(java.awt.event.ActionEvent evt) {                                                         
+    private void jTextField_protocol_nameActionPerformed(CaretEvent evt) {                                                         
         // TODO add your handling code here:
+    	this.protocol = new Protocol(jTextField_protocol_name.getText());
+    	
     }                                                        
 
     private void jButton_d_constant_okActionPerformed(java.awt.event.ActionEvent evt) {                                                      
@@ -407,7 +419,7 @@ public class JFrame_main extends javax.swing.JFrame {
 
     private void jButton_constant_added_edit_constantActionPerformed(java.awt.event.ActionEvent evt) {                                                                     
         // TODO pop up constant edit dialog window
-    	Constant_dialog.showConstant_dialog(jButton_constant_added_edit_constant);
+    	Constant_dialog.showConstant_dialog(jButton_constant_added_edit_constant,protocol);
     	
     }                                                                    
 

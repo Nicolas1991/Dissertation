@@ -2,6 +2,9 @@ package dissertation;
 
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -10,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import uk.ac.sheffield.vtts.model.Constant;
+import uk.ac.sheffield.vtts.model.Protocol;
 
 public class Constant_dialog extends JDialog{
 
@@ -29,9 +33,9 @@ public class Constant_dialog extends JDialog{
 	private JButton cancel;
 	
 	
-	private Constant constant = new Constant();
+	private Constant constant;
 
-	public Constant_dialog(){
+	public Constant_dialog(final Protocol protocol){
 		super();
 		name_input = new JTextField();
 		value_input = new JTextField();
@@ -43,13 +47,13 @@ public class Constant_dialog extends JDialog{
 		delete = new JButton("Delete");
 		ok = new JButton("OK");
 		cancel = new JButton("Cancel");
-		init();
+		init(protocol);
 		setModal(true);
 		setSize(400, 300);
 		
 	}
 	
-	private void init() {
+	private void init(final Protocol protocol) {
 		Container container = getContentPane();
 		JPanel panel = new JPanel();
 		
@@ -74,7 +78,20 @@ public class Constant_dialog extends JDialog{
 		delete.setLocation(50, 220);
 		cancel.setLocation(150, 220);
 		
-		
+		// listeners registration 
+		ok.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				constant.setName(name_input.getText());
+				constant.setType(typeJMenu.getText());
+				constant.setContent(value_input.getText());
+				protocol.getMemory().addParameter(constant);
+				System.out.println(protocol.getName());
+				dispose();
+			}
+		});
 		
 		panel.add(nameJLabel);
 		panel.add(typeJLabel);
@@ -90,10 +107,12 @@ public class Constant_dialog extends JDialog{
 		
 	}
 	
-	public static Constant showConstant_dialog(Component relativeTo) {
-		Constant_dialog c = new Constant_dialog();
+	public static Constant showConstant_dialog(Component relativeTo,final Protocol protocol) {
+		Constant_dialog c = new Constant_dialog(protocol);
 		c.setLocationRelativeTo(relativeTo);
 		c.setVisible(true);
 		return c.constant;
 	}
+	
+	
 }
