@@ -7,10 +7,12 @@ package dissertation;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 
 import uk.ac.sheffield.vtts.model.Constant;
 import uk.ac.sheffield.vtts.model.Memory;
@@ -24,6 +26,8 @@ public class JFrame_main extends javax.swing.JFrame {
     
     private Protocol protocol = new Protocol();
     private final Memory memory = new Memory();
+    private List<JButton> buttons_memory = new LinkedList<JButton>();
+    private List<JLabel> labels_memory = new LinkedList<JLabel>();
     /**
      * Creates new form NewJFrame
      */
@@ -47,8 +51,8 @@ public class JFrame_main extends javax.swing.JFrame {
         jButton_GenerateXML = new javax.swing.JButton();
         jTextField_protocol_name = new javax.swing.JTextField();
         jLabel_memory = new javax.swing.JLabel();
-        jScrollPane_constants = new javax.swing.JScrollPane();
-        jPanel_constants = new javax.swing.JPanel();
+        jScrollPane_memory = new javax.swing.JScrollPane();
+        jPanel_memory = new javax.swing.JPanel();
         jLabel_added_constant = new javax.swing.JLabel();
         jButton_added_edit_constant = new javax.swing.JButton();
         jButton_added_edit_viarable = new javax.swing.JButton();
@@ -88,9 +92,9 @@ public class JFrame_main extends javax.swing.JFrame {
 
         jLabel_memory.setText("Memory:");
 
-        jScrollPane_constants.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jScrollPane_memory.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jPanel_constants.setBorder(new javax.swing.border.MatteBorder(null));
+        jPanel_memory.setBorder(new javax.swing.border.MatteBorder(null));
 
         jLabel_added_constant.setText("Constant Name");
 
@@ -105,8 +109,8 @@ public class JFrame_main extends javax.swing.JFrame {
 
         jLabel_added_viarable.setText("Viarable Name");
 
-        javax.swing.GroupLayout jPanel_constantsLayout = new javax.swing.GroupLayout(jPanel_constants);
-        jPanel_constants.setLayout(jPanel_constantsLayout);
+        javax.swing.GroupLayout jPanel_constantsLayout = new javax.swing.GroupLayout(jPanel_memory);
+        jPanel_memory.setLayout(jPanel_constantsLayout);
         jPanel_constantsLayout.setHorizontalGroup(
             jPanel_constantsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_constantsLayout.createSequentialGroup()
@@ -125,14 +129,14 @@ public class JFrame_main extends javax.swing.JFrame {
             .addGroup(jPanel_constantsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel_constantsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel_added_constant)
-                    .addComponent(jButton_added_edit_constant)
+//                    .addComponent(jLabel_added_constant)
+//                    .addComponent(jButton_added_edit_constant)
                     .addComponent(jLabel_added_viarable)
                     .addComponent(jButton_added_edit_viarable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(257, Short.MAX_VALUE))
         );
 
-        jScrollPane_constants.setViewportView(jPanel_constants);
+        jScrollPane_memory.setViewportView(jPanel_memory);
 
         jButton_add_constant.setText("Add Constant");
         jButton_add_constant.addActionListener(new java.awt.event.ActionListener() {
@@ -230,7 +234,7 @@ public class JFrame_main extends javax.swing.JFrame {
                                 .addComponent(jLabel_constants_viarable)
                                 .addGap(133, 133, 133))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_mainLayout.createSequentialGroup()
-                                .addComponent(jScrollPane_constants, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jScrollPane_memory, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)))
                         .addComponent(jScrollPane_overview, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(28, 28, 28))
@@ -276,7 +280,7 @@ public class JFrame_main extends javax.swing.JFrame {
                             .addComponent(jLabel_constants_constant)
                             .addComponent(jLabel_constants_viarable))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane_constants, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane_memory, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton_add_constant)
@@ -324,13 +328,34 @@ public class JFrame_main extends javax.swing.JFrame {
     }                                                   
 
     private void jTextField_protocol_nameActionPerformed(java.awt.event.ActionEvent evt) {                                                         
-        // TODO add your handling code here:
+        // TODO create a protocol object and give it a name, with initializing it with memory
         this.protocol = new Protocol(jTextField_protocol_name.getText());
     	protocol.addMemory(memory);
     }                                                        
 
     private void jButton_add_constantActionPerformed(java.awt.event.ActionEvent evt) {                                                     
-        // TODO add your handling code here:
+        // TODO create a constant,save it in the memory and generate a label and edit button to edit it 
+    	Constant_add_dialog constant_add_dialog = new Constant_add_dialog(memory);
+    	constant_add_dialog.setLocationRelativeTo(jButton_add_constant);
+    	constant_add_dialog.setVisible(true);
+    	
+    	
+    	
+    	JButton jButton = constant_add_dialog.get_generated_button();
+    	JLabel jLabel = constant_add_dialog.get_generated_label();
+    	jButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				jButton_added_edit_constantActionPerformed(e);
+				
+			}
+		});
+    	this.buttons_memory.add(jButton);
+    	this.labels_memory.add(jLabel);
+    	
+    	reload_memory_panel();
     }                                                    
 
     private void jButton_add_operationActionPerformed(java.awt.event.ActionEvent evt) {                                                      
@@ -340,7 +365,15 @@ public class JFrame_main extends javax.swing.JFrame {
     private void jButton_added_edit_constantActionPerformed(java.awt.event.ActionEvent evt) {                                                            
         // TODO add your handling code here:
     	String constant_name = ((JButton)evt.getSource()).getName();
-        Constant_edit_dialog.showConstant_dialog(jButton_added_edit_constant,memory,constant_name);
+    	
+    	// pop up edit dialog window
+    	Constant_edit_dialog constant_edit_dialog = new Constant_edit_dialog(memory, constant_name);
+    	constant_edit_dialog.setLocationRelativeTo(jButton_added_edit_constant);
+		constant_edit_dialog.setVisible(true);
+        
+        
+        System.out.println("finished editing constant.");
+        jPanel_memory.revalidate();
 
     }                                                           
 
@@ -362,17 +395,29 @@ public class JFrame_main extends javax.swing.JFrame {
 		}
 	}
     
+    private void reload_memory_panel(){
+    	int init_y_position = 10;
+    	for (JButton jButton : buttons_memory) {
+			jButton.setLocation(150, init_y_position);
+    		jPanel_memory.add(jButton);
+    		init_y_position = init_y_position+70;
+		}
+    	init_y_position = 10;
+    	for (JLabel jLabel : labels_memory) {
+			jLabel.setLocation(30, init_y_position);
+    		jPanel_memory.add(jLabel);
+    		init_y_position = init_y_position+70;
+		}
+    	
+    	jPanel_memory.revalidate();
+    	validate();
+    	repaint();
+    	System.out.println(buttons_memory.size());
+    }
     
+   
+     
     
-    
-    
-    
-    
-    
-    
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -424,10 +469,10 @@ public class JFrame_main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_operation;
     private javax.swing.JLabel jLabel_operation_added_operation;
     private javax.swing.JLabel jLabel_protocol_name;
-    private javax.swing.JPanel jPanel_constants;
+    private javax.swing.JPanel jPanel_memory;
     private javax.swing.JPanel jPanel_main;
     private javax.swing.JPanel jPanel_operations;
-    private javax.swing.JScrollPane jScrollPane_constants;
+    private javax.swing.JScrollPane jScrollPane_memory;
     private javax.swing.JScrollPane jScrollPane_operations;
     private javax.swing.JScrollPane jScrollPane_overview;
     private javax.swing.JTextField jTextField_protocol_name;

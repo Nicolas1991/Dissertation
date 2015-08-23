@@ -1,10 +1,7 @@
 package dissertation;
-
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Set;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -15,37 +12,35 @@ import javax.swing.JTextField;
 import uk.ac.sheffield.vtts.model.Constant;
 import uk.ac.sheffield.vtts.model.Memory;
 
-public class Constant_edit_dialog extends JDialog{
+public class Constant_add_dialog extends JDialog{
 
 	/**
-	 * Dialog window for Constant editing
+	 * Dialog window for Constant creation
 	 * @author zhangyan
 	 */
 	private static final long serialVersionUID = 1L;
-	private JLabel name_input;
+	private JTextField name_input;
 	private JTextField value_input;
 	private JLabel nameJLabel;
 	private JLabel typeJLabel;
 	private JLabel valueJLabel;
 	private JMenu typeJMenu;
-	private JButton delete;
 	private JButton ok;
 	private JButton cancel;
 	private String constant_name;
 	
 	private Constant constant;
 
-	public Constant_edit_dialog(final Memory memory,String constant_name){
+	public Constant_add_dialog(final Memory memory){
 		super();
-		this.constant_name = constant_name;
-		name_input = new JLabel(constant_name);
+		this.constant_name = "";
+		name_input = new JTextField();
 		value_input = new JTextField();
 		nameJLabel = new JLabel("Name:");
 		typeJLabel = new JLabel("Type:");
 		valueJLabel = new JLabel("Value:");
 		typeJMenu = new JMenu();
 		constant = new Constant();
-		delete = new JButton("Delete");
 		ok = new JButton("OK");
 		cancel = new JButton("Cancel");
 		init(memory);
@@ -55,6 +50,7 @@ public class Constant_edit_dialog extends JDialog{
 	}
 	
 	private void init(final Memory memory) {
+		
 		Container container = getContentPane();
 		JPanel panel = new JPanel();
 		
@@ -67,7 +63,6 @@ public class Constant_edit_dialog extends JDialog{
 		value_input.setSize(150, 28);
 		typeJMenu.setSize(100, 20);
 		ok.setSize(75, 30);
-		delete.setSize(75, 30);
 		cancel.setSize(75, 30);
 		
 		nameJLabel.setLocation(40,30);
@@ -77,7 +72,6 @@ public class Constant_edit_dialog extends JDialog{
 		typeJMenu.setLocation(150,90);
 		value_input.setLocation(150,150);
 		ok.setLocation(250, 220);
-		delete.setLocation(50, 220);
 		cancel.setLocation(150, 220);
 		
 		// listeners registration=====================================================
@@ -86,7 +80,8 @@ public class Constant_edit_dialog extends JDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				constant.setName(constant_name);
+				constant_name = name_input.getText();
+				constant.setName(name_input.getText());
 				constant.setType(typeJMenu.getText());
 				constant.setContent(value_input.getText());
 				memory.addParameter(constant);
@@ -104,24 +99,7 @@ public class Constant_edit_dialog extends JDialog{
 			}
 		});
 		
-		delete.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				//System.out.println(constant_name);
-				Set<Constant> constants = memory.getConstants();
-				for (Constant constant : constants) {
-					System.out.println(constant+"----");
-					if (constant.getName().compareToIgnoreCase(constant_name)==0) {
-						memory.deleteConstant(constant_name);
-						System.out.println(memory.getConstants().toString());
-					}
-				}
-				
-				dispose();
-			}
-		});
+		
 		// end of --- listeners registration=====================================================
 
 		panel.add(nameJLabel);
@@ -131,13 +109,22 @@ public class Constant_edit_dialog extends JDialog{
 		panel.add(value_input);
 		panel.add(typeJMenu);
 		panel.add(ok);
-		panel.add(delete);
 		panel.add(cancel);
 		
 		container.add(panel);
 		
 	}
 	
+	public JButton get_generated_button() {
+		JButton jButton = new JButton("Edit");
+		jButton.setName(constant_name);
+		jButton.setSize(50,40);
+		return jButton;
+	}
 	
-	
+	public JLabel get_generated_label() {
+		JLabel jLabel = new JLabel("Constant: "+constant_name);
+		jLabel.setSize(90, 40);
+		return jLabel;
+	}
 }
