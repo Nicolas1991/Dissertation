@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -13,7 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import uk.ac.sheffield.vtts.model.Constant;
-import uk.ac.sheffield.vtts.model.Protocol;
+import uk.ac.sheffield.vtts.model.Memory;
 
 public class Constant_dialog extends JDialog{
 
@@ -31,12 +32,13 @@ public class Constant_dialog extends JDialog{
 	private JButton delete;
 	private JButton ok;
 	private JButton cancel;
-	
+	private String constant_name;
 	
 	private Constant constant;
 
-	public Constant_dialog(final Protocol protocol){
+	public Constant_dialog(final Memory memory,String constant_name){
 		super();
+		this.constant_name = constant_name;
 		name_input = new JTextField();
 		value_input = new JTextField();
 		nameJLabel = new JLabel("Name:");
@@ -47,15 +49,23 @@ public class Constant_dialog extends JDialog{
 		delete = new JButton("Delete");
 		ok = new JButton("OK");
 		cancel = new JButton("Cancel");
-		init(protocol);
+		init(memory);
 		setModal(true);
 		setSize(400, 300);
 		
 	}
 	
-	private void init(final Protocol protocol) {
+	private void init(final Memory memory) {
 		Container container = getContentPane();
 		JPanel panel = new JPanel();
+		name_input.setText(constant_name);
+		Set<Constant> constants = memory.getConstants();
+		for (Constant constant : constants) {
+			if (constant.getName().compareToIgnoreCase(constant_name)==0) {
+				System.out.println("Contains");
+			} 
+		}
+		
 		
 		panel.setLayout(null);
 		nameJLabel.setSize(40,16);
@@ -87,8 +97,30 @@ public class Constant_dialog extends JDialog{
 				constant.setName(name_input.getText());
 				constant.setType(typeJMenu.getText());
 				constant.setContent(value_input.getText());
-				protocol.getMemory().addParameter(constant);
-				System.out.println(protocol.getName());
+				memory.addParameter(constant);
+				System.out.println(memory.getParameter(name_input.getText()));
+				dispose();
+			}
+		});
+		
+		cancel.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				dispose();
+			}
+		});
+		
+		delete.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println(constant_name);
+				if (memory.getConstants().remove(name_input.getText())) {
+					System.out.println("deleted");
+				}
 				dispose();
 			}
 		});
@@ -107,8 +139,8 @@ public class Constant_dialog extends JDialog{
 		
 	}
 	
-	public static Constant showConstant_dialog(Component relativeTo,final Protocol protocol) {
-		Constant_dialog c = new Constant_dialog(protocol);
+	public static Constant showConstant_dialog(Component relativeTo,final Memory memory,String constant_name) {
+		Constant_dialog c = new Constant_dialog(memory,constant_name);
 		c.setLocationRelativeTo(relativeTo);
 		c.setVisible(true);
 		return c.constant;

@@ -5,13 +5,16 @@
  */
 package dissertation;
 
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Iterator;
+import java.util.Set;
 
+import javax.swing.JButton;
+
+import uk.ac.sheffield.vtts.model.Constant;
 import uk.ac.sheffield.vtts.model.Memory;
 import uk.ac.sheffield.vtts.model.Protocol;
-
-
 
 /**
  *
@@ -19,18 +22,15 @@ import uk.ac.sheffield.vtts.model.Protocol;
  */
 public class JFrame_main extends javax.swing.JFrame {
     
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private Protocol protocol = new Protocol();
-	private final Memory memory = new Memory();
+    private Protocol protocol = new Protocol();
+    private final Memory memory = new Memory();
     /**
      * Creates new form NewJFrame
      */
     public JFrame_main() {
         initComponents();
         protocol.addMemory(new Memory());
+        jButton_added_edit_constant.setName("asd");
     }
 
     /**
@@ -42,14 +42,6 @@ public class JFrame_main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
-        jDialog_test_constant = new javax.swing.JDialog();
-        jButton_d_constant_ok = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField_d_constant_value = new javax.swing.JTextField();
-        jButton_d_constant_delete = new javax.swing.JButton();
-        jTextField_d_constant_name = new javax.swing.JTextField();
         jPanel_main = new javax.swing.JPanel();
         jLabel_protocol_name = new javax.swing.JLabel();
         jButton_GenerateXML = new javax.swing.JButton();
@@ -57,10 +49,10 @@ public class JFrame_main extends javax.swing.JFrame {
         jLabel_memory = new javax.swing.JLabel();
         jScrollPane_constants = new javax.swing.JScrollPane();
         jPanel_constants = new javax.swing.JPanel();
-        jLabel_constant_added_constant = new javax.swing.JLabel();
-        jButton_constant_added_edit_constant = new javax.swing.JButton();
-        jButton_constant_added_edit_viarable = new javax.swing.JButton();
-        jLabel_constant_added_viarable = new javax.swing.JLabel();
+        jLabel_added_constant = new javax.swing.JLabel();
+        jButton_added_edit_constant = new javax.swing.JButton();
+        jButton_added_edit_viarable = new javax.swing.JButton();
+        jLabel_added_viarable = new javax.swing.JLabel();
         jButton_add_constant = new javax.swing.JButton();
         jButton_add_viarable = new javax.swing.JButton();
         jScrollPane_overview = new javax.swing.JScrollPane();
@@ -76,74 +68,6 @@ public class JFrame_main extends javax.swing.JFrame {
         jLabel_constants_constant = new javax.swing.JLabel();
         jLabel_constants_viarable = new javax.swing.JLabel();
 
-        jDialog_test_constant.setTitle("Edit Constant");
-
-        jButton_d_constant_ok.setText("OK");
-        jButton_d_constant_ok.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_d_constant_okActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setText("Name:");
-
-        jLabel2.setText("Type:");
-
-        jLabel3.setText("Value:");
-
-        jButton_d_constant_delete.setBackground(new java.awt.Color(255, 51, 0));
-        jButton_d_constant_delete.setText("Delete this Constant");
-        jButton_d_constant_delete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_d_constant_deleteActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jDialog_test_constantLayout = new javax.swing.GroupLayout(jDialog_test_constant.getContentPane());
-        jDialog_test_constant.getContentPane().setLayout(jDialog_test_constantLayout);
-        jDialog_test_constantLayout.setHorizontalGroup(
-            jDialog_test_constantLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog_test_constantLayout.createSequentialGroup()
-                .addGap(76, 76, 76)
-                .addComponent(jButton_d_constant_delete)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
-                .addComponent(jButton_d_constant_ok)
-                .addGap(34, 34, 34))
-            .addGroup(jDialog_test_constantLayout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addGroup(jDialog_test_constantLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jDialog_test_constantLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel1)
-                        .addComponent(jLabel2))
-                    .addGroup(jDialog_test_constantLayout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(6, 6, 6)))
-                .addGap(24, 24, 24)
-                .addGroup(jDialog_test_constantLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField_d_constant_name, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField_d_constant_value, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jDialog_test_constantLayout.setVerticalGroup(
-            jDialog_test_constantLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog_test_constantLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(jDialog_test_constantLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField_d_constant_name, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(35, 35, 35)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                .addGroup(jDialog_test_constantLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField_d_constant_value, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
-                .addGroup(jDialog_test_constantLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton_d_constant_delete)
-                    .addComponent(jButton_d_constant_ok))
-                .addGap(33, 33, 33))
-        );
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Broker@Cloud Specification Editor");
 
@@ -156,14 +80,11 @@ public class JFrame_main extends javax.swing.JFrame {
             }
         });
 
-        jTextField_protocol_name.addCaretListener(new CaretListener() {
-			
-			@Override
-			public void caretUpdate(CaretEvent e) {
-				// TODO Auto-generated method stub
-				jTextField_protocol_nameActionPerformed(e);
-			}
-		});
+        jTextField_protocol_name.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_protocol_nameActionPerformed(evt);
+            }
+        });
 
         jLabel_memory.setText("Memory:");
 
@@ -171,18 +92,18 @@ public class JFrame_main extends javax.swing.JFrame {
 
         jPanel_constants.setBorder(new javax.swing.border.MatteBorder(null));
 
-        jLabel_constant_added_constant.setText("Constant Name");
+        jLabel_added_constant.setText("Constant Name");
 
-        jButton_constant_added_edit_constant.setText("Edit");
-        jButton_constant_added_edit_constant.addActionListener(new java.awt.event.ActionListener() {
+        jButton_added_edit_constant.setText("Edit");
+        jButton_added_edit_constant.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_constant_added_edit_constantActionPerformed(evt);
+                jButton_added_edit_constantActionPerformed(evt);
             }
         });
 
-        jButton_constant_added_edit_viarable.setText("Edit");
+        jButton_added_edit_viarable.setText("Edit");
 
-        jLabel_constant_added_viarable.setText("Viarable Name");
+        jLabel_added_viarable.setText("Viarable Name");
 
         javax.swing.GroupLayout jPanel_constantsLayout = new javax.swing.GroupLayout(jPanel_constants);
         jPanel_constants.setLayout(jPanel_constantsLayout);
@@ -190,13 +111,13 @@ public class JFrame_main extends javax.swing.JFrame {
             jPanel_constantsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_constantsLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
-                .addComponent(jLabel_constant_added_constant)
+                .addComponent(jLabel_added_constant)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton_constant_added_edit_constant)
+                .addComponent(jButton_added_edit_constant)
                 .addGap(17, 17, 17)
-                .addComponent(jLabel_constant_added_viarable)
+                .addComponent(jLabel_added_viarable)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton_constant_added_edit_viarable)
+                .addComponent(jButton_added_edit_viarable)
                 .addContainerGap(40, Short.MAX_VALUE))
         );
         jPanel_constantsLayout.setVerticalGroup(
@@ -204,10 +125,10 @@ public class JFrame_main extends javax.swing.JFrame {
             .addGroup(jPanel_constantsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel_constantsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel_constant_added_constant)
-                    .addComponent(jButton_constant_added_edit_constant)
-                    .addComponent(jLabel_constant_added_viarable)
-                    .addComponent(jButton_constant_added_edit_viarable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel_added_constant)
+                    .addComponent(jButton_added_edit_constant)
+                    .addComponent(jLabel_added_viarable)
+                    .addComponent(jButton_added_edit_viarable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(257, Short.MAX_VALUE))
         );
 
@@ -390,24 +311,23 @@ public class JFrame_main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>                        
 
+    
+    
+    
+    
+    
+    
+    // button actions========================================================================
     private void jButton_GenerateXMLActionPerformed(java.awt.event.ActionEvent evt) {                                                    
         // TODO add your handling code here:
-        
-
-        // 
-        
+     
     }                                                   
 
-    private void jTextField_protocol_nameActionPerformed(CaretEvent evt) {                                                         
+    private void jTextField_protocol_nameActionPerformed(java.awt.event.ActionEvent evt) {                                                         
         // TODO add your handling code here:
-    	this.protocol = new Protocol(jTextField_protocol_name.getText());
-    	
+        this.protocol = new Protocol(jTextField_protocol_name.getText());
+    	protocol.addMemory(memory);
     }                                                        
-
-    private void jButton_d_constant_okActionPerformed(java.awt.event.ActionEvent evt) {                                                      
-        // TODO add your handling code here:
-        
-    }                                                     
 
     private void jButton_add_constantActionPerformed(java.awt.event.ActionEvent evt) {                                                     
         // TODO add your handling code here:
@@ -417,16 +337,40 @@ public class JFrame_main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }                                                     
 
-    private void jButton_constant_added_edit_constantActionPerformed(java.awt.event.ActionEvent evt) {                                                                     
-        // TODO pop up constant edit dialog window
-    	Constant_dialog.showConstant_dialog(jButton_constant_added_edit_constant,protocol);
-    	
-    }                                                                    
-
-    private void jButton_d_constant_deleteActionPerformed(java.awt.event.ActionEvent evt) {                                                          
+    private void jButton_added_edit_constantActionPerformed(java.awt.event.ActionEvent evt) {                                                            
         // TODO add your handling code here:
-    }                                                         
+    	String constant_name = ((JButton)evt.getSource()).getName();
+    	System.out.println(constant_name);
+        Constant_dialog.showConstant_dialog(jButton_added_edit_constant,memory,constant_name);
 
+    }                                                           
+
+    
+    // model modifiers======================================================================
+    private void generate_constant_button() {
+		Set<Constant> constants = memory.getConstants();
+		for (Constant constant : constants) {
+			JButton jButton = new JButton();
+			jButton.setName(constant.getName());
+			jButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					jButton_added_edit_constantActionPerformed(e);
+				}
+			});
+		}
+	}
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -468,19 +412,13 @@ public class JFrame_main extends javax.swing.JFrame {
     private javax.swing.JButton jButton_add_constant;
     private javax.swing.JButton jButton_add_operation;
     private javax.swing.JButton jButton_add_viarable;
-    private javax.swing.JButton jButton_constant_added_edit_constant;
-    private javax.swing.JButton jButton_constant_added_edit_viarable;
-    private javax.swing.JButton jButton_d_constant_delete;
-    private javax.swing.JButton jButton_d_constant_ok;
+    private javax.swing.JButton jButton_added_edit_constant;
+    private javax.swing.JButton jButton_added_edit_viarable;
     private javax.swing.JButton jButton_edit_constant_binding;
     private javax.swing.JButton jButton_operation_added_edit;
-    private javax.swing.JDialog jDialog_test_constant;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel_added_constant;
+    private javax.swing.JLabel jLabel_added_viarable;
     private javax.swing.JLabel jLabel_broker;
-    private javax.swing.JLabel jLabel_constant_added_constant;
-    private javax.swing.JLabel jLabel_constant_added_viarable;
     private javax.swing.JLabel jLabel_constants_constant;
     private javax.swing.JLabel jLabel_constants_viarable;
     private javax.swing.JLabel jLabel_memory;
@@ -493,8 +431,6 @@ public class JFrame_main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane_constants;
     private javax.swing.JScrollPane jScrollPane_operations;
     private javax.swing.JScrollPane jScrollPane_overview;
-    private javax.swing.JTextField jTextField_d_constant_name;
-    private javax.swing.JTextField jTextField_d_constant_value;
     private javax.swing.JTextField jTextField_protocol_name;
     private javax.swing.JTree jTree_overview;
     // End of variables declaration                   
