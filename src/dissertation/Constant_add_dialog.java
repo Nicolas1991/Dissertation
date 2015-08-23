@@ -8,7 +8,6 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 import uk.ac.sheffield.vtts.model.Constant;
 import uk.ac.sheffield.vtts.model.Memory;
 
@@ -28,7 +27,7 @@ public class Constant_add_dialog extends JDialog{
 	private JButton ok;
 	private JButton cancel;
 	private String constant_name;
-	
+	private boolean added = false;
 	private Constant constant;
 
 	public Constant_add_dialog(final Memory memory){
@@ -85,6 +84,7 @@ public class Constant_add_dialog extends JDialog{
 				constant.setType(typeJMenu.getText());
 				constant.setContent(value_input.getText());
 				memory.addParameter(constant);
+				added = true;
 				//System.out.println(memory.getParameter(name_input.getText()));
 				dispose();
 			}
@@ -126,5 +126,9 @@ public class Constant_add_dialog extends JDialog{
 		JLabel jLabel = new JLabel("Constant: "+constant_name);
 		jLabel.setSize(90, 40);
 		return jLabel;
+	}
+	
+	public boolean isCreated() {
+		return this.added;
 	}
 }
