@@ -83,6 +83,17 @@ public class Memory extends Scope {
 		return result;
 	}
 
+	public void deleteConstant(String constant_name) {
+		for (Parameter parameter : parameters.values()) {
+			if (parameter instanceof Constant) {
+				if (parameter.getName().compareToIgnoreCase(constant_name)==0) {
+					parameters.remove(constant_name);
+					break;
+				}
+			}
+		}
+	}
+	
 	/**
 	 * Returns the set of Variables in this Memory.  A convenience, to extract
 	 * those Parameters which are Variables.

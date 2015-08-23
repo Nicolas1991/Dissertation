@@ -340,8 +340,7 @@ public class JFrame_main extends javax.swing.JFrame {
     private void jButton_added_edit_constantActionPerformed(java.awt.event.ActionEvent evt) {                                                            
         // TODO add your handling code here:
     	String constant_name = ((JButton)evt.getSource()).getName();
-    	System.out.println(constant_name);
-        Constant_dialog.showConstant_dialog(jButton_added_edit_constant,memory,constant_name);
+        Constant_edit_dialog.showConstant_dialog(jButton_added_edit_constant,memory,constant_name);
 
     }                                                           
 

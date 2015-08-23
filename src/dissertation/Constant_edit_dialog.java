@@ -16,14 +16,14 @@ import javax.swing.JTextField;
 import uk.ac.sheffield.vtts.model.Constant;
 import uk.ac.sheffield.vtts.model.Memory;
 
-public class Constant_dialog extends JDialog{
+public class Constant_edit_dialog extends JDialog{
 
 	/**
 	 * Dialog window for Constant editing
 	 * @author zhangyan
 	 */
 	private static final long serialVersionUID = 1L;
-	private JTextField name_input;
+	private JLabel name_input;
 	private JTextField value_input;
 	private JLabel nameJLabel;
 	private JLabel typeJLabel;
@@ -36,10 +36,10 @@ public class Constant_dialog extends JDialog{
 	
 	private Constant constant;
 
-	public Constant_dialog(final Memory memory,String constant_name){
+	public Constant_edit_dialog(final Memory memory,String constant_name){
 		super();
 		this.constant_name = constant_name;
-		name_input = new JTextField();
+		name_input = new JLabel(constant_name);
 		value_input = new JTextField();
 		nameJLabel = new JLabel("Name:");
 		typeJLabel = new JLabel("Type:");
@@ -58,13 +58,6 @@ public class Constant_dialog extends JDialog{
 	private void init(final Memory memory) {
 		Container container = getContentPane();
 		JPanel panel = new JPanel();
-		name_input.setText(constant_name);
-		Set<Constant> constants = memory.getConstants();
-		for (Constant constant : constants) {
-			if (constant.getName().compareToIgnoreCase(constant_name)==0) {
-				System.out.println("Contains");
-			} 
-		}
 		
 		
 		panel.setLayout(null);
@@ -88,17 +81,17 @@ public class Constant_dialog extends JDialog{
 		delete.setLocation(50, 220);
 		cancel.setLocation(150, 220);
 		
-		// listeners registration 
+		// listeners registration=====================================================
 		ok.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				constant.setName(name_input.getText());
+				constant.setName(constant_name);
 				constant.setType(typeJMenu.getText());
 				constant.setContent(value_input.getText());
 				memory.addParameter(constant);
-				System.out.println(memory.getParameter(name_input.getText()));
+				//System.out.println(memory.getParameter(name_input.getText()));
 				dispose();
 			}
 		});
@@ -117,14 +110,21 @@ public class Constant_dialog extends JDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println(constant_name);
-				if (memory.getConstants().remove(name_input.getText())) {
-					System.out.println("deleted");
+				//System.out.println(constant_name);
+				Set<Constant> constants = memory.getConstants();
+				for (Constant constant : constants) {
+					System.out.println(constant+"----");
+					if (constant.getName().compareToIgnoreCase(constant_name)==0) {
+						memory.deleteConstant(constant_name);
+						System.out.println(memory.getConstants().toString());
+					}
 				}
+				
 				dispose();
 			}
 		});
-		
+		// end of --- listeners registration=====================================================
+
 		panel.add(nameJLabel);
 		panel.add(typeJLabel);
 		panel.add(valueJLabel);
@@ -140,7 +140,7 @@ public class Constant_dialog extends JDialog{
 	}
 	
 	public static Constant showConstant_dialog(Component relativeTo,final Memory memory,String constant_name) {
-		Constant_dialog c = new Constant_dialog(memory,constant_name);
+		Constant_edit_dialog c = new Constant_edit_dialog(memory,constant_name);
 		c.setLocationRelativeTo(relativeTo);
 		c.setVisible(true);
 		return c.constant;
