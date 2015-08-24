@@ -118,12 +118,13 @@ public class Constant_add_dialog extends JDialog{
 	public JButton get_generated_button() {
 		JButton jButton = new JButton("Edit");
 		jButton.setName(constant_name);
-		jButton.setSize(50,40);
+		jButton.setSize(50,30);
 		return jButton;
 	}
 	
 	public JLabel get_generated_label() {
-		JLabel jLabel = new JLabel("Constant: "+constant_name);
+		JLabel jLabel = new JLabel(constant_name);
+		jLabel.setName(constant_name);
 		jLabel.setSize(90, 40);
 		return jLabel;
 	}

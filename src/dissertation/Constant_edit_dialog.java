@@ -32,6 +32,7 @@ public class Constant_edit_dialog extends JDialog{
 	private JButton ok;
 	private JButton cancel;
 	private String constant_name;
+	private boolean deleted = false;
 	
 	private Constant constant;
 
@@ -115,7 +116,7 @@ public class Constant_edit_dialog extends JDialog{
 					System.out.println(constant+"----");
 					if (constant.getName().compareToIgnoreCase(constant_name)==0) {
 						memory.deleteConstant(constant_name);
-						System.out.println(memory.getConstants().toString());
+						deleted = true;
 					}
 				}
 				
@@ -138,6 +139,9 @@ public class Constant_edit_dialog extends JDialog{
 		
 	}
 	
+	public boolean isDeleted() {
+		return this.deleted;
+	}
 	
 	
 }
