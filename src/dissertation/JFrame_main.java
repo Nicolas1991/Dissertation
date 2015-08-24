@@ -26,8 +26,11 @@ public class JFrame_main extends javax.swing.JFrame {
     
     private Protocol protocol = new Protocol();
     private final Memory memory = new Memory();
-    private List<JButton> buttons_memory = new LinkedList<JButton>();
-    private List<JLabel> labels_memory = new LinkedList<JLabel>();
+    private List<JButton> buttons_constant = new LinkedList<JButton>();
+    private List<JLabel> labels_constant = new LinkedList<JLabel>();
+    
+    private List<JButton> buttons_variable = new LinkedList<JButton>();
+    private List<JLabel> labels_variable = new LinkedList<JLabel>();
     /**
      * Creates new form NewJFrame
      */
@@ -53,7 +56,6 @@ public class JFrame_main extends javax.swing.JFrame {
         jScrollPane_constants = new javax.swing.JScrollPane();
         jPanel_constant = new javax.swing.JPanel();
         jButton_add_constant = new javax.swing.JButton();
-        jButton_add_viarable = new javax.swing.JButton();
         jLabel_broker = new javax.swing.JLabel();
         jButton_add_memoryBinding = new javax.swing.JButton();
         jLabel_operation = new javax.swing.JLabel();
@@ -70,6 +72,7 @@ public class JFrame_main extends javax.swing.JFrame {
         jScrollPane_variable = new javax.swing.JScrollPane();
         jPanel_variable = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jButton_add_variable = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Broker@Cloud Specification Editor");
@@ -114,10 +117,6 @@ public class JFrame_main extends javax.swing.JFrame {
                 jButton_add_constantActionPerformed(evt);
             }
         });
-
-        jButton_add_viarable.setText("Add Viarable");
-        jButton_add_viarable.setMaximumSize(new java.awt.Dimension(130, 29));
-        jButton_add_viarable.setMinimumSize(new java.awt.Dimension(130, 29));
 
         jLabel_broker.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel_broker.setText("Broker@Cloud Specification Editor");
@@ -185,7 +184,7 @@ public class JFrame_main extends javax.swing.JFrame {
         jPanel_binding.setLayout(jPanel_bindingLayout);
         jPanel_bindingLayout.setHorizontalGroup(
             jPanel_bindingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 180, Short.MAX_VALUE)
+            .addGap(0, 197, Short.MAX_VALUE)
         );
         jPanel_bindingLayout.setVerticalGroup(
             jPanel_bindingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,6 +209,13 @@ public class JFrame_main extends javax.swing.JFrame {
         jScrollPane_variable.setViewportView(jPanel_variable);
 
         jLabel1.setText("Binding");
+
+        jButton_add_variable.setText("Add Variable");
+        jButton_add_variable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_add_variableActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel_mainLayout = new javax.swing.GroupLayout(jPanel_main);
         jPanel_main.setLayout(jPanel_mainLayout);
@@ -252,18 +258,20 @@ public class JFrame_main extends javax.swing.JFrame {
                             .addGroup(jPanel_mainLayout.createSequentialGroup()
                                 .addGap(93, 93, 93)
                                 .addGroup(jPanel_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jButton_add_viarable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane_constants, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel_mainLayout.createSequentialGroup()
-                                        .addGroup(jPanel_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jScrollPane_constants, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(jPanel_mainLayout.createSequentialGroup()
-                                                .addComponent(jLabel_constants_constant)
-                                                .addGap(135, 135, 135))
-                                            .addComponent(jButton_add_constant))
+                                        .addComponent(jLabel_constants_constant)
+                                        .addGap(135, 135, 135))
+                                    .addComponent(jButton_add_constant))
+                                .addGroup(jPanel_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel_mainLayout.createSequentialGroup()
                                         .addGap(48, 48, 48)
                                         .addGroup(jPanel_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jScrollPane_variable, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel_constants_viarable))))))
+                                            .addComponent(jLabel_constants_viarable)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_mainLayout.createSequentialGroup()
+                                        .addGap(120, 120, 120)
+                                        .addComponent(jButton_add_variable, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -294,7 +302,7 @@ public class JFrame_main extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton_add_constant)
-                            .addComponent(jButton_add_viarable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jButton_add_variable))
                         .addGap(44, 44, 44))
                     .addGroup(jPanel_mainLayout.createSequentialGroup()
                         .addComponent(jScrollPane_overview, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -353,27 +361,55 @@ public class JFrame_main extends javax.swing.JFrame {
     	constant_add_dialog.setLocationRelativeTo(jButton_add_constant);
     	constant_add_dialog.setVisible(true);
     	
-    	if (constant_add_dialog.isCreated()) {
-    		JButton jButton = constant_add_dialog.get_generated_button();
-        	JLabel jLabel = constant_add_dialog.get_generated_label();
-        	jButton.addActionListener(new ActionListener() {
-    			
-    			@Override
-    			public void actionPerformed(ActionEvent e) {
-    				// TODO Auto-generated method stub
-    				jButton_added_edit_constantActionPerformed(e);
-    				
-    			}
-    		});
-        	this.buttons_memory.add(jButton);
-        	this.labels_memory.add(jLabel);
-        	
-        	reload_memory_panel();
-		}
     	
+    	JButton jButton = constant_add_dialog.get_generated_button();
+    	JLabel jLabel = constant_add_dialog.get_generated_label();
+    	jButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				jButton_added_edit_constantActionPerformed(e);
+				
+			}
+		});
+    	this.buttons_constant.add(jButton);
+    	this.labels_constant.add(jLabel);
     	
+    	reload_constant_panel();
     }                                                    
 
+    private void jButton_added_edit_constantActionPerformed(java.awt.event.ActionEvent evt) {    
+        // TODO add your handling code here:
+    	String constant_name = ((JButton)evt.getSource()).getName();
+    	
+    	// pop up edit dialog window
+    	Constant_edit_dialog constant_edit_dialog = new Constant_edit_dialog(memory, constant_name);
+    	constant_edit_dialog.setLocationRelativeTo((JButton)evt.getSource());
+		constant_edit_dialog.setVisible(true);
+        
+		if (constant_edit_dialog.isDeleted()) {
+			System.out.println("deleting constant--");
+			for (JButton jButton : buttons_constant) {
+				if (jButton.getName().compareToIgnoreCase(constant_name)==0) {
+					buttons_constant.remove(jButton);
+					break;
+				}
+			}
+			
+			for (JLabel jLabel : labels_constant) {
+				if (jLabel.getName().compareToIgnoreCase(constant_name)==0) {
+					labels_constant.remove(jLabel);
+					break;
+				}
+			}
+		}
+        
+        System.out.println("finished editing constant.");
+        reload_constant_panel();
+
+    }
+    
     private void jButton_add_operationActionPerformed(java.awt.event.ActionEvent evt) {                                                      
         // TODO add your handling code here:
     }                                                     
@@ -386,50 +422,48 @@ public class JFrame_main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }                                                         
 
-    private void jButton_added_edit_constantActionPerformed(java.awt.event.ActionEvent evt) {                                                            
+    private void jButton_add_variableActionPerformed(java.awt.event.ActionEvent evt) {                                                     
         // TODO add your handling code here:
-    	String constant_name = ((JButton)evt.getSource()).getName();
+    	Variable_add_dialog variable_add_dialog = new Variable_add_dialog(memory);
+    	variable_add_dialog.setLocationRelativeTo(jButton_add_variable);
+    	variable_add_dialog.setVisible(true);
     	
-    	// pop up edit dialog window
-    	Constant_edit_dialog constant_edit_dialog = new Constant_edit_dialog(memory, constant_name);
-    	constant_edit_dialog.setLocationRelativeTo((JButton)evt.getSource());
-		constant_edit_dialog.setVisible(true);
-        
-		if (constant_edit_dialog.isDeleted()) {
-			System.out.println("deleting constant--");
-			for (JButton jButton : buttons_memory) {
-				if (jButton.getName().compareToIgnoreCase(constant_name)==0) {
-					buttons_memory.remove(jButton);
-					break;
-				}
-			}
+    	JButton jButton = variable_add_dialog.get_generated_button();
+    	JLabel jLabel = variable_add_dialog.get_generated_label();
+    	jButton.addActionListener(new ActionListener() {
 			
-			for (JLabel jLabel : labels_memory) {
-				if (jLabel.getName().compareToIgnoreCase(constant_name)==0) {
-					labels_memory.remove(jLabel);
-					break;
-				}
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				jButton_added_edit_variableActionPerformed(e);
 			}
-			reload_memory_panel();
-		}
-        
-        System.out.println("finished editing constant.");
-        
-    }
+		});
+    	this.buttons_variable.add(jButton);
+    	this.labels_variable.add(jLabel);
+    	
+    	reload_variable_panel();
+    }                                                    
+
+    private void jButton_added_edit_variableActionPerformed(java.awt.event.ActionEvent evt) {
+		
+	}
+    
+    
+    
     
     
     // model modifiers======================================================================
-    private void reload_memory_panel(){
+    private void reload_constant_panel(){
     	int init_y_position = 10;
     	jPanel_constant.removeAll();
-    	for (JButton jButton : buttons_memory) {
-			jButton.setLocation(120, init_y_position+5);
+    	for (JButton jButton : buttons_constant) {
+			jButton.setLocation(100, init_y_position);
     		jPanel_constant.add(jButton);
     		init_y_position = init_y_position+70;
 		}
     	init_y_position = 10;
-    	for (JLabel jLabel : labels_memory) {
-			jLabel.setLocation(10, init_y_position);
+    	for (JLabel jLabel : labels_constant) {
+			jLabel.setLocation(30, init_y_position);
     		jPanel_constant.add(jLabel);
     		init_y_position = init_y_position+70;
 		}
@@ -438,8 +472,12 @@ public class JFrame_main extends javax.swing.JFrame {
     	jPanel_constant.revalidate();
     	validate();
     	repaint();
-    	System.out.println(buttons_memory.size());
+    	System.out.println(buttons_constant.size());
     }
+    
+    private void reload_variable_panel() {
+		
+	}
     
     
     /**
@@ -483,7 +521,7 @@ public class JFrame_main extends javax.swing.JFrame {
     private javax.swing.JButton jButton_add_constant;
     private javax.swing.JButton jButton_add_memoryBinding;
     private javax.swing.JButton jButton_add_operation;
-    private javax.swing.JButton jButton_add_viarable;
+    private javax.swing.JButton jButton_add_variable;
     private javax.swing.JButton jButton_import;
     private javax.swing.JButton jButton_operation_added_edit;
     private javax.swing.JLabel jLabel1;
