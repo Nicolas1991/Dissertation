@@ -22,10 +22,8 @@ public class Variable_add_dialog extends JDialog{
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField name_input;
-	private JTextField value_input;
 	private JLabel nameJLabel;
 	private JLabel typeJLabel;
-	private JLabel valueJLabel;
 	private JMenu typeJMenu;
 	private JButton ok;
 	private JButton cancel;
@@ -37,10 +35,8 @@ public class Variable_add_dialog extends JDialog{
 		super();
 		this.variable_name = "";
 		name_input = new JTextField();
-		value_input = new JTextField();
 		nameJLabel = new JLabel("Name:");
 		typeJLabel = new JLabel("Type:");
-		valueJLabel = new JLabel("Value:");
 		typeJMenu = new JMenu();
 		variable = new Variable();
 		ok = new JButton("OK");
@@ -60,19 +56,15 @@ public class Variable_add_dialog extends JDialog{
 		panel.setLayout(null);
 		nameJLabel.setSize(40,16);
 		typeJLabel.setSize(40,16);
-		valueJLabel.setSize(40,16);
 		name_input.setSize(150,28);
-		value_input.setSize(150, 28);
 		typeJMenu.setSize(100, 20);
 		ok.setSize(75, 30);
 		cancel.setSize(75, 30);
 		
 		nameJLabel.setLocation(40,30);
 		typeJLabel.setLocation(40,90);
-		valueJLabel.setLocation(40,150);
 		name_input.setLocation(150,30);
 		typeJMenu.setLocation(150,90);
-		value_input.setLocation(150,150);
 		ok.setLocation(250, 220);
 		cancel.setLocation(150, 220);
 		
@@ -85,7 +77,6 @@ public class Variable_add_dialog extends JDialog{
 				variable_name = name_input.getText();
 				variable.setName(name_input.getText());
 				variable.setType(typeJMenu.getText());
-				variable.setContent(value_input.getText());
 				memory.addParameter(variable);
 				added = true;
 				//System.out.println(memory.getParameter(name_input.getText()));
@@ -107,9 +98,7 @@ public class Variable_add_dialog extends JDialog{
 
 		panel.add(nameJLabel);
 		panel.add(typeJLabel);
-		panel.add(valueJLabel);
 		panel.add(name_input);
-		panel.add(value_input);
 		panel.add(typeJMenu);
 		panel.add(ok);
 		panel.add(cancel);

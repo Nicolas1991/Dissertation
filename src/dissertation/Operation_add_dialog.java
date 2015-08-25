@@ -1,76 +1,74 @@
 package dissertation;
+
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import uk.ac.sheffield.vtts.model.Constant;
-import uk.ac.sheffield.vtts.model.Memory;
 
-public class Constant_add_dialog extends JDialog{
+public class Operation_add_dialog extends JDialog{
 
 	/**
-	 * Dialog window for Constant creation
+	 * Dialog window for Operation creation
 	 * @author zhangyan
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField name_input;
-	private JTextField value_input;
 	private JLabel nameJLabel;
-	private JLabel typeJLabel;
-	private JLabel valueJLabel;
-	private JTextField typeJMenu;
 	private JButton ok;
 	private JButton cancel;
-	private String constant_name;
+	private String operation_name;
 	private boolean added = false;
-	private Constant constant;
 
-	public Constant_add_dialog(final Memory memory){
+	private JScrollPane jScrollPane_input;
+	private JPanel jPanel_input;
+	private JButton add_input;
+	
+	public Operation_add_dialog(){
 		super();
-		this.constant_name = "";
+		this.operation_name = "";
 		name_input = new JTextField();
-		value_input = new JTextField();
 		nameJLabel = new JLabel("Name:");
-		typeJLabel = new JLabel("Type:");
-		valueJLabel = new JLabel("Value:");
-		typeJMenu = new JTextField();
-		constant = new Constant();
+		jScrollPane_input = new JScrollPane();
+		jPanel_input = new JPanel();
 		ok = new JButton("OK");
 		cancel = new JButton("Cancel");
-		init(memory);
+		add_input = new JButton("Add Input");
+		init();
 		setModal(true);
-		setSize(400, 300);
+		setSize(800, 600);
 		
 	}
 	
-	private void init(final Memory memory) {
+	private void init() {
 		
 		Container container = getContentPane();
 		JPanel panel = new JPanel();
 		
-		
+		// set size
 		panel.setLayout(null);
 		nameJLabel.setSize(40,16);
-		typeJLabel.setSize(40,16);
-		valueJLabel.setSize(40,16);
 		name_input.setSize(150,28);
-		value_input.setSize(150, 28);
-		typeJMenu.setSize(100, 20);
 		ok.setSize(75, 30);
 		cancel.setSize(75, 30);
+		add_input.setSize(120, 30);
+		jScrollPane_input.setSize(200, 100);
+		jPanel_input.setPreferredSize(new Dimension(150,300));
 		
+		// set location
 		nameJLabel.setLocation(40,30);
-		typeJLabel.setLocation(40,90);
-		valueJLabel.setLocation(40,150);
-		name_input.setLocation(150,30);
-		typeJMenu.setLocation(150,90);
-		value_input.setLocation(150,150);
-		ok.setLocation(250, 220);
-		cancel.setLocation(150, 220);
+		name_input.setLocation(100,30);
+		ok.setLocation(700, 500);
+		cancel.setLocation(700, 450);
+		add_input.setLocation(95, 200);
+		jScrollPane_input.setLocation(50, 100);
+
 		
 		// listeners registration=====================================================
 		ok.addActionListener(new ActionListener() {
@@ -78,14 +76,9 @@ public class Constant_add_dialog extends JDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				constant_name = name_input.getText();
-				constant.setName(name_input.getText());
-				constant.setType(typeJMenu.getText());
-				constant.setContent(value_input.getText());
-				memory.addParameter(constant);
 				added = true;
-				//System.out.println(memory.getParameter(name_input.getText()));
 				dispose();
+				
 			}
 		});
 		
@@ -98,17 +91,26 @@ public class Constant_add_dialog extends JDialog{
 			}
 		});
 		
+		add_input.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				
+			}
+		});
 		
 		// end of --- listeners registration=====================================================
 
+		jScrollPane_input.setViewportView(jPanel_input);
+		
+		panel.add(jScrollPane_input);
 		panel.add(nameJLabel);
-		panel.add(typeJLabel);
-		panel.add(valueJLabel);
 		panel.add(name_input);
-		panel.add(value_input);
-		panel.add(typeJMenu);
 		panel.add(ok);
 		panel.add(cancel);
+		panel.add(add_input);
 		
 		container.add(panel);
 		
@@ -116,14 +118,14 @@ public class Constant_add_dialog extends JDialog{
 	
 	public JButton get_generated_button() {
 		JButton jButton = new JButton("Edit");
-		jButton.setName(constant_name);
+		jButton.setName(operation_name);
 		jButton.setSize(50,30);
 		return jButton;
 	}
 	
 	public JLabel get_generated_label() {
-		JLabel jLabel = new JLabel(constant_name);
-		jLabel.setName(constant_name);
+		JLabel jLabel = new JLabel(operation_name);
+		jLabel.setName(operation_name);
 		jLabel.setSize(90, 40);
 		return jLabel;
 	}
@@ -131,4 +133,6 @@ public class Constant_add_dialog extends JDialog{
 	public boolean isCreated() {
 		return this.added;
 	}
+	
+	
 }

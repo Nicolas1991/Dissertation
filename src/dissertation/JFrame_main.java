@@ -61,8 +61,6 @@ public class JFrame_main extends javax.swing.JFrame {
         jLabel_operation = new javax.swing.JLabel();
         jScrollPane_operation = new javax.swing.JScrollPane();
         jPanel_operation = new javax.swing.JPanel();
-        jLabel_operation_added_operation = new javax.swing.JLabel();
-        jButton_operation_added_edit = new javax.swing.JButton();
         jButton_add_operation = new javax.swing.JButton();
         jLabel_constants_constant = new javax.swing.JLabel();
         jLabel_constants_viarable = new javax.swing.JLabel();
@@ -134,30 +132,15 @@ public class JFrame_main extends javax.swing.JFrame {
 
         jPanel_operation.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel_operation_added_operation.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jLabel_operation_added_operation.setText("Operation");
-
-        jButton_operation_added_edit.setText("Edit");
-
         javax.swing.GroupLayout jPanel_operationLayout = new javax.swing.GroupLayout(jPanel_operation);
         jPanel_operation.setLayout(jPanel_operationLayout);
         jPanel_operationLayout.setHorizontalGroup(
             jPanel_operationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_operationLayout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addComponent(jLabel_operation_added_operation, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
-                .addComponent(jButton_operation_added_edit, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(71, 71, 71))
+            .addGap(0, 408, Short.MAX_VALUE)
         );
         jPanel_operationLayout.setVerticalGroup(
             jPanel_operationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_operationLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(jPanel_operationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel_operation_added_operation, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton_operation_added_edit))
-                .addContainerGap(181, Short.MAX_VALUE))
+            .addGap(0, 233, Short.MAX_VALUE)
         );
 
         jScrollPane_operation.setViewportView(jPanel_operation);
@@ -184,7 +167,7 @@ public class JFrame_main extends javax.swing.JFrame {
         jPanel_binding.setLayout(jPanel_bindingLayout);
         jPanel_bindingLayout.setHorizontalGroup(
             jPanel_bindingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 197, Short.MAX_VALUE)
+            .addGap(0, 160, Short.MAX_VALUE)
         );
         jPanel_bindingLayout.setVerticalGroup(
             jPanel_bindingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,16 +205,6 @@ public class JFrame_main extends javax.swing.JFrame {
         jPanel_mainLayout.setHorizontalGroup(
             jPanel_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_mainLayout.createSequentialGroup()
-                .addContainerGap(645, Short.MAX_VALUE)
-                .addGroup(jPanel_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton_GenerateXML, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton_import, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-            .addGroup(jPanel_mainLayout.createSequentialGroup()
-                .addGap(0, 267, Short.MAX_VALUE)
-                .addComponent(jButton_add_operation, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(378, 378, 378))
-            .addGroup(jPanel_mainLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(jPanel_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel_memory)
@@ -243,40 +216,50 @@ public class JFrame_main extends javax.swing.JFrame {
                         .addComponent(jLabel_broker, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel_mainLayout.createSequentialGroup()
-                .addGroup(jPanel_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel_mainLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton_add_memoryBinding, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(645, Short.MAX_VALUE)
+                        .addGroup(jPanel_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton_GenerateXML, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton_import, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel_mainLayout.createSequentialGroup()
-                        .addGroup(jPanel_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel_mainLayout.createSequentialGroup()
-                                .addGap(140, 140, 140)
-                                .addComponent(jScrollPane_operation, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel_mainLayout.createSequentialGroup()
-                                .addGap(38, 38, 38)
-                                .addComponent(jLabel_operation))
-                            .addGroup(jPanel_mainLayout.createSequentialGroup()
-                                .addGap(93, 93, 93)
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jButton_add_memoryBinding, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel_mainLayout.createSequentialGroup()
                                 .addGroup(jPanel_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jScrollPane_constants, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel_mainLayout.createSequentialGroup()
-                                        .addComponent(jLabel_constants_constant)
-                                        .addGap(135, 135, 135))
-                                    .addComponent(jButton_add_constant))
+                                    .addComponent(jButton_add_operation, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel_mainLayout.createSequentialGroup()
+                                            .addGap(140, 140, 140)
+                                            .addComponent(jScrollPane_operation, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel_mainLayout.createSequentialGroup()
+                                            .addGap(38, 38, 38)
+                                            .addComponent(jLabel_operation))
+                                        .addGroup(jPanel_mainLayout.createSequentialGroup()
+                                            .addGap(93, 93, 93)
+                                            .addGroup(jPanel_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(jScrollPane_constants, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGroup(jPanel_mainLayout.createSequentialGroup()
+                                                    .addComponent(jLabel_constants_constant)
+                                                    .addGap(135, 135, 135))
+                                                .addComponent(jButton_add_constant))
+                                            .addGroup(jPanel_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(jPanel_mainLayout.createSequentialGroup()
+                                                    .addGap(48, 48, 48)
+                                                    .addGroup(jPanel_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jScrollPane_variable, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jLabel_constants_viarable)))
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_mainLayout.createSequentialGroup()
+                                                    .addGap(120, 120, 120)
+                                                    .addComponent(jButton_add_variable, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel_mainLayout.createSequentialGroup()
-                                        .addGap(48, 48, 48)
-                                        .addGroup(jPanel_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jScrollPane_variable, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel_constants_viarable)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_mainLayout.createSequentialGroup()
-                                        .addGap(120, 120, 120)
-                                        .addComponent(jButton_add_variable, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jScrollPane_overview, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabel1)
+                                    .addComponent(jScrollPane_overview, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel_mainLayout.setVerticalGroup(
             jPanel_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -361,25 +344,63 @@ public class JFrame_main extends javax.swing.JFrame {
     	constant_add_dialog.setLocationRelativeTo(jButton_add_constant);
     	constant_add_dialog.setVisible(true);
     	
+    	if (constant_add_dialog.isCreated()) {
+    		
+    		JButton jButton = constant_add_dialog.get_generated_button();
+        	JLabel jLabel = constant_add_dialog.get_generated_label();
+        	jButton.addActionListener(new ActionListener() {
+    			
+    			@Override
+    			public void actionPerformed(ActionEvent e) {
+    				// TODO Auto-generated method stub
+    				jButton_added_edit_constantActionPerformed(e);
+    				
+    			}
+    		});
+        	this.buttons_constant.add(jButton);
+        	this.labels_constant.add(jLabel);
+        	
+        	reload_constant_panel();
+		}
+    }                                                    
+
+    private void jButton_add_operationActionPerformed(java.awt.event.ActionEvent evt) {                                                      
+        // TODO add your handling code here:
+        Operation_add_dialog operation_add_dialog = new Operation_add_dialog();
+        operation_add_dialog.setVisible(true);
+    }                                                     
+
+    private void jButton_importActionPerformed(java.awt.event.ActionEvent evt) {                                               
+        // TODO add your handling code here:
+    }                                              
+
+    private void jButton_add_memoryBindingActionPerformed(java.awt.event.ActionEvent evt) {                                                          
+        // TODO add your handling code here:
+    }                                                         
+
+    private void jButton_add_variableActionPerformed(java.awt.event.ActionEvent evt) {                                                     
+        // TODO add your handling code here:
+        Variable_add_dialog variable_add_dialog = new Variable_add_dialog(memory);
+    	variable_add_dialog.setLocationRelativeTo(jButton_add_variable);
+    	variable_add_dialog.setVisible(true);
     	
-    	JButton jButton = constant_add_dialog.get_generated_button();
-    	JLabel jLabel = constant_add_dialog.get_generated_label();
+    	JButton jButton = variable_add_dialog.get_generated_button();
+    	JLabel jLabel = variable_add_dialog.get_generated_label();
     	jButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				jButton_added_edit_constantActionPerformed(e);
-				
+				jButton_added_edit_variableActionPerformed(e);
 			}
 		});
-    	this.buttons_constant.add(jButton);
-    	this.labels_constant.add(jLabel);
+    	this.buttons_variable.add(jButton);
+    	this.labels_variable.add(jLabel);
     	
-    	reload_constant_panel();
+    	reload_variable_panel();
     }                                                    
 
-    private void jButton_added_edit_constantActionPerformed(java.awt.event.ActionEvent evt) {    
+    private void jButton_added_edit_constantActionPerformed(java.awt.event.ActionEvent evt) {                                                            
         // TODO add your handling code here:
     	String constant_name = ((JButton)evt.getSource()).getName();
     	
@@ -410,50 +431,39 @@ public class JFrame_main extends javax.swing.JFrame {
 
     }
     
-    private void jButton_add_operationActionPerformed(java.awt.event.ActionEvent evt) {                                                      
-        // TODO add your handling code here:
-    }                                                     
-
-    private void jButton_importActionPerformed(java.awt.event.ActionEvent evt) {                                               
-        // TODO add your handling code here:
-    }                                              
-
-    private void jButton_add_memoryBindingActionPerformed(java.awt.event.ActionEvent evt) {                                                          
-        // TODO add your handling code here:
-    }                                                         
-
-    private void jButton_add_variableActionPerformed(java.awt.event.ActionEvent evt) {                                                     
-        // TODO add your handling code here:
-    	Variable_add_dialog variable_add_dialog = new Variable_add_dialog(memory);
-    	variable_add_dialog.setLocationRelativeTo(jButton_add_variable);
-    	variable_add_dialog.setVisible(true);
-    	
-    	JButton jButton = variable_add_dialog.get_generated_button();
-    	JLabel jLabel = variable_add_dialog.get_generated_label();
-    	jButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				jButton_added_edit_variableActionPerformed(e);
-			}
-		});
-    	this.buttons_variable.add(jButton);
-    	this.labels_variable.add(jLabel);
-    	
-    	reload_variable_panel();
-    }                                                    
-
     private void jButton_added_edit_variableActionPerformed(java.awt.event.ActionEvent evt) {
-		
+    	
+    	String variable_name = ((JButton)evt.getSource()).getName();
+    	
+    	// pop up edit dialog window
+    	Variable_edit_dialog variable_edit_dialog = new Variable_edit_dialog(memory, variable_name);
+    	variable_edit_dialog.setLocationRelativeTo((JButton)evt.getSource());
+    	variable_edit_dialog.setVisible(true);
+        
+		if (variable_edit_dialog.isDeleted()) {
+			System.out.println("deleting variable--");
+			for (JButton jButton : buttons_variable) {
+				if (jButton.getName().compareToIgnoreCase(variable_name)==0) {
+					buttons_variable.remove(jButton);
+					break;
+				}
+			}
+			
+			for (JLabel jLabel : labels_variable) {
+				if (jLabel.getName().compareToIgnoreCase(variable_name)==0) {
+					labels_variable.remove(jLabel);
+					break;
+				}
+			}
+		}
+        
+        System.out.println("finished editing variable.");
+        reload_variable_panel();
 	}
-    
-    
-    
-    
     
     // model modifiers======================================================================
     private void reload_constant_panel(){
+    	
     	int init_y_position = 10;
     	jPanel_constant.removeAll();
     	for (JButton jButton : buttons_constant) {
@@ -476,8 +486,29 @@ public class JFrame_main extends javax.swing.JFrame {
     }
     
     private void reload_variable_panel() {
-		
+    	
+    	int init_y_position = 10;
+    	jPanel_variable.removeAll();
+    	for (JButton jButton : buttons_variable) {
+			jButton.setLocation(100, init_y_position);
+			jPanel_variable.add(jButton);
+    		init_y_position = init_y_position+70;
+		}
+    	init_y_position = 10;
+    	for (JLabel jLabel : labels_variable) {
+			jLabel.setLocation(30, init_y_position);
+			jPanel_variable.add(jLabel);
+    		init_y_position = init_y_position+70;
+		}
+    	jPanel_variable.setPreferredSize(
+    			new Dimension(jPanel_constant.getWidth(), jPanel_variable.getHeight()+init_y_position));
+    	jPanel_variable.revalidate();
+    	validate();
+    	repaint();
+    	System.out.println(buttons_constant.size());
 	}
+    
+    
     
     
     /**
@@ -523,14 +554,12 @@ public class JFrame_main extends javax.swing.JFrame {
     private javax.swing.JButton jButton_add_operation;
     private javax.swing.JButton jButton_add_variable;
     private javax.swing.JButton jButton_import;
-    private javax.swing.JButton jButton_operation_added_edit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel_broker;
     private javax.swing.JLabel jLabel_constants_constant;
     private javax.swing.JLabel jLabel_constants_viarable;
     private javax.swing.JLabel jLabel_memory;
     private javax.swing.JLabel jLabel_operation;
-    private javax.swing.JLabel jLabel_operation_added_operation;
     private javax.swing.JLabel jLabel_protocol_name;
     private javax.swing.JPanel jPanel_binding;
     private javax.swing.JPanel jPanel_constant;

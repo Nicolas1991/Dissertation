@@ -1,55 +1,57 @@
 package dissertation;
-
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
 import javax.swing.JPanel;
-import uk.ac.sheffield.vtts.model.Variable;
+import javax.swing.JTextField;
+
+import uk.ac.sheffield.vtts.model.Constant;
+import uk.ac.sheffield.vtts.model.Input;
 import uk.ac.sheffield.vtts.model.Memory;
 
-public class Variable_edit_dialog extends JDialog{
+public class Input_add_dialog extends JDialog{
 
 	/**
-	 * Dialog window for Variable editing
+	 * Dialog window for Input creation
 	 * @author zhangyan
 	 */
 	private static final long serialVersionUID = 1L;
-	private JLabel name_input;
+	private JTextField name_input;
+	private JTextField value_input;
 	private JLabel nameJLabel;
 	private JLabel typeJLabel;
-	private JMenu typeJMenu;
-	private JButton delete;
+	private JLabel valueJLabel;
+	private JTextField typeJMenu;
 	private JButton ok;
 	private JButton cancel;
-	private String variable_name;
-	private boolean deleted = false;
-	
-	private Variable variable;
+	private String constant_name;
+	private boolean added = false;
+	private Input input;
 
-	public Variable_edit_dialog(final Memory memory,String variable_name){
+	public Input_add_dialog(){
 		super();
-		this.variable_name = variable_name;
-		name_input = new JLabel(variable_name);
+		this.constant_name = "";
+		name_input = new JTextField();
+		value_input = new JTextField();
 		nameJLabel = new JLabel("Name:");
 		typeJLabel = new JLabel("Type:");
-		typeJMenu = new JMenu();
-		variable = new Variable();
-		delete = new JButton("Delete");
+		valueJLabel = new JLabel("Value:");
+		typeJMenu = new JTextField();
+		input = new Input();
 		ok = new JButton("OK");
 		cancel = new JButton("Cancel");
-		init(memory);
+		init();
 		setModal(true);
 		setSize(400, 300);
 		
 	}
 	
-	private void init(final Memory memory) {
+	private void init() {
+		
 		Container container = getContentPane();
 		JPanel panel = new JPanel();
 		
@@ -57,18 +59,20 @@ public class Variable_edit_dialog extends JDialog{
 		panel.setLayout(null);
 		nameJLabel.setSize(40,16);
 		typeJLabel.setSize(40,16);
+		valueJLabel.setSize(40,16);
 		name_input.setSize(150,28);
+		value_input.setSize(150, 28);
 		typeJMenu.setSize(100, 20);
 		ok.setSize(75, 30);
-		delete.setSize(75, 30);
 		cancel.setSize(75, 30);
 		
 		nameJLabel.setLocation(40,30);
 		typeJLabel.setLocation(40,90);
+		valueJLabel.setLocation(40,150);
 		name_input.setLocation(150,30);
 		typeJMenu.setLocation(150,90);
+		value_input.setLocation(150,150);
 		ok.setLocation(250, 220);
-		delete.setLocation(50, 220);
 		cancel.setLocation(150, 220);
 		
 		// listeners registration=====================================================
@@ -77,9 +81,11 @@ public class Variable_edit_dialog extends JDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				variable.setName(variable_name);
-				variable.setType(typeJMenu.getText());
-				memory.addParameter(variable);
+				constant_name = name_input.getText();
+				input.setName(name_input.getText());
+				input.setType(typeJMenu.getText());
+				input.setContent(value_input.getText());
+				added = true;
 				//System.out.println(memory.getParameter(name_input.getText()));
 				dispose();
 			}
@@ -94,39 +100,37 @@ public class Variable_edit_dialog extends JDialog{
 			}
 		});
 		
-		delete.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				//System.out.println(constant_name);
-				Set<Variable> variables = memory.getVariables();
-				for (Variable variable : variables) {
-					System.out.println(variable+"----");
-					if (variable.getName().compareToIgnoreCase(variable_name)==0) {
-						memory.deleteViable(variable_name);
-						deleted = true;
-					}
-				}
-				
-				dispose();
-			}
-		});
+		
 		// end of --- listeners registration=====================================================
 
 		panel.add(nameJLabel);
 		panel.add(typeJLabel);
+		panel.add(valueJLabel);
 		panel.add(name_input);
+		panel.add(value_input);
 		panel.add(typeJMenu);
 		panel.add(ok);
-		panel.add(delete);
 		panel.add(cancel);
 		
 		container.add(panel);
 		
 	}
 	
-	public boolean isDeleted() {
-		return this.deleted;
+	public JButton get_generated_button() {
+		JButton jButton = new JButton("Edit");
+		jButton.setName(constant_name);
+		jButton.setSize(50,30);
+		return jButton;
+	}
+	
+	public JLabel get_generated_label() {
+		JLabel jLabel = new JLabel(constant_name);
+		jLabel.setName(constant_name);
+		jLabel.setSize(90, 40);
+		return jLabel;
+	}
+	
+	public boolean isCreated() {
+		return this.added;
 	}
 }
