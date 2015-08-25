@@ -83,6 +83,10 @@ public class Memory extends Scope {
 		return result;
 	}
 
+	/**
+	 * function added
+	 * @param constant_name
+	 */
 	public void deleteConstant(String constant_name) {
 		for (Parameter parameter : parameters.values()) {
 			if (parameter instanceof Constant) {
@@ -93,6 +97,19 @@ public class Memory extends Scope {
 			}
 		}
 	}
+	
+	public void deleteViable(String variable_name) {
+		for (Parameter parameter : parameters.values()) {
+			if (parameter instanceof Variable) {
+				if (parameter.getName().compareToIgnoreCase(variable_name)==0) {
+					parameters.remove(variable_name);
+					break;
+				}
+			}
+		}
+	}
+	// end of added functions----------------------------------------------------
+	
 	
 	/**
 	 * Returns the set of Variables in this Memory.  A convenience, to extract
