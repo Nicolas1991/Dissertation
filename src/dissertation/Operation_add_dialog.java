@@ -225,4 +225,6 @@ public class Operation_add_dialog extends JDialog{
 		
 		return result;
 	}
+	
+	
 }

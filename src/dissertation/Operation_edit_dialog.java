@@ -21,6 +21,7 @@ public class Operation_edit_dialog extends JDialog{
 	 * Dialog window for Operation creation
 	 * @author zhangyan
 	 */
+	private Operation operation;
 	
     private Map<String,JButton> buttons_input = new HashMap<String,JButton>();
     private Map<String,Input> inputs = new HashMap<String,Input>();
@@ -39,8 +40,9 @@ public class Operation_edit_dialog extends JDialog{
 	private JPanel jPanel_input;
 	private JButton add_input;
 	
-	public Operation_edit_dialog(String operation_name){
+	public Operation_edit_dialog(String operation_name,Operation operation){
 		super();
+		this.operation = operation;
 		deleted = false;
 		modified = false;
 		this.operation_name = operation_name;
@@ -165,6 +167,8 @@ public class Operation_edit_dialog extends JDialog{
 		
 		container.add(panel);
 		
+		reload_input_panel();
+		
 	}
 	
 	
@@ -190,6 +194,10 @@ public class Operation_edit_dialog extends JDialog{
 	
 	public boolean isDeleted() {
 		return this.deleted;
+	}
+	
+	private void load_input_panel(){
+		
 	}
 	
 	private void reload_input_panel(){

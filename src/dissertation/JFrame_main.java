@@ -522,8 +522,10 @@ public class JFrame_main extends javax.swing.JFrame {
     	String operation_name = ((JButton)evt.getSource()).getName();
     	
     	// pop up edit dialog window
-    	Operation_edit_dialog operation_edit_dialog = new Operation_edit_dialog(operation_name);
-    	operation_edit_dialog.setLocationRelativeTo((JButton)evt.getSource());
+    	Operation_edit_dialog operation_edit_dialog = new Operation_edit_dialog(
+    			operation_name,
+    			operations.get(operation_name));
+    	operation_edit_dialog.setLocationRelativeTo(null);
     	operation_edit_dialog.setVisible(true);
         
 		if (operation_edit_dialog.isDeleted()) {
