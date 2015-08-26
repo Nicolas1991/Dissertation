@@ -115,6 +115,7 @@ public class Input_edit_dialog extends JDialog{
 		panel.add(type_input);
 		panel.add(ok);
 		panel.add(cancel);
+		panel.add(delete);
 		
 		container.add(panel);
 		

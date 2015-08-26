@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import uk.ac.sheffield.vtts.model.Input;
 import uk.ac.sheffield.vtts.model.Operation;
 
 public class Operation_add_dialog extends JDialog{
@@ -25,10 +26,9 @@ public class Operation_add_dialog extends JDialog{
 	 */
 	
     private Map<String,JButton> buttons_input = new HashMap<String,JButton>();
-	//private List<JLabel> labels_input = new LinkedList<JLabel>();
+    private Map<String,Input> inputs = new HashMap<String,Input>();
 	
 	private static final long serialVersionUID = 1L;
-	private Operation operation;
 	private JTextField name_input;
 	private JLabel nameJLabel;
 	private JButton ok;
@@ -42,7 +42,6 @@ public class Operation_add_dialog extends JDialog{
 	
 	public Operation_add_dialog(){
 		super();
-		operation = new Operation();
 		this.operation_name = "";
 		name_input = new JTextField();
 		nameJLabel = new JLabel("Name:");
@@ -111,7 +110,7 @@ public class Operation_add_dialog extends JDialog{
 				input_add_dialog.setVisible(true);
 				
 				if (input_add_dialog.isCreated()) {
-					operation.addParameter(input_add_dialog.getInput());
+					//operation.addParameter(input_add_dialog.getInput());
 					// add a button to input panel for editing
 					if (!buttons_input.containsKey(input_add_dialog.getInput().getName())) {
 						System.out.println("not included");
@@ -127,6 +126,7 @@ public class Operation_add_dialog extends JDialog{
 						buttons_input.put(
 								input_add_dialog.getInput().getName(),
 								jButton);
+						inputs.put(input_add_dialog.getInput().getName(), input_add_dialog.getInput());
 						reload_input_panel();
 					}
 					
@@ -200,16 +200,27 @@ public class Operation_add_dialog extends JDialog{
 		// actions------------------------------------------------------
 		// modify model
 		if (input_edit_dialog.isModified()) {
-			buttons_input.replace(input_edit_dialog.getInput().getName(), input_edit_dialog.get_generated_button());
-			operation.deleteInput(input_edit_dialog.getInput().getName());
-			operation.addParameter(input_edit_dialog.getInput());
+			Input input = input_edit_dialog.getInput();
+			inputs.replace(input_name, input);
 			reload_input_panel();
 		}
 		// delete model
 		if (input_edit_dialog.isDeleted()) {
-			buttons_input.replace(input_edit_dialog.getInput().getName(), input_edit_dialog.get_generated_button());
-			operation.deleteInput(input_edit_dialog.getInput().getName());
+			buttons_input.remove(input_name);
+			inputs.remove(input_name);
 			reload_input_panel();
 		}
+	}
+	
+	public Operation getOperation() {
+		Operation result = new Operation(name_input.getText());
+		
+		Set<String> keySet = inputs.keySet();
+		for (String keyString : keySet) {
+			Input input = inputs.get(keyString);
+			result.addParameter(input);		
+		}
+		
+		return result;
 	}
 }
