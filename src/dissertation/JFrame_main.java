@@ -36,6 +36,7 @@ public class JFrame_main extends javax.swing.JFrame {
      */
     public JFrame_main() {
         initComponents();
+        setLocationRelativeTo(null);
         protocol.addMemory(new Memory());
     }
 

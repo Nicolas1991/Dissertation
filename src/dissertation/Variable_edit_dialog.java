@@ -8,8 +8,9 @@ import java.util.Set;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 import uk.ac.sheffield.vtts.model.Variable;
 import uk.ac.sheffield.vtts.model.Memory;
 
@@ -23,7 +24,7 @@ public class Variable_edit_dialog extends JDialog{
 	private JLabel name_input;
 	private JLabel nameJLabel;
 	private JLabel typeJLabel;
-	private JMenu typeJMenu;
+	private JTextField type_input;
 	private JButton delete;
 	private JButton ok;
 	private JButton cancel;
@@ -38,7 +39,7 @@ public class Variable_edit_dialog extends JDialog{
 		name_input = new JLabel(variable_name);
 		nameJLabel = new JLabel("Name:");
 		typeJLabel = new JLabel("Type:");
-		typeJMenu = new JMenu();
+		type_input = new JTextField();
 		variable = new Variable();
 		delete = new JButton("Delete");
 		ok = new JButton("OK");
@@ -58,7 +59,7 @@ public class Variable_edit_dialog extends JDialog{
 		nameJLabel.setSize(40,16);
 		typeJLabel.setSize(40,16);
 		name_input.setSize(150,28);
-		typeJMenu.setSize(100, 20);
+		type_input.setSize(100, 28);
 		ok.setSize(75, 30);
 		delete.setSize(75, 30);
 		cancel.setSize(75, 30);
@@ -66,7 +67,7 @@ public class Variable_edit_dialog extends JDialog{
 		nameJLabel.setLocation(40,30);
 		typeJLabel.setLocation(40,90);
 		name_input.setLocation(150,30);
-		typeJMenu.setLocation(150,90);
+		type_input.setLocation(150,90);
 		ok.setLocation(250, 220);
 		delete.setLocation(50, 220);
 		cancel.setLocation(150, 220);
@@ -78,9 +79,8 @@ public class Variable_edit_dialog extends JDialog{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				variable.setName(variable_name);
-				variable.setType(typeJMenu.getText());
+				variable.setType(type_input.getText());
 				memory.addParameter(variable);
-				//System.out.println(memory.getParameter(name_input.getText()));
 				dispose();
 			}
 		});
@@ -117,7 +117,7 @@ public class Variable_edit_dialog extends JDialog{
 		panel.add(nameJLabel);
 		panel.add(typeJLabel);
 		panel.add(name_input);
-		panel.add(typeJMenu);
+		panel.add(type_input);
 		panel.add(ok);
 		panel.add(delete);
 		panel.add(cancel);

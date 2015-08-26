@@ -22,7 +22,7 @@ public class Constant_add_dialog extends JDialog{
 	private JLabel nameJLabel;
 	private JLabel typeJLabel;
 	private JLabel valueJLabel;
-	private JTextField typeJMenu;
+	private JTextField type_input;
 	private JButton ok;
 	private JButton cancel;
 	private String constant_name;
@@ -37,7 +37,7 @@ public class Constant_add_dialog extends JDialog{
 		nameJLabel = new JLabel("Name:");
 		typeJLabel = new JLabel("Type:");
 		valueJLabel = new JLabel("Value:");
-		typeJMenu = new JTextField();
+		type_input = new JTextField();
 		constant = new Constant();
 		ok = new JButton("OK");
 		cancel = new JButton("Cancel");
@@ -59,7 +59,7 @@ public class Constant_add_dialog extends JDialog{
 		valueJLabel.setSize(40,16);
 		name_input.setSize(150,28);
 		value_input.setSize(150, 28);
-		typeJMenu.setSize(100, 20);
+		type_input.setSize(100, 28);
 		ok.setSize(75, 30);
 		cancel.setSize(75, 30);
 		
@@ -67,7 +67,7 @@ public class Constant_add_dialog extends JDialog{
 		typeJLabel.setLocation(40,90);
 		valueJLabel.setLocation(40,150);
 		name_input.setLocation(150,30);
-		typeJMenu.setLocation(150,90);
+		type_input.setLocation(150,90);
 		value_input.setLocation(150,150);
 		ok.setLocation(250, 220);
 		cancel.setLocation(150, 220);
@@ -78,14 +78,35 @@ public class Constant_add_dialog extends JDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				constant_name = name_input.getText();
-				constant.setName(name_input.getText());
-				constant.setType(typeJMenu.getText());
-				constant.setContent(value_input.getText());
-				memory.addParameter(constant);
-				added = true;
-				//System.out.println(memory.getParameter(name_input.getText()));
-				dispose();
+				
+				// type check
+				boolean flag = true;
+				try {
+					String name = name_input.getText();
+					String type = type_input.getText();
+					Constant constant = new Constant(name, type);
+					System.out.println(constant.evaluate());
+				} catch (Exception e2) {
+					// TODO: pop up error window
+					System.out.println("Constant type error");
+					flag = false;
+
+				}
+				if (flag) {
+					constant_name = name_input.getText();
+					constant.setName(name_input.getText());
+					constant.setType(type_input.getText());
+					constant.setContent(value_input.getText());
+					memory.addParameter(constant);
+					added = true;
+					//System.out.println(memory.getParameter(name_input.getText()));
+					dispose();
+				}
+				else {
+					Warning_dialog.showWarning("This data type can't be evaluated.");
+				}
+				
+				
 			}
 		});
 		
@@ -106,7 +127,7 @@ public class Constant_add_dialog extends JDialog{
 		panel.add(valueJLabel);
 		panel.add(name_input);
 		panel.add(value_input);
-		panel.add(typeJMenu);
+		panel.add(type_input);
 		panel.add(ok);
 		panel.add(cancel);
 		

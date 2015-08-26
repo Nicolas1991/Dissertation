@@ -4,6 +4,9 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -12,13 +15,20 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import uk.ac.sheffield.vtts.model.Operation;
+
 public class Operation_add_dialog extends JDialog{
 
 	/**
 	 * Dialog window for Operation creation
 	 * @author zhangyan
 	 */
+	
+    private Map<String,JButton> buttons_input = new HashMap<String,JButton>();
+	//private List<JLabel> labels_input = new LinkedList<JLabel>();
+	
 	private static final long serialVersionUID = 1L;
+	private Operation operation;
 	private JTextField name_input;
 	private JLabel nameJLabel;
 	private JButton ok;
@@ -32,6 +42,7 @@ public class Operation_add_dialog extends JDialog{
 	
 	public Operation_add_dialog(){
 		super();
+		operation = new Operation();
 		this.operation_name = "";
 		name_input = new JTextField();
 		nameJLabel = new JLabel("Name:");
@@ -96,8 +107,22 @@ public class Operation_add_dialog extends JDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
-				
+				Input_add_dialog input_add_dialog = new Input_add_dialog();
+				input_add_dialog.setVisible(true);
+				if (input_add_dialog.isCreated()) {
+					operation.addParameter(input_add_dialog.getInput());
+					// add a button to input panel for editing
+					if (!buttons_input.containsKey(input_add_dialog.getInput().getName())) {
+						System.out.println("not included");
+						buttons_input.put(
+								input_add_dialog.getInput().getName(),
+								input_add_dialog.get_generated_button());
+						reload_input_panel();
+					}
+					
+					
+				}
+				System.out.println(operation.getInputs());
 			}
 		});
 		
@@ -134,5 +159,24 @@ public class Operation_add_dialog extends JDialog{
 		return this.added;
 	}
 	
+	private void reload_input_panel(){
+    	
+    	int init_y_position = 10;
+    	jPanel_input.removeAll();
+    	Set<String> keys = buttons_input.keySet();
+    	for (String input_name : keys) {
+			JButton jButton = buttons_input.get(input_name);
+			jButton.setLocation(100, init_y_position);
+			jPanel_input.add(jButton);
+    		init_y_position = init_y_position+70;
+		}
+    	
+    	
+    	jPanel_input.setPreferredSize(
+    			new Dimension(jPanel_input.getWidth(), jPanel_input.getHeight()+init_y_position));
+    	jPanel_input.revalidate();
+    	validate();
+    	repaint();
+    }
 	
 }

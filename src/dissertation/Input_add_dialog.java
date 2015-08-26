@@ -9,9 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import uk.ac.sheffield.vtts.model.Constant;
 import uk.ac.sheffield.vtts.model.Input;
-import uk.ac.sheffield.vtts.model.Memory;
 
 public class Input_add_dialog extends JDialog{
 
@@ -21,26 +19,22 @@ public class Input_add_dialog extends JDialog{
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField name_input;
-	private JTextField value_input;
 	private JLabel nameJLabel;
 	private JLabel typeJLabel;
-	private JLabel valueJLabel;
-	private JTextField typeJMenu;
+	private JTextField type_input;
 	private JButton ok;
 	private JButton cancel;
-	private String constant_name;
+	private String input_name;
 	private boolean added = false;
 	private Input input;
 
 	public Input_add_dialog(){
 		super();
-		this.constant_name = "";
+		this.input_name = "";
 		name_input = new JTextField();
-		value_input = new JTextField();
 		nameJLabel = new JLabel("Name:");
 		typeJLabel = new JLabel("Type:");
-		valueJLabel = new JLabel("Value:");
-		typeJMenu = new JTextField();
+		type_input = new JTextField();
 		input = new Input();
 		ok = new JButton("OK");
 		cancel = new JButton("Cancel");
@@ -59,19 +53,15 @@ public class Input_add_dialog extends JDialog{
 		panel.setLayout(null);
 		nameJLabel.setSize(40,16);
 		typeJLabel.setSize(40,16);
-		valueJLabel.setSize(40,16);
 		name_input.setSize(150,28);
-		value_input.setSize(150, 28);
-		typeJMenu.setSize(100, 20);
+		type_input.setSize(100, 28);
 		ok.setSize(75, 30);
 		cancel.setSize(75, 30);
 		
 		nameJLabel.setLocation(40,30);
 		typeJLabel.setLocation(40,90);
-		valueJLabel.setLocation(40,150);
 		name_input.setLocation(150,30);
-		typeJMenu.setLocation(150,90);
-		value_input.setLocation(150,150);
+		type_input.setLocation(150,90);
 		ok.setLocation(250, 220);
 		cancel.setLocation(150, 220);
 		
@@ -81,12 +71,23 @@ public class Input_add_dialog extends JDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				constant_name = name_input.getText();
+//				boolean flag = true;
+//				while (flag) {
+//					try {
+//						String name = name_input.getText();
+//						String type = type_input.getText();
+//						Input input = new Input(name, type);
+//						System.out.println(input.evaluate());
+//						flag = false;
+//					} catch (Exception e2) {
+//						// TODO: pop up error window
+//						System.out.println("input type error");
+//					}
+//				}
+				input_name = name_input.getText();
 				input.setName(name_input.getText());
-				input.setType(typeJMenu.getText());
-				input.setContent(value_input.getText());
+				input.setType(type_input.getText());
 				added = true;
-				//System.out.println(memory.getParameter(name_input.getText()));
 				dispose();
 			}
 		});
@@ -105,10 +106,8 @@ public class Input_add_dialog extends JDialog{
 
 		panel.add(nameJLabel);
 		panel.add(typeJLabel);
-		panel.add(valueJLabel);
 		panel.add(name_input);
-		panel.add(value_input);
-		panel.add(typeJMenu);
+		panel.add(type_input);
 		panel.add(ok);
 		panel.add(cancel);
 		
@@ -118,19 +117,24 @@ public class Input_add_dialog extends JDialog{
 	
 	public JButton get_generated_button() {
 		JButton jButton = new JButton("Edit");
-		jButton.setName(constant_name);
+		jButton.setName(input_name);
 		jButton.setSize(50,30);
+		jButton.setText(input_name);
 		return jButton;
 	}
 	
 	public JLabel get_generated_label() {
-		JLabel jLabel = new JLabel(constant_name);
-		jLabel.setName(constant_name);
+		JLabel jLabel = new JLabel(input_name);
+		jLabel.setName(input_name);
 		jLabel.setSize(90, 40);
 		return jLabel;
 	}
 	
 	public boolean isCreated() {
 		return this.added;
+	}
+	
+	public Input getInput() {
+		return this.input;
 	}
 }
