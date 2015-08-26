@@ -109,20 +109,30 @@ public class Operation_add_dialog extends JDialog{
 				// TODO Auto-generated method stub
 				Input_add_dialog input_add_dialog = new Input_add_dialog();
 				input_add_dialog.setVisible(true);
+				
 				if (input_add_dialog.isCreated()) {
 					operation.addParameter(input_add_dialog.getInput());
 					// add a button to input panel for editing
 					if (!buttons_input.containsKey(input_add_dialog.getInput().getName())) {
 						System.out.println("not included");
+						JButton jButton = input_add_dialog.get_generated_button();
+						jButton.addActionListener(new ActionListener() {
+							
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								modify_input(e);
+								
+							}
+						});
 						buttons_input.put(
 								input_add_dialog.getInput().getName(),
-								input_add_dialog.get_generated_button());
+								jButton);
 						reload_input_panel();
 					}
 					
 					
 				}
-				System.out.println(operation.getInputs());
+				//System.out.println(operation.getInputs());
 			}
 		});
 		
@@ -140,6 +150,8 @@ public class Operation_add_dialog extends JDialog{
 		container.add(panel);
 		
 	}
+	
+	
 	
 	public JButton get_generated_button() {
 		JButton jButton = new JButton("Edit");
@@ -179,4 +191,25 @@ public class Operation_add_dialog extends JDialog{
     	repaint();
     }
 	
+	private void modify_input(java.awt.event.ActionEvent evt){
+		System.out.println("---");
+		String input_name = ((JButton)evt.getSource()).getName();
+		Input_edit_dialog input_edit_dialog = new Input_edit_dialog(input_name);
+		input_edit_dialog.setLocationRelativeTo(null);
+		input_edit_dialog.setVisible(true);
+		// actions------------------------------------------------------
+		// modify model
+		if (input_edit_dialog.isModified()) {
+			buttons_input.replace(input_edit_dialog.getInput().getName(), input_edit_dialog.get_generated_button());
+			operation.deleteInput(input_edit_dialog.getInput().getName());
+			operation.addParameter(input_edit_dialog.getInput());
+			reload_input_panel();
+		}
+		// delete model
+		if (input_edit_dialog.isDeleted()) {
+			buttons_input.replace(input_edit_dialog.getInput().getName(), input_edit_dialog.get_generated_button());
+			operation.deleteInput(input_edit_dialog.getInput().getName());
+			reload_input_panel();
+		}
+	}
 }

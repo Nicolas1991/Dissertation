@@ -91,7 +91,7 @@ public class Memory extends Scope {
 		for (Parameter parameter : parameters.values()) {
 			if (parameter instanceof Constant) {
 				if (parameter.getName().compareToIgnoreCase(constant_name)==0) {
-					parameters.remove(constant_name);
+					parameters.remove(parameter);
 					break;
 				}
 			}
@@ -102,7 +102,7 @@ public class Memory extends Scope {
 		for (Parameter parameter : parameters.values()) {
 			if (parameter instanceof Variable) {
 				if (parameter.getName().compareToIgnoreCase(variable_name)==0) {
-					parameters.remove(variable_name);
+					parameters.remove(parameter);
 					break;
 				}
 			}

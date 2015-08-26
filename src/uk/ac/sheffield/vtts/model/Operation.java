@@ -116,6 +116,19 @@ public class Operation extends Scope {
 		return result;
 	}
 	
+	public void deleteInput(String input_name) {
+		for (Parameter parameter : parameters.values()) {
+			
+			if (parameter instanceof Input) {
+				if (parameter.getName().compareToIgnoreCase(input_name)==0) {
+					parameters.remove(parameter);
+					break;
+				}
+				
+			}
+		}
+	}
+	
 	/**
 	 * Returns the set of Outputs in this Operation.  A convenience, to extract
 	 * those Parameters from the Scope which are Outputs.
