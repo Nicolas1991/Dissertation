@@ -8,13 +8,17 @@ package dissertation;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+
+import org.jast.ast.ASTWriter;
 
 import uk.ac.sheffield.vtts.model.Memory;
 import uk.ac.sheffield.vtts.model.Operation;
@@ -340,8 +344,22 @@ public class JFrame_main extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.protocol = new Protocol(protocol_name);
         protocol.addMemory(memory);
-        //protocol.addOperation()
+        Set<String> keySet = operations.keySet();
+        for (String key : keySet) {
+			Operation operation = operations.get(key);
+	        protocol.addOperation(operation);
+		}
 
+        try {
+        	
+    		File xFile = new File("/Users/zhangyan/Documents/workspace/ADissertation/src/test/1.xml");
+    		ASTWriter writer = new ASTWriter(xFile);
+    		writer.writeDocument(protocol);
+    		writer.close();
+    	} catch (Exception e) {
+    		// TODO: handle exception
+    		System.out.println("Protocol Object Error");
+    	}
      
     }                                                   
 
