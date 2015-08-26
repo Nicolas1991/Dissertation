@@ -19,10 +19,11 @@ public class Expression_builder {
 			// preprocess for deleting redundant spaces and ignore upper case
 			String rawExpression = q.toLowerCase().trim();     
 			
-			//************************ equal expression builder *********************************/
+			
+			//*****************************Assignments***********************************/
+			// equal expression builder 
 			if (rawExpression.matches("[a-z0-9]+=[a-z0-9]+")) {
 				Assignment assignment = new Assignment("equals");
-				
 				String[] paras = rawExpression.split("=");
 				for (String para : paras) {
 					Function equal = Expression_builder.parse(para);
@@ -34,43 +35,37 @@ public class Expression_builder {
 				throw new NullPointerException();
 			}
 			
-			//************************ and query builder *********************************/
-			else if(rawExpression.startsWith(AND)){
-				ArrayList<Function> andQ = new ArrayList<Function>();
+			// moreThan expression builder 
+			else if(rawExpression.matches("[a-z0-9]+>[a-z0-9]+")){
 				
-				int first = rawExpression.indexOf("(");
-				int last = rawExpression.lastIndexOf(")");
-				if (first>-1&&last>-1) {
-					String processedExpression = rawExpression.substring(first+1, last);
-					ArrayList<String> subqueries = Expression_builder.mySplit(processedExpression);
-					for (String query : subqueries) {
-						Function subQ = Expression_builder.parse(query);
-						andQ.add(subQ);
-					}
-					return new AndQuery(andQ);
+				Assignment assignment = new Assignment("moreThan");
+				String[] paras = rawExpression.split(">");
+				for (String para : paras) {
+					Function equal = Expression_builder.parse(para);
+					assignment.addExpression(equal);
 				}
+				return assignment;
+				
 				
 				throw new NullPointerException();
 			}
 			
-			//************************ or query builder *********************************/
-			else if(rawExpression.startsWith(OR)){
-				ArrayList<Function> orQ = new ArrayList<Function>();
-				int first = rawExpression.indexOf("(");
-				int last = rawExpression.lastIndexOf(")");
-				if (first>-1&&last>-1) {
-					String processedExpression = rawExpression.substring(first+1, last);
-					ArrayList<String> subqueries = Expression_builder.mySplit(processedExpression);
-					for (String query : subqueries) {
-						Function subQ = Expression_builder.parse(query);
-						orQ.add(subQ);
-					}
-					return new OrQuery(orQ);
+			// lessThan expression builder
+			else if(rawExpression.matches("[a-z0-9]+<[a-z0-9]+")){
+				
+				Assignment assignment = new Assignment("lessThan");
+				String[] paras = rawExpression.split("<");
+				for (String para : paras) {
+					Function equal = Expression_builder.parse(para);
+					assignment.addExpression(equal);
 				}
+				return assignment;
+				
+				
 				throw new NullPointerException();
 			}
 			
-			//************************ atomic expression builder *********************************/
+			//************** atomic expression builder ******************************/
 			else if(rawExpression.matches("[a-z]+")){
 				return new AtomicQuery(rawExpression);
 			}

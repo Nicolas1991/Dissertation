@@ -87,6 +87,7 @@ public class Operation_add_dialog extends JDialog{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				added = true;
+				operation_name = name_input.getText();
 				dispose();
 				
 			}
@@ -154,9 +155,9 @@ public class Operation_add_dialog extends JDialog{
 	
 	
 	public JButton get_generated_button() {
-		JButton jButton = new JButton("Edit");
+		JButton jButton = new JButton();
 		jButton.setName(operation_name);
-		jButton.setSize(100,30);
+		jButton.setSize(300,30);
 		jButton.setText("Operation: "+operation_name);
 		return jButton;
 	}

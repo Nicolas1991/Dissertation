@@ -30,6 +30,7 @@ public class Operation_edit_dialog extends JDialog{
 	private JLabel nameJLabel;
 	private JButton ok;
 	private JButton cancel;
+	private JButton delete;
 	private String operation_name;
 	private boolean deleted = false;
 	private boolean modified = false;
@@ -40,6 +41,8 @@ public class Operation_edit_dialog extends JDialog{
 	
 	public Operation_edit_dialog(String operation_name){
 		super();
+		deleted = false;
+		modified = false;
 		this.operation_name = operation_name;
 		name_input = new JLabel(operation_name);
 		nameJLabel = new JLabel("Name:");
@@ -47,6 +50,7 @@ public class Operation_edit_dialog extends JDialog{
 		jPanel_input = new JPanel();
 		ok = new JButton("OK");
 		cancel = new JButton("Cancel");
+		delete = new JButton("Delete");
 		add_input = new JButton("Add Input");
 		init();
 		setModal(true);
@@ -64,6 +68,7 @@ public class Operation_edit_dialog extends JDialog{
 		nameJLabel.setSize(40,16);
 		name_input.setSize(150,28);
 		ok.setSize(75, 30);
+		delete.setSize(75, 30);
 		cancel.setSize(75, 30);
 		add_input.setSize(120, 30);
 		jScrollPane_input.setSize(200, 100);
@@ -74,6 +79,7 @@ public class Operation_edit_dialog extends JDialog{
 		name_input.setLocation(100,30);
 		ok.setLocation(700, 500);
 		cancel.setLocation(700, 450);
+		delete.setLocation(700, 400);
 		add_input.setLocation(95, 200);
 		jScrollPane_input.setLocation(50, 100);
 
@@ -84,7 +90,7 @@ public class Operation_edit_dialog extends JDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				deleted = true;
+				modified = true;
 				dispose();
 				
 			}
@@ -98,6 +104,17 @@ public class Operation_edit_dialog extends JDialog{
 				dispose();
 			}
 		});
+		
+		delete.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				deleted = true;
+				dispose();
+			}
+		});
+		
 		
 		add_input.addActionListener(new ActionListener() {
 			
@@ -143,6 +160,7 @@ public class Operation_edit_dialog extends JDialog{
 		panel.add(name_input);
 		panel.add(ok);
 		panel.add(cancel);
+		panel.add(delete);
 		panel.add(add_input);
 		
 		container.add(panel);
@@ -164,6 +182,10 @@ public class Operation_edit_dialog extends JDialog{
 		jLabel.setName(operation_name);
 		jLabel.setSize(90, 40);
 		return jLabel;
+	}
+	
+	public boolean isModified() {
+		return this.modified;
 	}
 	
 	public boolean isDeleted() {

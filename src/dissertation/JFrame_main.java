@@ -8,13 +8,16 @@ package dissertation;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
 import uk.ac.sheffield.vtts.model.Memory;
+import uk.ac.sheffield.vtts.model.Operation;
 import uk.ac.sheffield.vtts.model.Protocol;
 
 
@@ -31,6 +34,10 @@ public class JFrame_main extends javax.swing.JFrame {
     
     private List<JButton> buttons_variable = new LinkedList<JButton>();
     private List<JLabel> labels_variable = new LinkedList<JLabel>();
+    
+    private List<JButton> buttons_operation = new LinkedList<JButton>();
+    private Map<String, Operation> operations = new HashMap<String, Operation>();
+    
     private String protocol_name = "";
     /**
      * Creates new form NewJFrame
@@ -373,12 +380,27 @@ public class JFrame_main extends javax.swing.JFrame {
     private void jButton_add_operationActionPerformed(java.awt.event.ActionEvent evt) {                                                      
         // TODO add your handling code here:
         Operation_add_dialog operation_add_dialog = new Operation_add_dialog();
+        operation_add_dialog.setLocationRelativeTo(null);
         operation_add_dialog.setVisible(true);
+        
+        if (operation_add_dialog.isCreated()) {
+			
+        	JButton jButton = operation_add_dialog.get_generated_button();
+        	jButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					jButton_added_edit_operationActionPerformed(e);
+				}
+			});
+        	buttons_operation.add(jButton);
+        	operations.put(jButton.getName(), operation_add_dialog.getOperation());
+        	
+        	reload_operation_panel();
+		}
+        
     }                                                     
-
-    private void jButton_importActionPerformed(java.awt.event.ActionEvent evt) {                                               
-        // TODO add your handling code here:
-    }                                              
 
     private void jButton_add_memoryBindingActionPerformed(java.awt.event.ActionEvent evt) {                                                          
         // TODO add your handling code here:
@@ -404,8 +426,18 @@ public class JFrame_main extends javax.swing.JFrame {
     	this.labels_variable.add(jLabel);
     	
     	reload_variable_panel();
-    }                                                    
+    }
+    
+    private void jButton_importActionPerformed(java.awt.event.ActionEvent evt) {                                               
+        // TODO add your handling code here:
+    }                                              
 
+    
+                                                        
+    /**
+     * Added button listeners
+     * @param evt
+     */
     private void jButton_added_edit_constantActionPerformed(java.awt.event.ActionEvent evt) {                                                            
         // TODO add your handling code here:
     	String constant_name = ((JButton)evt.getSource()).getName();
@@ -467,6 +499,34 @@ public class JFrame_main extends javax.swing.JFrame {
         reload_variable_panel();
 	}
     
+    private void jButton_added_edit_operationActionPerformed(java.awt.event.ActionEvent evt) {
+    	
+    	String operation_name = ((JButton)evt.getSource()).getName();
+    	
+    	// pop up edit dialog window
+    	Operation_edit_dialog operation_edit_dialog = new Operation_edit_dialog(operation_name);
+    	operation_edit_dialog.setLocationRelativeTo((JButton)evt.getSource());
+    	operation_edit_dialog.setVisible(true);
+        
+		if (operation_edit_dialog.isDeleted()) {
+			System.out.println("--deleting operation--");
+			for (JButton jButton : buttons_operation) {
+				if (jButton.getName().compareToIgnoreCase(operation_name)==0) {
+					buttons_operation.remove(jButton);
+					operations.remove(jButton.getName());
+					break;
+				}
+			}
+		}
+		
+		if (operation_edit_dialog.isModified()) {
+			System.out.println("--modifying operation--");
+			operations.replace(operation_edit_dialog.getOperation().getName(), operation_edit_dialog.getOperation());
+		}
+        
+        System.out.println("finished editing operation.");
+        reload_operation_panel();
+	}
     // model modifiers======================================================================
     private void reload_constant_panel(){
     	
@@ -507,11 +567,33 @@ public class JFrame_main extends javax.swing.JFrame {
     		init_y_position = init_y_position+70;
 		}
     	jPanel_variable.setPreferredSize(
-    			new Dimension(jPanel_constant.getWidth(), jPanel_variable.getHeight()+init_y_position));
+    			new Dimension(jPanel_variable.getWidth(), jPanel_variable.getHeight()+init_y_position));
     	jPanel_variable.revalidate();
     	validate();
     	repaint();
-    	System.out.println(buttons_constant.size());
+    	System.out.println(buttons_variable.size());
+	}
+    
+    private void reload_operation_panel() {
+    	
+    	//jScrollPane_operation.setSize(width, height);
+    	jScrollPane_operation.setViewportView(jPanel_operation);
+    	
+    	int init_y_position = 10;
+    	jPanel_operation.removeAll();
+    	for (JButton jButton : buttons_operation) {
+			jButton.setLocation(50, init_y_position);
+			jPanel_operation.add(jButton);
+    		init_y_position = init_y_position+30;
+		}
+    	init_y_position = 10;
+    	
+    	jPanel_operation.setPreferredSize(
+    			new Dimension(jPanel_operation.getWidth(), jPanel_operation.getHeight()+init_y_position));
+    	jPanel_operation.revalidate();
+    	validate();
+    	repaint();
+    	System.out.println(buttons_operation.size());
 	}
     
     
