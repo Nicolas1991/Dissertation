@@ -1,5 +1,4 @@
 package dissertation;
-
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -13,12 +12,10 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-
 import uk.ac.sheffield.vtts.model.Input;
 import uk.ac.sheffield.vtts.model.Operation;
 
-public class Operation_add_dialog extends JDialog{
+public class Operation_edit_dialog extends JDialog{
 
 	/**
 	 * Dialog window for Operation creation
@@ -29,21 +26,22 @@ public class Operation_add_dialog extends JDialog{
     private Map<String,Input> inputs = new HashMap<String,Input>();
 	
 	private static final long serialVersionUID = 1L;
-	private JTextField name_input;
+	private JLabel name_input;
 	private JLabel nameJLabel;
 	private JButton ok;
 	private JButton cancel;
 	private String operation_name;
-	private boolean added = false;
+	private boolean deleted = false;
+	private boolean modified = false;
 
 	private JScrollPane jScrollPane_input;
 	private JPanel jPanel_input;
 	private JButton add_input;
 	
-	public Operation_add_dialog(){
+	public Operation_edit_dialog(String operation_name){
 		super();
-		this.operation_name = "";
-		name_input = new JTextField();
+		this.operation_name = operation_name;
+		name_input = new JLabel(operation_name);
 		nameJLabel = new JLabel("Name:");
 		jScrollPane_input = new JScrollPane();
 		jPanel_input = new JPanel();
@@ -86,7 +84,7 @@ public class Operation_add_dialog extends JDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				added = true;
+				deleted = true;
 				dispose();
 				
 			}
@@ -168,8 +166,8 @@ public class Operation_add_dialog extends JDialog{
 		return jLabel;
 	}
 	
-	public boolean isCreated() {
-		return this.added;
+	public boolean isDeleted() {
+		return this.deleted;
 	}
 	
 	private void reload_input_panel(){

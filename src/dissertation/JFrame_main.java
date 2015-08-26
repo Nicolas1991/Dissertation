@@ -31,6 +31,7 @@ public class JFrame_main extends javax.swing.JFrame {
     
     private List<JButton> buttons_variable = new LinkedList<JButton>();
     private List<JLabel> labels_variable = new LinkedList<JLabel>();
+    private String protocol_name = "";
     /**
      * Creates new form NewJFrame
      */
@@ -330,12 +331,16 @@ public class JFrame_main extends javax.swing.JFrame {
 
     private void jButton_GenerateXMLActionPerformed(java.awt.event.ActionEvent evt) {                                                    
         // TODO add your handling code here:
+        this.protocol = new Protocol(protocol_name);
+        protocol.addMemory(memory);
+        //protocol.addOperation()
+
      
     }                                                   
 
     private void jTextField_protocol_nameActionPerformed(java.awt.event.ActionEvent evt) {                                                         
         // TODO add your handling code here:
-        this.protocol = new Protocol(jTextField_protocol_name.getText());
+    	protocol_name = jTextField_protocol_name.getText();
     	protocol.addMemory(memory);
     }                                                        
 
