@@ -204,44 +204,46 @@ public class Operation_edit_dialog extends JDialog{
 		});
 		
 		//add 
-				add_output.addActionListener(new ActionListener() {
-					
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
-						Output_add_dialog output_add_dialog = new Output_add_dialog();
-						output_add_dialog.setLocationRelativeTo(null);
-						output_add_dialog.setVisible(true);
-						
-						if (output_add_dialog.isCreated()) {
-							if (!buttons_output.containsKey(output_add_dialog.getOutput().getName())) {
-								System.out.println("not included");
-								JButton jButton = output_add_dialog.get_generated_button();
-								jButton.addActionListener(new ActionListener() {
-									
-									@Override
-									public void actionPerformed(ActionEvent e) {
-										modify_output(e);
-										
-									}
-								});
-								buttons_output.put(
-										output_add_dialog.getOutput().getName(),
-										jButton);
-								outputs.put(output_add_dialog.getOutput().getName(), output_add_dialog.getOutput());
-								reload_output_panel();
+		add_output.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Output_add_dialog output_add_dialog = new Output_add_dialog();
+				output_add_dialog.setLocationRelativeTo(null);
+				output_add_dialog.setVisible(true);
+				
+				if (output_add_dialog.isCreated()) {
+					if (!buttons_output.containsKey(output_add_dialog.getOutput().getName())) {
+						System.out.println("not included");
+						JButton jButton = output_add_dialog.get_generated_button();
+						jButton.addActionListener(new ActionListener() {
+							
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								modify_output(e);
+								
 							}
-							else {
-								Warning_dialog.showWarning("This Output name is occupied");
-							}
-						}
-						
+						});
+						buttons_output.put(
+								output_add_dialog.getOutput().getName(),
+								jButton);
+						outputs.put(output_add_dialog.getOutput().getName(), output_add_dialog.getOutput());
+						reload_output_panel();
 					}
-				});
+					else {
+						Warning_dialog.showWarning("This Output name is occupied");
+					}
+				}
+				
+			}
+		});
 		
 		// end of --- listeners registration=====================================================
 
 		jScrollPane_input.setViewportView(jPanel_input);
+		jScrollPane_output.setViewportView(jPanel_output);//add
+		jScrollPane_scenario.setViewportView(jPanel_scenario);//add
 		
 		panel.add(jScrollPane_input);
 		panel.add(nameJLabel);
@@ -263,11 +265,13 @@ public class Operation_edit_dialog extends JDialog{
 		container.add(panel);
 		
 		init_input_buttons();
+		init_output_buttons();
 		reload_input_panel();
+		reload_output_panel();
 		
 	}
 	/**
-	 * initializing the button of inputs
+	 * initializing buttons
 	 */
 	private void init_input_buttons() {
 		
@@ -289,15 +293,30 @@ public class Operation_edit_dialog extends JDialog{
 		}
 		
 	}
-	
-	public boolean isModified() {
-		return this.modified;
+	private void init_output_buttons() {
+		
+		Set<Output> outInputs = operation.getOutputs();
+		for (Output output : outInputs) {
+			JButton jButton = new JButton(output.getName());
+			jButton.setName(output.getName());
+			jButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					modify_output(e);
+					
+				}
+			});
+			buttons_output.put(output.getName(), jButton);
+			this.outputs.put(output.getName(), output);
+		}
+		
 	}
 	
-	public boolean isDeleted() {
-		return this.deleted;
-	}
-	
+	/**
+	 * refresh methods-------------------
+	 */
 	private void reload_input_panel(){
     	
     	int init_y_position = 10;
@@ -317,7 +336,30 @@ public class Operation_edit_dialog extends JDialog{
     	validate();
     	repaint();
     }
+
+	private void reload_output_panel(){
+    	
+    	int init_y_position = 10;
+    	jPanel_output.removeAll();
+    	Set<String> keys = buttons_output.keySet();
+    	for (String output_name : keys) {
+			JButton jButton = buttons_output.get(output_name);
+			jButton.setLocation(100, init_y_position);
+			jPanel_output.add(jButton);
+    		init_y_position = init_y_position+70;
+		}
+    	
+    	
+    	jPanel_output.setPreferredSize(
+    			new Dimension(jPanel_output.getWidth(), jPanel_output.getHeight()+init_y_position));
+    	jPanel_output.revalidate();
+    	validate();
+    	repaint();
+    }
 	
+	/**
+	 * button listener actions, for editing bottom level data
+	 */
 	private void modify_input(java.awt.event.ActionEvent evt){
 		System.out.println("---");
 		String input_name = ((JButton)evt.getSource()).getName();
@@ -360,27 +402,10 @@ public class Operation_edit_dialog extends JDialog{
 		}
 	}
 	
-	private void reload_output_panel(){
-    	
-    	int init_y_position = 10;
-    	jPanel_output.removeAll();
-    	Set<String> keys = buttons_output.keySet();
-    	for (String output_name : keys) {
-			JButton jButton = buttons_output.get(output_name);
-			jButton.setLocation(100, init_y_position);
-			jPanel_output.add(jButton);
-    		init_y_position = init_y_position+70;
-		}
-    	
-    	
-    	jPanel_output.setPreferredSize(
-    			new Dimension(jPanel_output.getWidth(), jPanel_output.getHeight()+init_y_position));
-    	jPanel_output.revalidate();
-    	validate();
-    	repaint();
-    }
-	
-	
+	/**
+	 * top level modifiers------------------
+	 * @return
+	 */
 	public Operation getOperation() {
 
 		Operation result = new Operation(name_input.getText());
@@ -389,6 +414,12 @@ public class Operation_edit_dialog extends JDialog{
 		for (String keyString : keySet) {
 			Input input = inputs.get(keyString);
 			result.addParameter(input);		
+		}
+		
+		Set<String> keySet_output = outputs.keySet();
+		for (String keyString : keySet_output) {
+			Output output = outputs.get(keyString);
+			result.addParameter(output);		
 		}
 		
 		return result;
@@ -403,9 +434,19 @@ public class Operation_edit_dialog extends JDialog{
 	}
 	
 	public JLabel get_generated_label() {
+
 		JLabel jLabel = new JLabel(operation_name);
 		jLabel.setName(operation_name);
 		jLabel.setSize(90, 40);
 		return jLabel;
 	}
+	
+	public boolean isModified() {
+		return this.modified;
+	}
+	
+	public boolean isDeleted() {
+		return this.deleted;
+	}
+	
 }
