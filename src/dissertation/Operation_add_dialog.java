@@ -49,24 +49,32 @@ public class Operation_add_dialog extends JDialog{
 	private JButton add_output;
 	private JLabel inputJLabel;
 	private JLabel outputJLabel;
+	private JScrollPane jScrollPane_scenario;
+	private JPanel jPanel_scenario;
+	private JButton add_scenario;
+	private JLabel scenarioJLabel; 
 	
 	public Operation_add_dialog(){
 		super();
 		this.operation_name = "";
 		name_input = new JTextField();
 		nameJLabel = new JLabel("Name:");
-		inputJLabel = new JLabel("Inputs:");// add
-		outputJLabel = new JLabel("Outputs:");// add
-		
 		jScrollPane_input = new JScrollPane();
 		jPanel_input = new JPanel();
 		ok = new JButton("OK");
 		cancel = new JButton("Cancel");
 		add_input = new JButton("Add Input");
 		
+		inputJLabel = new JLabel("Inputs:");// add
+		outputJLabel = new JLabel("Outputs:");// add
 		jScrollPane_output = new JScrollPane();// add
 		jPanel_output = new JPanel();
 		add_output = new JButton("Add Output");
+		
+		scenarioJLabel = new JLabel("Scenario:");// add
+		jScrollPane_scenario = new JScrollPane();// add
+		jPanel_scenario = new JPanel();
+		add_scenario = new JButton("Add Scenario");
 		
 		init();
 		setModal(true);
@@ -93,14 +101,23 @@ public class Operation_add_dialog extends JDialog{
 		
 		// add
 		add_output.setSize(120, 30);
+		add_scenario.setSize(120, 30);
 		jScrollPane_output.setSize(200, 100);
 		jPanel_output.setPreferredSize(new Dimension(150,300));
+		jScrollPane_scenario.setSize(500, 200);
+		jPanel_scenario.setPreferredSize(new Dimension(450,500));
+		
+		add_output.setLocation(395, 200);
+		add_scenario.setLocation(400, 500);
 		inputJLabel.setSize(40,16);
 		inputJLabel.setLocation(100, 70);
-		jScrollPane_output.setLocation(350, 100);
-		add_output.setLocation(395, 200);
 		outputJLabel.setSize(50, 16);
 		outputJLabel.setLocation(400, 70);
+		scenarioJLabel.setSize(100, 16);
+		scenarioJLabel.setLocation(100, 270);
+		jScrollPane_output.setLocation(350, 100);
+		jScrollPane_scenario.setLocation(70, 300);
+		
 		
 		
 		// set location
@@ -173,6 +190,8 @@ public class Operation_add_dialog extends JDialog{
 
 		jScrollPane_input.setViewportView(jPanel_input);
 		jScrollPane_output.setViewportView(jPanel_output);//add
+		jScrollPane_scenario.setViewportView(jPanel_scenario);//add
+		
 		
 		panel.add(jScrollPane_input);
 		panel.add(nameJLabel);
@@ -182,9 +201,12 @@ public class Operation_add_dialog extends JDialog{
 		panel.add(add_input);
 		
 		panel.add(inputJLabel);//add
-		panel.add(jScrollPane_output);
-		panel.add(add_output);
 		panel.add(outputJLabel);
+		panel.add(scenarioJLabel);
+		panel.add(add_output);
+		panel.add(add_scenario);
+		panel.add(jScrollPane_output);
+		panel.add(jScrollPane_scenario);
 		
 		
 		container.add(panel);
