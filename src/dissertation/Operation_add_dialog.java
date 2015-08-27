@@ -263,8 +263,6 @@ public class Operation_add_dialog extends JDialog{
 	/**
 	 * input panel modifiers--------------
 	 */
-	
-	
 	private void modify_input(java.awt.event.ActionEvent evt){
 		System.out.println("---");
 		String input_name = ((JButton)evt.getSource()).getName();
