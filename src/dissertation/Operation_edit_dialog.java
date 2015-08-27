@@ -129,7 +129,6 @@ public class Operation_edit_dialog extends JDialog{
 				input_add_dialog.setVisible(true);
 				
 				if (input_add_dialog.isCreated()) {
-					//operation.addParameter(input_add_dialog.getInput());
 					// add a button to input panel for editing
 					if (!buttons_input.containsKey(input_add_dialog.getInput().getName())) {
 						System.out.println("not included");

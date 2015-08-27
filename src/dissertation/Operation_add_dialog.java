@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import uk.ac.sheffield.vtts.model.Input;
 import uk.ac.sheffield.vtts.model.Operation;
 import uk.ac.sheffield.vtts.model.Output;
+import uk.ac.sheffield.vtts.model.Scenario;
 
 public class Operation_add_dialog extends JDialog{
 
@@ -31,6 +32,10 @@ public class Operation_add_dialog extends JDialog{
     
     private Map<String,JButton> buttons_output = new HashMap<String,JButton>();
     private Map<String,Output> outputs = new HashMap<String,Output>();
+    
+    private Map<String,JButton> buttons_scenario = new HashMap<String,JButton>();
+    private Map<String,Scenario> scenarios = new HashMap<String,Scenario>();
+	
 	
 	private static final long serialVersionUID = 1L;
 	private JTextField name_input;
@@ -56,6 +61,7 @@ public class Operation_add_dialog extends JDialog{
 	
 	public Operation_add_dialog(){
 		super();
+		setTitle("Create an operation");
 		this.operation_name = "";
 		name_input = new JTextField();
 		nameJLabel = new JLabel("Name:");
@@ -158,9 +164,9 @@ public class Operation_add_dialog extends JDialog{
 				// TODO Auto-generated method stub
 				Input_add_dialog input_add_dialog = new Input_add_dialog();
 				input_add_dialog.setVisible(true);
+				input_add_dialog.setLocationRelativeTo(null);
 				
 				if (input_add_dialog.isCreated()) {
-					//operation.addParameter(input_add_dialog.getInput());
 					// add a button to input panel for editing
 					if (!buttons_input.containsKey(input_add_dialog.getInput().getName())) {
 						System.out.println("not included");
@@ -179,13 +185,48 @@ public class Operation_add_dialog extends JDialog{
 						inputs.put(input_add_dialog.getInput().getName(), input_add_dialog.getInput());
 						reload_input_panel();
 					}
-					
-					
+					else {
+						Warning_dialog.showWarning("This Input name is occupied");
+					}
 				}
-				//System.out.println(operation.getInputs());
 			}
 		});
 		
+		//add 
+		add_output.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Output_add_dialog output_add_dialog = new Output_add_dialog();
+				output_add_dialog.setLocationRelativeTo(null);
+				output_add_dialog.setVisible(true);
+				
+				if (output_add_dialog.isCreated()) {
+					if (!buttons_output.containsKey(output_add_dialog.getOutput().getName())) {
+						System.out.println("not included");
+						JButton jButton = output_add_dialog.get_generated_button();
+						jButton.addActionListener(new ActionListener() {
+							
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								modify_output(e);
+								
+							}
+						});
+						buttons_output.put(
+								output_add_dialog.getOutput().getName(),
+								jButton);
+						outputs.put(output_add_dialog.getOutput().getName(), output_add_dialog.getOutput());
+						reload_output_panel();
+					}
+					else {
+						Warning_dialog.showWarning("This Output name is occupied");
+					}
+				}
+				
+			}
+		});
 		// end of --- listeners registration=====================================================
 
 		jScrollPane_input.setViewportView(jPanel_input);
@@ -200,7 +241,8 @@ public class Operation_add_dialog extends JDialog{
 		panel.add(cancel);
 		panel.add(add_input);
 		
-		panel.add(inputJLabel);//add
+		//add
+		panel.add(inputJLabel);
 		panel.add(outputJLabel);
 		panel.add(scenarioJLabel);
 		panel.add(add_output);
@@ -221,25 +263,7 @@ public class Operation_add_dialog extends JDialog{
 	/**
 	 * input panel modifiers--------------
 	 */
-	private void reload_input_panel(){
-    	
-    	int init_y_position = 10;
-    	jPanel_input.removeAll();
-    	Set<String> keys = buttons_input.keySet();
-    	for (String input_name : keys) {
-			JButton jButton = buttons_input.get(input_name);
-			jButton.setLocation(100, init_y_position);
-			jPanel_input.add(jButton);
-    		init_y_position = init_y_position+70;
-		}
-    	
-    	
-    	jPanel_input.setPreferredSize(
-    			new Dimension(jPanel_input.getWidth(), jPanel_input.getHeight()+init_y_position));
-    	jPanel_input.revalidate();
-    	validate();
-    	repaint();
-    }
+	
 	
 	private void modify_input(java.awt.event.ActionEvent evt){
 		System.out.println("---");
@@ -262,7 +286,66 @@ public class Operation_add_dialog extends JDialog{
 		}
 	}
 	
+	private void reload_input_panel(){
+    	
+    	int init_y_position = 10;
+    	jPanel_input.removeAll();
+    	Set<String> keys = buttons_input.keySet();
+    	for (String input_name : keys) {
+			JButton jButton = buttons_input.get(input_name);
+			jButton.setLocation(100, init_y_position);
+			jPanel_input.add(jButton);
+    		init_y_position = init_y_position+70;
+		}
+    	
+    	
+    	jPanel_input.setPreferredSize(
+    			new Dimension(jPanel_input.getWidth(), jPanel_input.getHeight()+init_y_position));
+    	jPanel_input.revalidate();
+    	validate();
+    	repaint();
+    }
 	
+	private void modify_output(java.awt.event.ActionEvent evt){
+		System.out.println("editing output--");
+		String output_name = ((JButton)evt.getSource()).getName();
+		Output_edit_dialog output_edit_dialog = new Output_edit_dialog(output_name,outputs.get(output_name));
+		output_edit_dialog.setLocationRelativeTo(null);
+		output_edit_dialog.setVisible(true);
+		// actions------------------------------------------------------
+		// modify model
+		if (output_edit_dialog.isModified()) {
+			Output output = output_edit_dialog.getOutput();
+			outputs.replace(output_name, output);
+			reload_output_panel();
+		}
+		// delete model
+		if (output_edit_dialog.isDeleted()) {
+			buttons_output.remove(output_name);
+			outputs.remove(output_name);
+			reload_output_panel();
+		}
+	}
+	
+	private void reload_output_panel(){
+    	
+    	int init_y_position = 10;
+    	jPanel_output.removeAll();
+    	Set<String> keys = buttons_output.keySet();
+    	for (String output_name : keys) {
+			JButton jButton = buttons_output.get(output_name);
+			jButton.setLocation(100, init_y_position);
+			jPanel_output.add(jButton);
+    		init_y_position = init_y_position+70;
+		}
+    	
+    	
+    	jPanel_output.setPreferredSize(
+    			new Dimension(jPanel_output.getWidth(), jPanel_output.getHeight()+init_y_position));
+    	jPanel_output.revalidate();
+    	validate();
+    	repaint();
+    }
 	
 	
 	// top level modifiers========================================================/
@@ -275,6 +358,13 @@ public class Operation_add_dialog extends JDialog{
 			Input input = inputs.get(keyString);
 			result.addParameter(input);		
 		}
+		
+		Set<String> keySet_output = outputs.keySet();
+		for (String keyString : keySet_output) {
+			Output output = outputs.get(keyString);
+			result.addParameter(output);		
+		}
+		
 		
 		return result;
 	}
