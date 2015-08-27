@@ -30,8 +30,9 @@ public class Input_edit_dialog extends JDialog{
 	private JButton delete;
 
 	
-	public Input_edit_dialog(String input_name){
+	public Input_edit_dialog(String input_name,Input input){
 		super();
+		this.input = input;
 		this.input_name = input_name;
 		name_input = new JLabel(input_name);
 		nameJLabel = new JLabel("Name:");

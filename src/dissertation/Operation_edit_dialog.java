@@ -25,7 +25,9 @@ public class Operation_edit_dialog extends JDialog{
 	
     private Map<String,JButton> buttons_input = new HashMap<String,JButton>();
     private Map<String,Input> inputs = new HashMap<String,Input>();
-	
+
+    
+    
 	private static final long serialVersionUID = 1L;
 	private JLabel name_input;
 	private JLabel nameJLabel;
@@ -167,25 +169,32 @@ public class Operation_edit_dialog extends JDialog{
 		
 		container.add(panel);
 		
+		init_input_buttons();
 		reload_input_panel();
 		
 	}
-	
-	
-	
-	public JButton get_generated_button() {
-		JButton jButton = new JButton("Edit");
-		jButton.setName(operation_name);
-		jButton.setSize(100,30);
-		jButton.setText("Operation: "+operation_name);
-		return jButton;
-	}
-	
-	public JLabel get_generated_label() {
-		JLabel jLabel = new JLabel(operation_name);
-		jLabel.setName(operation_name);
-		jLabel.setSize(90, 40);
-		return jLabel;
+	/**
+	 * initializing the button of inputs
+	 */
+	private void init_input_buttons() {
+		
+		Set<Input> inputs = operation.getInputs();
+		for (Input input : inputs) {
+			JButton jButton = new JButton(input.getName());
+			jButton.setName(input.getName());
+			jButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					modify_input(e);
+					
+				}
+			});
+			buttons_input.put(input.getName(), jButton);
+			this.inputs.put(input.getName(), input);
+		}
+		
 	}
 	
 	public boolean isModified() {
@@ -194,10 +203,6 @@ public class Operation_edit_dialog extends JDialog{
 	
 	public boolean isDeleted() {
 		return this.deleted;
-	}
-	
-	private void load_input_panel(){
-		
 	}
 	
 	private void reload_input_panel(){
@@ -223,7 +228,7 @@ public class Operation_edit_dialog extends JDialog{
 	private void modify_input(java.awt.event.ActionEvent evt){
 		System.out.println("---");
 		String input_name = ((JButton)evt.getSource()).getName();
-		Input_edit_dialog input_edit_dialog = new Input_edit_dialog(input_name);
+		Input_edit_dialog input_edit_dialog = new Input_edit_dialog(input_name,inputs.get(input_name));
 		input_edit_dialog.setLocationRelativeTo(null);
 		input_edit_dialog.setVisible(true);
 		// actions------------------------------------------------------
@@ -242,6 +247,7 @@ public class Operation_edit_dialog extends JDialog{
 	}
 	
 	public Operation getOperation() {
+
 		Operation result = new Operation(name_input.getText());
 		
 		Set<String> keySet = inputs.keySet();
@@ -251,5 +257,20 @@ public class Operation_edit_dialog extends JDialog{
 		}
 		
 		return result;
+	}
+	
+	public JButton get_generated_button() {
+		JButton jButton = new JButton("Edit");
+		jButton.setName(operation_name);
+		jButton.setSize(100,30);
+		jButton.setText("Operation: "+operation_name);
+		return jButton;
+	}
+	
+	public JLabel get_generated_label() {
+		JLabel jLabel = new JLabel(operation_name);
+		jLabel.setName(operation_name);
+		jLabel.setSize(90, 40);
+		return jLabel;
 	}
 }

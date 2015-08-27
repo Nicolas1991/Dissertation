@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 
 import uk.ac.sheffield.vtts.model.Input;
 import uk.ac.sheffield.vtts.model.Operation;
+import uk.ac.sheffield.vtts.model.Output;
 
 public class Operation_add_dialog extends JDialog{
 
@@ -27,6 +28,9 @@ public class Operation_add_dialog extends JDialog{
 	
     private Map<String,JButton> buttons_input = new HashMap<String,JButton>();
     private Map<String,Input> inputs = new HashMap<String,Input>();
+    
+    private Map<String,JButton> buttons_output = new HashMap<String,JButton>();
+    private Map<String,Output> outputs = new HashMap<String,Output>();
 	
 	private static final long serialVersionUID = 1L;
 	private JTextField name_input;
@@ -40,22 +44,38 @@ public class Operation_add_dialog extends JDialog{
 	private JPanel jPanel_input;
 	private JButton add_input;
 	
+	private JScrollPane jScrollPane_output;// add
+	private JPanel jPanel_output;
+	private JButton add_output;
+	private JLabel inputJLabel;
+	private JLabel outputJLabel;
+	
 	public Operation_add_dialog(){
 		super();
 		this.operation_name = "";
 		name_input = new JTextField();
 		nameJLabel = new JLabel("Name:");
+		inputJLabel = new JLabel("Inputs:");// add
+		outputJLabel = new JLabel("Outputs:");// add
+		
 		jScrollPane_input = new JScrollPane();
 		jPanel_input = new JPanel();
 		ok = new JButton("OK");
 		cancel = new JButton("Cancel");
 		add_input = new JButton("Add Input");
+		
+		jScrollPane_output = new JScrollPane();// add
+		jPanel_output = new JPanel();
+		add_output = new JButton("Add Output");
+		
 		init();
 		setModal(true);
 		setSize(800, 600);
 		
 	}
-	
+	/**
+	 * initialize operation panel
+	 */
 	private void init() {
 		
 		Container container = getContentPane();
@@ -70,6 +90,18 @@ public class Operation_add_dialog extends JDialog{
 		add_input.setSize(120, 30);
 		jScrollPane_input.setSize(200, 100);
 		jPanel_input.setPreferredSize(new Dimension(150,300));
+		
+		// add
+		add_output.setSize(120, 30);
+		jScrollPane_output.setSize(200, 100);
+		jPanel_output.setPreferredSize(new Dimension(150,300));
+		inputJLabel.setSize(40,16);
+		inputJLabel.setLocation(100, 70);
+		jScrollPane_output.setLocation(350, 100);
+		add_output.setLocation(395, 200);
+		outputJLabel.setSize(50, 16);
+		outputJLabel.setLocation(400, 70);
+		
 		
 		// set location
 		nameJLabel.setLocation(40,30);
@@ -140,6 +172,7 @@ public class Operation_add_dialog extends JDialog{
 		// end of --- listeners registration=====================================================
 
 		jScrollPane_input.setViewportView(jPanel_input);
+		jScrollPane_output.setViewportView(jPanel_output);//add
 		
 		panel.add(jScrollPane_input);
 		panel.add(nameJLabel);
@@ -148,31 +181,24 @@ public class Operation_add_dialog extends JDialog{
 		panel.add(cancel);
 		panel.add(add_input);
 		
+		panel.add(inputJLabel);//add
+		panel.add(jScrollPane_output);
+		panel.add(add_output);
+		panel.add(outputJLabel);
+		
+		
 		container.add(panel);
 		
 	}
 	
 	
 	
-	public JButton get_generated_button() {
-		JButton jButton = new JButton();
-		jButton.setName(operation_name);
-		jButton.setSize(300,30);
-		jButton.setText("Operation: "+operation_name);
-		return jButton;
-	}
 	
-	public JLabel get_generated_label() {
-		JLabel jLabel = new JLabel(operation_name);
-		jLabel.setName(operation_name);
-		jLabel.setSize(90, 40);
-		return jLabel;
-	}
 	
-	public boolean isCreated() {
-		return this.added;
-	}
 	
+	/**
+	 * input panel modifiers--------------
+	 */
 	private void reload_input_panel(){
     	
     	int init_y_position = 10;
@@ -196,7 +222,7 @@ public class Operation_add_dialog extends JDialog{
 	private void modify_input(java.awt.event.ActionEvent evt){
 		System.out.println("---");
 		String input_name = ((JButton)evt.getSource()).getName();
-		Input_edit_dialog input_edit_dialog = new Input_edit_dialog(input_name);
+		Input_edit_dialog input_edit_dialog = new Input_edit_dialog(input_name,inputs.get(input_name));
 		input_edit_dialog.setLocationRelativeTo(null);
 		input_edit_dialog.setVisible(true);
 		// actions------------------------------------------------------
@@ -214,6 +240,11 @@ public class Operation_add_dialog extends JDialog{
 		}
 	}
 	
+	
+	
+	
+	// top level modifiers========================================================/
+	
 	public Operation getOperation() {
 		Operation result = new Operation(name_input.getText());
 		
@@ -226,5 +257,26 @@ public class Operation_add_dialog extends JDialog{
 		return result;
 	}
 	
+	/**
+	 * button generation for top level
+	 * @return
+	 */
+	public JButton get_generated_button() {
+		JButton jButton = new JButton();
+		jButton.setName(operation_name);
+		jButton.setSize(300,30);
+		jButton.setText("Operation: "+operation_name);
+		return jButton;
+	}
 	
+	public JLabel get_generated_label() {
+		JLabel jLabel = new JLabel(operation_name);
+		jLabel.setName(operation_name);
+		jLabel.setSize(90, 40);
+		return jLabel;
+	}
+	
+	public boolean isCreated() {
+		return this.added;
+	}
 }
