@@ -1,6 +1,5 @@
 package dissertation;
 import java.awt.Container;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -191,6 +190,8 @@ public class Scenario_edit_dialog extends JDialog{
 		conditionLabel = new JLabel("Condition");
 		effectLabel = new JLabel("Effect");
 		
+		
+		jEditorPane_binding.setText("test");
 		
 		//size and location settings 
 		nameJLabel.setSize(40,28);

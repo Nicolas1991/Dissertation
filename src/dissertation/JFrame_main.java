@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 
 import org.jast.ast.ASTWriter;
@@ -80,7 +81,7 @@ public class JFrame_main extends javax.swing.JFrame {
         jLabel_constants_viarable = new javax.swing.JLabel();
         jButton_import = new javax.swing.JButton();
         jScrollPane_overview = new javax.swing.JScrollPane();
-        jPanel_binding = new javax.swing.JPanel();
+        jPanel_binding = new JEditorPane();
         jScrollPane_variable = new javax.swing.JScrollPane();
         jPanel_variable = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -133,7 +134,7 @@ public class JFrame_main extends javax.swing.JFrame {
         jLabel_broker.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel_broker.setText("Broker@Cloud Specification Editor");
 
-        jButton_add_memoryBinding.setText("Add Binding Expression");
+        jButton_add_memoryBinding.setText("Edit Binding Expression");
         jButton_add_memoryBinding.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_add_memoryBindingActionPerformed(evt);
@@ -423,6 +424,14 @@ public class JFrame_main extends javax.swing.JFrame {
 
     private void jButton_add_memoryBindingActionPerformed(java.awt.event.ActionEvent evt) {                                                          
         // TODO add your handling code here:
+    	Binding_edit_dialog binding_edit_dialog = new Binding_edit_dialog(memory);
+    	binding_edit_dialog.setLocationRelativeTo(null);
+    	binding_edit_dialog.setVisible(true);
+    	
+    	if (binding_edit_dialog.isModified()) {
+			memory.addBinding(binding_edit_dialog.getBinding());
+		}
+    	
     }                                                         
 
     private void jButton_add_variableActionPerformed(java.awt.event.ActionEvent evt) {                                                     
@@ -673,7 +682,7 @@ public class JFrame_main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_memory;
     private javax.swing.JLabel jLabel_operation;
     private javax.swing.JLabel jLabel_protocol_name;
-    private javax.swing.JPanel jPanel_binding;
+    private javax.swing.JEditorPane jPanel_binding;
     private javax.swing.JPanel jPanel_constant;
     private javax.swing.JPanel jPanel_main;
     private javax.swing.JPanel jPanel_operation;
