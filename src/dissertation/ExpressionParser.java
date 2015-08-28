@@ -9,6 +9,7 @@ import java.util.Map;
 import uk.ac.sheffield.vtts.model.Assignment;
 import uk.ac.sheffield.vtts.model.Expression;
 import uk.ac.sheffield.vtts.model.Function;
+import uk.ac.sheffield.vtts.model.Memory;
 import uk.ac.sheffield.vtts.model.Parameter;
 
 /**
@@ -69,7 +70,10 @@ public class ExpressionParser {
 	 * The last index into the input that was read.
 	 */
 	private int index = 0;
-	
+	/**
+	 *  Created Memory
+	 */
+	private Memory memory;
 	/**
 	 * Returns the next character from the input.
 	 * @return
@@ -85,9 +89,10 @@ public class ExpressionParser {
 	 * Creates an ExpressionParser to parse the given input String.
 	 * @param input the String, containing an expression.
 	 */
-	public ExpressionParser(String input) {
+	public ExpressionParser(String input,Memory memory) {
 		this.input = input;
 		lastChar = getChar();
+		this.memory = memory;
 	}
 
 	/**
@@ -162,6 +167,7 @@ public class ExpressionParser {
 		// TODO
 		// Looks up the parameter with the given name from
 		// elsewhere in your model -- complete this yourself
+		param = memory.getParameter(name);
 		return param;
 	}
 	
