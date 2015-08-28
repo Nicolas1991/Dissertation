@@ -166,12 +166,14 @@ public class Binding_edit_dialog extends JDialog{
 				if (assignment!=null) {
 					result = true;
 					current_binding.addAssignment(assignment);
+					//current_binding.execute();
 				}
 				else {
 					result = false;
 					break;
 				}
 			} catch (NullPointerException e) {
+				System.out.println("==========");
 				result = false;
 				break;
 			}

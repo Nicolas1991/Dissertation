@@ -116,7 +116,7 @@ public class ExpressionParser {
 			return function;
 		}
 		else if (lastChar == 0) {
-			System.out.println("Bad format");
+			System.out.println("Bad format---from parser");
 			throw new NullPointerException();
 		}
 		else {

@@ -21,6 +21,7 @@ import javax.swing.JLabel;
 
 import org.jast.ast.ASTWriter;
 
+import uk.ac.sheffield.vtts.model.Binding;
 import uk.ac.sheffield.vtts.model.Memory;
 import uk.ac.sheffield.vtts.model.Operation;
 import uk.ac.sheffield.vtts.model.Protocol;
@@ -36,6 +37,7 @@ public class JFrame_main extends javax.swing.JFrame {
 	private static final long serialVersionUID = 1L;
 	private Protocol protocol = new Protocol();
     private final Memory memory = new Memory();
+    private Binding memory_binding = new Binding();
     private List<JButton> buttons_constant = new LinkedList<JButton>();
     private List<JLabel> labels_constant = new LinkedList<JLabel>();
     
@@ -346,6 +348,9 @@ public class JFrame_main extends javax.swing.JFrame {
     private void jButton_GenerateXMLActionPerformed(java.awt.event.ActionEvent evt) {                                                    
         // TODO add your handling code here:
         this.protocol = new Protocol(protocol_name);
+        Memory memory = new Memory();
+        memory = this.memory;
+        memory.addBinding(memory_binding);   
         protocol.addMemory(memory);
         Set<String> keySet = operations.keySet();
         for (String key : keySet) {
@@ -430,7 +435,7 @@ public class JFrame_main extends javax.swing.JFrame {
     	binding_edit_dialog.setVisible(true);
     	
     	if (binding_edit_dialog.isModified()) {
-			memory.addBinding(binding_edit_dialog.getBinding());
+			memory_binding = binding_edit_dialog.getBinding();
 			memoryBindingString = binding_edit_dialog.getBindingString();
 		}
     	jPanel_binding.setText(memoryBindingString);
