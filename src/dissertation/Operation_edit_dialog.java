@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import uk.ac.sheffield.vtts.model.Input;
+import uk.ac.sheffield.vtts.model.Memory;
 import uk.ac.sheffield.vtts.model.Operation;
 import uk.ac.sheffield.vtts.model.Output;
 import uk.ac.sheffield.vtts.model.Scenario;
@@ -25,6 +26,7 @@ public class Operation_edit_dialog extends JDialog{
 	 * @author zhangyan
 	 */
 	private Operation operation;
+	private Memory memory;
 	
     private Map<String,JButton> buttons_input = new HashMap<String,JButton>();
     private Map<String,Input> inputs = new HashMap<String,Input>();
@@ -60,9 +62,10 @@ public class Operation_edit_dialog extends JDialog{
 	private JButton add_scenario;
 	private JLabel scenarioJLabel; 
 	
-	public Operation_edit_dialog(String operation_name,Operation operation){
+	public Operation_edit_dialog(String operation_name,Operation operation,Memory memory){
 		super();
 		this.operation = operation;
+		this.memory = memory;
 		deleted = false;
 		modified = false;
 		this.operation_name = operation_name;

@@ -16,6 +16,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import uk.ac.sheffield.vtts.model.Input;
+import uk.ac.sheffield.vtts.model.Memory;
 import uk.ac.sheffield.vtts.model.Operation;
 import uk.ac.sheffield.vtts.model.Output;
 import uk.ac.sheffield.vtts.model.Scenario;
@@ -26,6 +27,7 @@ public class Operation_add_dialog extends JDialog{
 	 * Dialog window for Operation creation
 	 * @author zhangyan
 	 */
+	private Memory memory;
 	
     private Map<String,JButton> buttons_input = new HashMap<String,JButton>();
     private Map<String,Input> inputs = new HashMap<String,Input>();
@@ -59,8 +61,9 @@ public class Operation_add_dialog extends JDialog{
 	private JButton add_scenario;
 	private JLabel scenarioJLabel; 
 	
-	public Operation_add_dialog(){
+	public Operation_add_dialog(Memory memory){
 		super();
+		this.memory = memory;
 		setTitle("Create an operation");
 		this.operation_name = "";
 		name_input = new JTextField();
@@ -227,6 +230,42 @@ public class Operation_add_dialog extends JDialog{
 				
 			}
 		});
+		
+		
+		add_scenario.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Scenario_edit_dialog scenario_edit_dialog = new Scenario_edit_dialog(memory);
+				scenario_edit_dialog.setLocationRelativeTo(null);
+				scenario_edit_dialog.setVisible(true);
+				
+				if (scenario_edit_dialog.isCreated()) {
+					if (!buttons_scenario.containsKey(scenario_edit_dialog.getScenario().getName())) {
+						System.out.println("not included");
+						JButton jButton = scenario_edit_dialog.get_generated_button();
+						jButton.addActionListener(new ActionListener() {
+							
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								modify_scenario(e);
+								
+							}
+						});
+						buttons_scenario.put(
+								scenario_edit_dialog.getScenario().getName(),
+								jButton);
+						scenarios.put(scenario_edit_dialog.getScenario().getName(), scenario_edit_dialog.getScenario());
+						reload_scenario_panel();
+					}
+					else {
+						Warning_dialog.showWarning("This Scenario name is occupied");
+					}
+				}
+			}
+		});
+		
 		// end of --- listeners registration=====================================================
 
 		jScrollPane_input.setViewportView(jPanel_input);
@@ -254,9 +293,6 @@ public class Operation_add_dialog extends JDialog{
 		container.add(panel);
 		
 	}
-	
-	
-	
 	
 	
 	
@@ -337,7 +373,6 @@ public class Operation_add_dialog extends JDialog{
     		init_y_position = init_y_position+70;
 		}
     	
-    	
     	jPanel_output.setPreferredSize(
     			new Dimension(jPanel_output.getWidth(), jPanel_output.getHeight()+init_y_position));
     	jPanel_output.revalidate();
@@ -345,7 +380,45 @@ public class Operation_add_dialog extends JDialog{
     	repaint();
     }
 	
+	private void modify_scenario(java.awt.event.ActionEvent evt){
+		System.out.println("editing scenario--");
+		String scenario_name = ((JButton)evt.getSource()).getName();
+		Scenario_edit_dialog scenario_edit_dialog = new Scenario_edit_dialog(scenarios.get(scenario_name),memory);
+		scenario_edit_dialog.setLocationRelativeTo(null);
+		scenario_edit_dialog.setVisible(true);
+		// actions------------------------------------------------------
+		// modify model
+		if (scenario_edit_dialog.isModified()) {
+			Scenario scenario = scenario_edit_dialog.getScenario();
+			scenarios.replace(scenario_name, scenario);
+			
+		}
+		// delete model
+		if (scenario_edit_dialog.isDeleted()) {
+			scenarios.remove(scenario_name);
+			outputs.remove(scenario_name);
+			reload_scenario_panel();
+		}
+	}
 	
+	private void reload_scenario_panel(){
+    	
+    	int init_y_position = 10;
+    	jPanel_scenario.removeAll();
+    	Set<String> keys = buttons_scenario.keySet();
+    	for (String scenario_name : keys) {
+			JButton jButton = buttons_scenario.get(scenario_name);
+			jButton.setLocation(100, init_y_position);
+			jPanel_scenario.add(jButton);
+    		init_y_position = init_y_position+70;
+		}
+    	
+    	jPanel_scenario.setPreferredSize(
+    			new Dimension(jPanel_scenario.getWidth(), jPanel_scenario.getHeight()+init_y_position));
+    	jPanel_scenario.revalidate();
+    	validate();
+    	repaint();
+    }
 	// top level modifiers========================================================/
 	
 	public Operation getOperation() {
