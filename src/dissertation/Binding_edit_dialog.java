@@ -21,7 +21,6 @@ public class Binding_edit_dialog extends JDialog{
 	 * Dialog window for binding creation and editing
 	 * @author zhangyan
 	 */
-	private Memory memory;
 	private Binding binding;
 	private String binding_String = "";
 	private boolean modified = false;
@@ -35,59 +34,10 @@ public class Binding_edit_dialog extends JDialog{
 	private JEditorPane jEditorPane_binding;
 	private JLabel bindingLabel;
 	
-	public Binding_edit_dialog(Memory memory){
-		super();
-		this.binding = new Binding();
-		this.memory = memory;
-		init();
-
-		setTitle("Edit Memory Binding");
-		Container container = getContentPane();
-		JPanel panel = new JPanel();
-		panel.setLayout(null);
-		// creation process listeners registration================================================================
-		
-		ok.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 	
-				modified = true;
-				dispose();
-			}
-		});
-		
-		jEditorPane_binding.addCaretListener(new CaretListener() {
-			
-			@Override
-			public void caretUpdate(CaretEvent e) {
-				// TODO Auto-generated method stub
-				binding_String = jEditorPane_binding.getText();
-				System.out.println(jEditorPane_binding.getText());
-			}
-		});
-		
-		// end of --- creation process listeners registration=====================================================
-
-		jScrollPane_binding.setViewportView(jEditorPane_binding);
-		
-		
-		panel.add(ok);
-		panel.add(cancel);
-		panel.add(bindingButton);
-		panel.add(binding_status);
-		panel.add(jScrollPane_binding);
-		panel.add(bindingLabel);
-		
-		container.add(panel);
-	}
-	
-	public Binding_edit_dialog(String binding_String,Memory memory){
+	public Binding_edit_dialog(final Memory memory,String binding_String){
 		super();
-		this.memory = memory;
 		init();
-
 		setTitle("Scenario Editor");
 		Container container = getContentPane();
 		JPanel panel = new JPanel();
@@ -106,6 +56,30 @@ public class Binding_edit_dialog extends JDialog{
 			}
 		});
 		
+		jEditorPane_binding.addCaretListener(new CaretListener() {
+			
+			@Override
+			public void caretUpdate(CaretEvent e) {
+				// TODO Auto-generated method stub
+				Binding_edit_dialog.this.binding_String = jEditorPane_binding.getText();
+				inGoodFormat_binding(Binding_edit_dialog.this.binding_String, memory);
+				System.out.println(jEditorPane_binding.getText());
+			}
+		});
+		
+		bindingButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if (inGoodFormat_binding(Binding_edit_dialog.this.binding_String,memory)) {
+					
+				} else {
+					Warning_dialog.showWarning("The input String isn't in good format");
+				}
+				
+			}
+		});
 		// end of --- creation process listeners registration=====================================================
 
 		jScrollPane_binding.setViewportView(jEditorPane_binding);
@@ -122,7 +96,6 @@ public class Binding_edit_dialog extends JDialog{
 	}
 	
 	private void init() {
-		
 		
 		ok = new JButton("OK");
 		cancel = new JButton("Cancel");
@@ -167,8 +140,12 @@ public class Binding_edit_dialog extends JDialog{
 		// end of --- common listeners registration=====================================================
 
 	}
-	
-	private boolean inGoodFormat_binding(String input) {
+	/**
+	 * validate whether the input string is in correct format
+	 * @param input
+	 * @return
+	 */
+	private boolean inGoodFormat_binding(String input,Memory memory) {
 		boolean result = false;
 		
 		
@@ -176,6 +153,9 @@ public class Binding_edit_dialog extends JDialog{
 		return result;
 	}
 	
+	public String getBindingString() {
+		return this.binding_String;
+	}
 	
 	public Binding getBinding() {
 		return this.binding;

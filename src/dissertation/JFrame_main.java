@@ -46,6 +46,7 @@ public class JFrame_main extends javax.swing.JFrame {
     private Map<String, Operation> operations = new HashMap<String, Operation>();
     
     private String protocol_name = "";
+    private String memoryBindingString = "";
     /**
      * Creates new form NewJFrame
      */
@@ -424,14 +425,15 @@ public class JFrame_main extends javax.swing.JFrame {
 
     private void jButton_add_memoryBindingActionPerformed(java.awt.event.ActionEvent evt) {                                                          
         // TODO add your handling code here:
-    	Binding_edit_dialog binding_edit_dialog = new Binding_edit_dialog(memory);
+    	Binding_edit_dialog binding_edit_dialog = new Binding_edit_dialog(memory,memoryBindingString);
     	binding_edit_dialog.setLocationRelativeTo(null);
     	binding_edit_dialog.setVisible(true);
     	
     	if (binding_edit_dialog.isModified()) {
 			memory.addBinding(binding_edit_dialog.getBinding());
+			memoryBindingString = binding_edit_dialog.getBindingString();
 		}
-    	
+    	jPanel_binding.setText(memoryBindingString);
     }                                                         
 
     private void jButton_add_variableActionPerformed(java.awt.event.ActionEvent evt) {                                                     
