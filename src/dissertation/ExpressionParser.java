@@ -37,6 +37,10 @@ public class ExpressionParser {
 		typeMap.put("not", "Proposition");
 		typeMap.put("and", "Proposition");
 		typeMap.put("or", "Proposition");
+		typeMap.put("implies", "Proposition");
+		//typeMap.put("equals", "Proposition");
+
+
 		
 		typeMap.put("lessThan", "Comparison");
 		typeMap.put("moreThan", "Comparison");
@@ -50,6 +54,8 @@ public class ExpressionParser {
 		typeMap.put("times", "Arithmetic");
 		typeMap.put("divide", "Arithmetic");
 		typeMap.put("negate", "Arithmetic");
+		typeMap.put("modulo", "Arithmetic");
+
 		
 		// TODO
 		// More for you to add here.  Complete this by adding
@@ -89,7 +95,7 @@ public class ExpressionParser {
 	 * Creates an ExpressionParser to parse the given input String.
 	 * @param input the String, containing an expression.
 	 */
-	public ExpressionParser(String input,Memory memory) {
+	public ExpressionParser(String input,Memory memory) throws NullPointerException{
 		this.input = input;
 		lastChar = getChar();
 		this.memory = memory;
@@ -108,6 +114,10 @@ public class ExpressionParser {
 				function.addExpression(argument);
 			}
 			return function;
+		}
+		else if (lastChar == 0) {
+			System.out.println("Bad format");
+			throw new NullPointerException();
 		}
 		else {
 			// This is just some kind of parameter.

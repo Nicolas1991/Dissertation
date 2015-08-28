@@ -12,6 +12,7 @@ import javax.swing.JScrollPane;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
+import uk.ac.sheffield.vtts.model.Assignment;
 import uk.ac.sheffield.vtts.model.Binding;
 import uk.ac.sheffield.vtts.model.Memory;
 
@@ -28,7 +29,7 @@ public class Binding_edit_dialog extends JDialog{
 	private static final long serialVersionUID = 1L;
 	private JButton ok;
 	private JButton cancel;
-	private JButton bindingButton;
+	private JButton save_binding;
 	private JLabel binding_status;
 	private JScrollPane jScrollPane_binding;
 	private JEditorPane jEditorPane_binding;
@@ -62,18 +63,26 @@ public class Binding_edit_dialog extends JDialog{
 			public void caretUpdate(CaretEvent e) {
 				// TODO Auto-generated method stub
 				Binding_edit_dialog.this.binding_String = jEditorPane_binding.getText();
-				inGoodFormat_binding(Binding_edit_dialog.this.binding_String, memory);
-				System.out.println(jEditorPane_binding.getText());
+				if (inGoodFormat_binding(Binding_edit_dialog.this.binding_String, memory)) {
+					binding_status.setText("Good Format");
+					System.out.println("good format");
+					revalidate();
+					repaint();
+				}
+				else {
+					binding_status.setText("Bad Format");
+					System.out.println("bad format");
+				}
 			}
 		});
 		
-		bindingButton.addActionListener(new ActionListener() {
+		save_binding.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if (inGoodFormat_binding(Binding_edit_dialog.this.binding_String,memory)) {
-					
+					Warning_dialog.showWarning("Binding saved, click ok to exit");
 				} else {
 					Warning_dialog.showWarning("The input String isn't in good format");
 				}
@@ -83,11 +92,11 @@ public class Binding_edit_dialog extends JDialog{
 		// end of --- creation process listeners registration=====================================================
 
 		jScrollPane_binding.setViewportView(jEditorPane_binding);
-		
+		jEditorPane_binding.setText(binding_String);
 		
 		panel.add(ok);
 		panel.add(cancel);
-		panel.add(bindingButton);
+		panel.add(save_binding);
 		panel.add(binding_status);
 		panel.add(jScrollPane_binding);
 		panel.add(bindingLabel);
@@ -99,7 +108,7 @@ public class Binding_edit_dialog extends JDialog{
 		
 		ok = new JButton("OK");
 		cancel = new JButton("Cancel");
-		bindingButton = new JButton("Save Binding");
+		save_binding = new JButton("Save Binding");
 		binding_status = new JLabel("unchecked");
 		jScrollPane_binding = new JScrollPane();
 		jEditorPane_binding = new JEditorPane();
@@ -111,7 +120,7 @@ public class Binding_edit_dialog extends JDialog{
 		
 		ok.setSize(75, 30);
 		cancel.setSize(75, 30);
-		bindingButton.setSize(150, 50);
+		save_binding.setSize(150, 50);
 		binding_status.setSize(100, 50);
 		jScrollPane_binding.setSize(400, 300);
 		jEditorPane_binding.setSize(200, 300);
@@ -119,7 +128,7 @@ public class Binding_edit_dialog extends JDialog{
 		
 		ok.setLocation(700, 520);
 		cancel.setLocation(600, 520);
-		bindingButton.setLocation(500, 130);
+		save_binding.setLocation(500, 130);
 		binding_status.setLocation(700, 130);
 		jScrollPane_binding.setLocation(40, 100);	
 		bindingLabel.setLocation(40, 70);
@@ -147,9 +156,31 @@ public class Binding_edit_dialog extends JDialog{
 	 */
 	private boolean inGoodFormat_binding(String input,Memory memory) {
 		boolean result = false;
+		Binding current_binding = new Binding();
+		String[] singleLineStrings = input.split("\n");
+		for (String singleLine : singleLineStrings) {
+			String processingString = singleLine.trim();
+			ExpressionParser expressionParser = new ExpressionParser(processingString, memory);
+			try {
+				Assignment assignment = expressionParser.parseAssignment();
+				if (assignment!=null) {
+					result = true;
+					current_binding.addAssignment(assignment);
+				}
+				else {
+					result = false;
+					break;
+				}
+			} catch (NullPointerException e) {
+				result = false;
+				break;
+			}
+			
+		}
 		
-		
-		
+		if (result) {
+			binding = current_binding;
+		}
 		return result;
 	}
 	
