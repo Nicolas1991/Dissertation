@@ -11,6 +11,7 @@ import uk.ac.sheffield.vtts.model.Expression;
 import uk.ac.sheffield.vtts.model.Function;
 import uk.ac.sheffield.vtts.model.Memory;
 import uk.ac.sheffield.vtts.model.Parameter;
+import uk.ac.sheffield.vtts.model.Scope;
 
 /**
  * ExpressionParser is a parser that analyses an Expression or an Assignment.
@@ -79,7 +80,7 @@ public class ExpressionParser {
 	/**
 	 *  Created Memory
 	 */
-	private Memory memory;
+	private Scope memory;
 	/**
 	 * Returns the next character from the input.
 	 * @return

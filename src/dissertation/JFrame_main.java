@@ -5,6 +5,8 @@
  */
 package dissertation;
 
+import info.Operation_info;
+
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -46,6 +48,7 @@ public class JFrame_main extends javax.swing.JFrame {
     
     private List<JButton> buttons_operation = new LinkedList<JButton>();
     private Map<String, Operation> operations = new HashMap<String, Operation>();
+    private Map<String, Operation_info> operation_infos = new HashMap<String,Operation_info>();
     
     private String protocol_name = "";
     private String memoryBindingString = "";
@@ -422,7 +425,7 @@ public class JFrame_main extends javax.swing.JFrame {
 			});
         	buttons_operation.add(jButton);
         	operations.put(jButton.getName(), operation_add_dialog.getOperation());
-        	
+        	operation_infos.put(jButton.getName(), operation_add_dialog.getOperation_info());
         	reload_operation_panel();
 		}
         
@@ -542,7 +545,8 @@ public class JFrame_main extends javax.swing.JFrame {
     	Operation_edit_dialog operation_edit_dialog = new Operation_edit_dialog(
     			operation_name,
     			operations.get(operation_name),
-    			memory);
+    			memory,
+    			operation_infos.get(operation_name));
     	operation_edit_dialog.setLocationRelativeTo(null);
     	operation_edit_dialog.setVisible(true);
         

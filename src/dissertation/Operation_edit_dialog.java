@@ -1,4 +1,6 @@
 package dissertation;
+import info.Operation_info;
+
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -26,6 +28,7 @@ public class Operation_edit_dialog extends JDialog{
 	 * @author zhangyan
 	 */
 	private Operation operation;
+	private Operation_info operation_info;
 	private Memory memory;
 	
     private Map<String,JButton> buttons_input = new HashMap<String,JButton>();
@@ -62,9 +65,13 @@ public class Operation_edit_dialog extends JDialog{
 	private JButton add_scenario;
 	private JLabel scenarioJLabel; 
 	
-	public Operation_edit_dialog(String operation_name,Operation operation,Memory memory){
+	public Operation_edit_dialog(
+			String operation_name,
+			Operation operation,Memory memory,
+			Operation_info operation_info){
 		super();
 		this.operation = operation;
+		this.operation_info = operation_info;
 		this.memory = memory;
 		deleted = false;
 		modified = false;
@@ -426,6 +433,10 @@ public class Operation_edit_dialog extends JDialog{
 		}
 		
 		return result;
+	}
+	
+	public Operation_info getOperation_info() {
+		return this.operation_info;
 	}
 	
 	public JButton get_generated_button() {

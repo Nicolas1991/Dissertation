@@ -1,4 +1,6 @@
 package dissertation;
+import info.Scenario_info;
+
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +15,8 @@ import javax.swing.JTextField;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
+import uk.ac.sheffield.vtts.model.Assignment;
+import uk.ac.sheffield.vtts.model.Binding;
 import uk.ac.sheffield.vtts.model.Memory;
 import uk.ac.sheffield.vtts.model.Scenario;
 
@@ -23,12 +27,14 @@ public class Scenario_edit_dialog extends JDialog{
 	 * Dialog window for scenario creation and editing
 	 * @author zhangyan
 	 */
+	
 	private Scenario scenario;
 	private Memory memory;
 	private String scenario_name;
 	private boolean added = false;
 	private boolean modified = false;
 	private boolean deleted = false;
+	private Scenario_info scenario_info;
 	
 	private static final long serialVersionUID = 1L;
 	private JTextField name_scenario;
@@ -55,6 +61,7 @@ public class Scenario_edit_dialog extends JDialog{
 	
 	public Scenario_edit_dialog(Memory memory){
 		super();
+		scenario_info = new Scenario_info();
 		scenario = new Scenario();
 		this.memory = memory;
 		this.scenario_name = "";
@@ -74,6 +81,13 @@ public class Scenario_edit_dialog extends JDialog{
 	
 				scenario_name = name_scenario.getText();
 				scenario.setName(scenario_name);
+				if (scenario_name.compareToIgnoreCase("")==0) {
+					scenario_info = new Scenario_info(
+							scenario_name,
+							jEditorPane_binding.getText(),
+							jEditorPane_condition.getText(),
+							jEditorPane_effect.getText());
+				}
 				added = true;
 				dispose();
 			}
@@ -248,11 +262,35 @@ public class Scenario_edit_dialog extends JDialog{
 
 	}
 	
-	private boolean inGoodFormat_binding() {
+	private boolean inGoodFormat_binding(String input) {
 		boolean result = false;
+		Binding current_binding = new Binding();
+		String[] singleLineStrings = input.split("\n");
+		for (String singleLine : singleLineStrings) {
+			String processingString = singleLine.trim();
+			ExpressionParser expressionParser = new ExpressionParser(processingString, memory);
+			try {
+				Assignment assignment = expressionParser.parseAssignment();
+				if (assignment!=null) {
+					result = true;
+					current_binding.addAssignment(assignment);
+					current_binding.execute();
+				}
+				else {
+					result = false;
+					break;
+				}
+			} catch (Exception e) {
+				System.out.println("==========");
+				result = false;
+				break;
+			}
+			
+		}
 		
-		
-		
+		if (result) {
+			scenario.addBinding(current_binding);
+		}
 		return result;
 	}
 	
@@ -296,11 +334,7 @@ public class Scenario_edit_dialog extends JDialog{
 		return this.deleted;
 	}
 	
-	public static void main(String[] args) {
-		Scenario_edit_dialog scenario_add_dialog = new Scenario_edit_dialog(new Memory());
-		scenario_add_dialog.setLocationRelativeTo(null);
-		scenario_add_dialog.setVisible(true);
-		
-
+	public Scenario_info getScenario_info() {
+		return this.scenario_info;
 	}
 }

@@ -1,5 +1,7 @@
 package dissertation;
 
+import info.Operation_info;
+
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -28,6 +30,7 @@ public class Operation_add_dialog extends JDialog{
 	 * @author zhangyan
 	 */
 	private Memory memory;
+	private Operation_info operation_info = new Operation_info(); 
 	
     private Map<String,JButton> buttons_input = new HashMap<String,JButton>();
     private Map<String,Input> inputs = new HashMap<String,Input>();
@@ -38,6 +41,7 @@ public class Operation_add_dialog extends JDialog{
     private Map<String,JButton> buttons_scenario = new HashMap<String,JButton>();
     private Map<String,Scenario> scenarios = new HashMap<String,Scenario>();
 	
+    
 	
 	private static final long serialVersionUID = 1L;
 	private JTextField name_input;
@@ -257,6 +261,7 @@ public class Operation_add_dialog extends JDialog{
 								scenario_edit_dialog.getScenario().getName(),
 								jButton);
 						scenarios.put(scenario_edit_dialog.getScenario().getName(), scenario_edit_dialog.getScenario());
+						operation_info.addScenario_info(scenario_edit_dialog.getScenario_info());
 						reload_scenario_panel();
 					}
 					else {
@@ -391,12 +396,13 @@ public class Operation_add_dialog extends JDialog{
 		if (scenario_edit_dialog.isModified()) {
 			Scenario scenario = scenario_edit_dialog.getScenario();
 			scenarios.replace(scenario_name, scenario);
+			operation_info.addScenario_info(scenario_edit_dialog.getScenario_info());
 			
 		}
 		// delete model
 		if (scenario_edit_dialog.isDeleted()) {
 			scenarios.remove(scenario_name);
-			outputs.remove(scenario_name);
+			operation_info.deleteScenario_info(scenario_name);
 			reload_scenario_panel();
 		}
 	}
@@ -461,5 +467,9 @@ public class Operation_add_dialog extends JDialog{
 	
 	public boolean isCreated() {
 		return this.added;
+	}
+	
+	public Operation_info getOperation_info() {
+		return this.operation_info;
 	}
 }
