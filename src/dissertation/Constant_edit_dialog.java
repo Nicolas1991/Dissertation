@@ -37,6 +37,7 @@ public class Constant_edit_dialog extends JDialog{
 
 	public Constant_edit_dialog(final Memory memory,String constant_name){
 		super();
+		setTitle("Constant");
 		this.constant_name = constant_name;
 		name_input = new JLabel(constant_name);
 		value_input = new JTextField();

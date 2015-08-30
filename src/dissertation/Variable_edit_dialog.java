@@ -35,6 +35,7 @@ public class Variable_edit_dialog extends JDialog{
 
 	public Variable_edit_dialog(final Memory memory,String variable_name){
 		super();
+		setTitle("Variable");
 		this.variable_name = variable_name;
 		name_input = new JLabel(variable_name);
 		nameJLabel = new JLabel("Name:");

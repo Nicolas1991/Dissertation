@@ -32,6 +32,7 @@ public class Variable_add_dialog extends JDialog{
 
 	public Variable_add_dialog(final Memory memory){
 		super();
+		setTitle("Variable");
 		this.variable_name = "";
 		name_input = new JTextField();
 		nameJLabel = new JLabel("Name:");
