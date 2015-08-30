@@ -11,7 +11,7 @@ public class Scenario_info {
 	private String effect_String = "";
 		
 	public Scenario_info(){
-		
+		this.scenario = new Scenario();
 	}
 	
 	public Scenario_info(String name){
@@ -24,6 +24,7 @@ public class Scenario_info {
 			String bindingString,
 			String conditionString,
 			String effectString){
+		
 		this.scenario_name = name;
 		this.binding_String = bindingString;
 		this.condition_String = conditionString;

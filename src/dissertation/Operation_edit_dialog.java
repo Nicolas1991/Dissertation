@@ -67,7 +67,8 @@ public class Operation_edit_dialog extends JDialog{
 	
 	public Operation_edit_dialog(
 			String operation_name,
-			Operation operation,Memory memory,
+			Operation operation,
+			Memory memory,
 			Operation_info operation_info){
 		super();
 		this.operation = operation;
@@ -249,6 +250,41 @@ public class Operation_edit_dialog extends JDialog{
 			}
 		});
 		
+		add_scenario.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Scenario_edit_dialog scenario_edit_dialog = new Scenario_edit_dialog(memory);
+				scenario_edit_dialog.setLocationRelativeTo(null);
+				scenario_edit_dialog.setVisible(true);
+				
+				if (scenario_edit_dialog.isCreated()) {
+					if (!buttons_scenario.containsKey(scenario_edit_dialog.getScenario().getName())) {
+						System.out.println("not included");
+						JButton jButton = scenario_edit_dialog.get_generated_button();
+						jButton.addActionListener(new ActionListener() {
+							
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								modify_scenario(e);
+								
+							}
+						});
+						buttons_scenario.put(
+								scenario_edit_dialog.getScenario().getName(),
+								jButton);
+						scenarios.put(scenario_edit_dialog.getScenario().getName(), scenario_edit_dialog.getScenario());
+						operation_info.addScenario_info(scenario_edit_dialog.getScenario_info());
+						reload_scenario_panel();
+					}
+					else {
+						Warning_dialog.showWarning("This Scenario name is occupied");
+					}
+				}
+			}
+		});
+		
 		// end of --- listeners registration=====================================================
 
 		jScrollPane_input.setViewportView(jPanel_input);
@@ -276,8 +312,10 @@ public class Operation_edit_dialog extends JDialog{
 		
 		init_input_buttons();
 		init_output_buttons();
+		init_scenario_buttons();
 		reload_input_panel();
 		reload_output_panel();
+		reload_scenario_panel();
 		
 	}
 	/**
@@ -321,6 +359,27 @@ public class Operation_edit_dialog extends JDialog{
 			buttons_output.put(output.getName(), jButton);
 			this.outputs.put(output.getName(), output);
 		}
+		
+	}
+	private void init_scenario_buttons() {
+		
+		Set<String> keySet = operation_info.getScenario_infos().keySet();
+		for (String scenario_name : keySet) {
+			JButton jButton = new JButton(scenario_name);
+			jButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					modify_scenario(e);
+					
+				}
+			});
+			buttons_scenario.put(scenario_name, jButton);
+			Scenario scenario = operation_info.getScenario_info(scenario_name).getScenario();
+			this.scenarios.put(scenario_name, scenario);
+		}
+		
 		
 	}
 	
@@ -367,6 +426,24 @@ public class Operation_edit_dialog extends JDialog{
     	repaint();
     }
 	
+	private void reload_scenario_panel(){
+    	
+    	int init_y_position = 10;
+    	jPanel_scenario.removeAll();
+    	Set<String> keys = buttons_scenario.keySet();
+    	for (String scenario_name : keys) {
+			JButton jButton = buttons_scenario.get(scenario_name);
+			jButton.setLocation(100, init_y_position);
+			jPanel_scenario.add(jButton);
+    		init_y_position = init_y_position+70;
+		}
+    	
+    	jPanel_scenario.setPreferredSize(
+    			new Dimension(jPanel_scenario.getWidth(), jPanel_scenario.getHeight()+init_y_position));
+    	jPanel_scenario.revalidate();
+    	validate();
+    	repaint();
+    }
 	/**
 	 * button listener actions, for editing bottom level data
 	 */
@@ -411,6 +488,33 @@ public class Operation_edit_dialog extends JDialog{
 			reload_output_panel();
 		}
 	}
+	
+	private void modify_scenario(java.awt.event.ActionEvent evt){
+		System.out.println("editing scenario--");
+		String scenario_name = ((JButton)evt.getSource()).getName();
+		Scenario_edit_dialog scenario_edit_dialog = new Scenario_edit_dialog(
+				scenarios.get(scenario_name),
+				memory);
+		scenario_edit_dialog.setLocationRelativeTo(null);
+		scenario_edit_dialog.setVisible(true);
+		// actions------------------------------------------------------
+		// modify model
+		if (scenario_edit_dialog.isModified()) {
+			Scenario scenario = scenario_edit_dialog.getScenario();
+			scenarios.replace(scenario_name, scenario);
+			operation_info.addScenario_info(scenario_edit_dialog.getScenario_info());
+			
+		}
+		// delete model
+		if (scenario_edit_dialog.isDeleted()) {
+			scenarios.remove(scenario_name);
+			buttons_scenario.remove(scenario_name);
+			operation_info.deleteScenario_info(scenario_name);
+			reload_scenario_panel();
+		}
+	}
+	
+	
 	
 	/**
 	 * top level modifiers------------------

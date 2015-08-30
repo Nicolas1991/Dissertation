@@ -268,6 +268,7 @@ public class Operation_add_dialog extends JDialog{
 						Warning_dialog.showWarning("This Scenario name is occupied");
 					}
 				}
+				
 			}
 		});
 		

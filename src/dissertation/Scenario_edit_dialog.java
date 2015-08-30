@@ -79,17 +79,22 @@ public class Scenario_edit_dialog extends JDialog{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 	
-				scenario_name = name_scenario.getText();
-				scenario.setName(scenario_name);
-				if (scenario_name.compareToIgnoreCase("")==0) {
-					scenario_info = new Scenario_info(
-							scenario_name,
-							jEditorPane_binding.getText(),
-							jEditorPane_condition.getText(),
-							jEditorPane_effect.getText());
+				if (name_scenario.getText().compareToIgnoreCase("")==0) {
+					Warning_dialog.showWarning("Scenario name can't be null");
+				} else {
+					scenario_name = name_scenario.getText();
+					scenario.setName(scenario_name);
+					if (scenario_name.compareToIgnoreCase("")==0) {
+						scenario_info = new Scenario_info(
+								scenario_name,
+								jEditorPane_binding.getText(),
+								jEditorPane_condition.getText(),
+								jEditorPane_effect.getText());
+					}
+					added = true;
+					dispose();
 				}
-				added = true;
-				dispose();
+				
 			}
 		});
 		
@@ -148,9 +153,30 @@ public class Scenario_edit_dialog extends JDialog{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 	
-				scenario_name = name_scenario.getText();
-				Scenario_edit_dialog.this.scenario.setName(scenario_name);
-				added = true;
+				if (name_scenario.getText().compareToIgnoreCase("")==0) {
+					Warning_dialog.showWarning("Scenario name can't be null");
+				} else {
+					scenario_name = name_scenario.getText();
+					Scenario_edit_dialog.this.scenario.setName(scenario_name);
+					if (scenario_name.compareToIgnoreCase("")==0) {
+						scenario_info = new Scenario_info(
+								scenario_name,
+								jEditorPane_binding.getText(),
+								jEditorPane_condition.getText(),
+								jEditorPane_effect.getText());
+					}
+					added = true;
+					dispose();
+				}
+			}
+		});
+		
+		delete.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				deleted = true;
 				dispose();
 			}
 		});
@@ -178,12 +204,14 @@ public class Scenario_edit_dialog extends JDialog{
 		panel.add(bindingLabel);
 		panel.add(conditionLabel);
 		panel.add(effectLabel);
+		panel.add(delete);
 		
 		container.add(panel);
 	}
 	
 	private void init() {
 		
+		delete = new JButton("Delete");
 		name_scenario = new JTextField();
 		nameJLabel = new JLabel("Name:");
 		ok = new JButton("OK");
@@ -227,6 +255,7 @@ public class Scenario_edit_dialog extends JDialog{
 		bindingLabel.setSize(100, 30);
 		conditionLabel.setSize(100, 30);
 		effectLabel.setSize(100, 30);
+		delete.setSize(75, 30);
 		
 		nameJLabel.setLocation(100,30);
 		name_scenario.setLocation(150,30);
@@ -244,6 +273,7 @@ public class Scenario_edit_dialog extends JDialog{
 		bindingLabel.setLocation(40, 70);
 		conditionLabel.setLocation(40, 230);
 		effectLabel.setLocation(40, 380);
+		delete.setLocation(500, 520);
 		
 		// common listeners registration================================================================
 		
@@ -311,10 +341,10 @@ public class Scenario_edit_dialog extends JDialog{
 	}
 	
 	public JButton get_generated_button() {
-		JButton jButton = new JButton("Scenario:"+scenario_name);
+		JButton jButton = new JButton(scenario_name);
 		jButton.setName(scenario_name);
 		jButton.setSize(100,30);
-		jButton.setText(scenario_name);
+		jButton.setText("Scenario:"+scenario_name);
 		return jButton;
 	}
 	
