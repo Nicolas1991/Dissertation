@@ -404,6 +404,7 @@ public class Operation_add_dialog extends JDialog{
 		if (scenario_edit_dialog.isDeleted()) {
 			scenarios.remove(scenario_name);
 			operation_info.deleteScenario_info(scenario_name);
+			buttons_scenario.remove(scenario_name);
 			reload_scenario_panel();
 		}
 	}

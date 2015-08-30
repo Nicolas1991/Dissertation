@@ -38,6 +38,7 @@ public class Scenario_edit_dialog extends JDialog{
 	
 	private static final long serialVersionUID = 1L;
 	private JTextField name_scenario;
+	private JLabel name_scenario2;
 	private JLabel nameJLabel;
 	private JButton ok;
 	private JButton cancel;
@@ -138,7 +139,7 @@ public class Scenario_edit_dialog extends JDialog{
 		super();
 		this.scenario = scenario;
 		this.memory = memory;
-		this.scenario_name = "";
+		this.scenario_name = scenario.getName();
 		init();
 
 		setTitle("Scenario Editor");
@@ -189,7 +190,7 @@ public class Scenario_edit_dialog extends JDialog{
 		
 		
 		panel.add(nameJLabel);
-		panel.add(name_scenario);
+		panel.add(name_scenario2);
 		panel.add(ok);
 		panel.add(cancel);
 		panel.add(bindingButton);
@@ -213,6 +214,7 @@ public class Scenario_edit_dialog extends JDialog{
 		
 		delete = new JButton("Delete");
 		name_scenario = new JTextField();
+		name_scenario2 = new JLabel();
 		nameJLabel = new JLabel("Name:");
 		ok = new JButton("OK");
 		cancel = new JButton("Cancel");
@@ -232,12 +234,13 @@ public class Scenario_edit_dialog extends JDialog{
 		conditionLabel = new JLabel("Condition");
 		effectLabel = new JLabel("Effect");
 		
-		
+		name_scenario2.setText(scenario_name);
 		jEditorPane_binding.setText("test");
 		
 		//size and location settings 
 		nameJLabel.setSize(40,28);
 		name_scenario.setSize(150,28);
+		name_scenario2.setSize(150,28);
 		ok.setSize(75, 30);
 		cancel.setSize(75, 30);
 		bindingButton.setSize(150, 50);
@@ -259,6 +262,7 @@ public class Scenario_edit_dialog extends JDialog{
 		
 		nameJLabel.setLocation(100,30);
 		name_scenario.setLocation(150,30);
+		name_scenario2.setLocation(150,30);
 		ok.setLocation(700, 520);
 		cancel.setLocation(600, 520);
 		bindingButton.setLocation(500, 130);
