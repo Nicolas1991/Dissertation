@@ -17,7 +17,11 @@ import javax.swing.event.CaretListener;
 
 import uk.ac.sheffield.vtts.model.Assignment;
 import uk.ac.sheffield.vtts.model.Binding;
+import uk.ac.sheffield.vtts.model.Condition;
+import uk.ac.sheffield.vtts.model.Effect;
+import uk.ac.sheffield.vtts.model.Expression;
 import uk.ac.sheffield.vtts.model.Memory;
+import uk.ac.sheffield.vtts.model.Predicate;
 import uk.ac.sheffield.vtts.model.Scenario;
 
 
@@ -182,6 +186,7 @@ public class Scenario_edit_dialog extends JDialog{
 			}
 		});
 		
+		
 		// end of --- creation process listeners registration=====================================================
 
 		jScrollPane_binding.setViewportView(jEditorPane_binding);
@@ -295,6 +300,88 @@ public class Scenario_edit_dialog extends JDialog{
 		});
 		setModal(true);
 		setSize(800, 600);
+		
+		saveBinding.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if (inGoodFormat_binding(jEditorPane_binding.getText())) {
+					Warning_dialog.showWarning("Binding saved");
+				}
+				else {
+					Warning_dialog.showWarning("The binding is not in good format");
+				}
+				
+			}
+		});
+		
+		saveCondition.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if (inGoodFormat_condition(jEditorPane_condition.getText())) {
+					Warning_dialog.showWarning("Condition saved");
+				} else {
+					Warning_dialog.showWarning("The condition is not in good format");
+				}
+				
+			}
+		});
+		
+		saveEffect.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if (inGoodFormat_effect(jEditorPane_effect.getText())) {
+					Warning_dialog.showWarning("Effect saved");
+				} else {
+					Warning_dialog.showWarning("The effect is not in good format");
+				}
+				
+			}
+		});
+		
+		jEditorPane_binding.addCaretListener(new CaretListener() {
+			
+			@Override
+			public void caretUpdate(CaretEvent e) {
+				// TODO Auto-generated method stub
+				if (inGoodFormat_binding(jEditorPane_binding.getText())) {
+					binding_status.setText("Good Format");
+				} else {
+					binding_status.setText("Bad Format");
+				}
+			}
+		});
+		
+		jEditorPane_condition.addCaretListener(new CaretListener() {
+			
+			@Override
+			public void caretUpdate(CaretEvent e) {
+				// TODO Auto-generated method stub
+				if (inGoodFormat_condition(jEditorPane_condition.getText())) {
+					condition_status.setText("Good Format");
+				} else {
+					condition_status.setText("Bad Format");
+				}
+			}
+		});
+		
+		jEditorPane_effect.addCaretListener(new CaretListener() {
+			
+			@Override
+			public void caretUpdate(CaretEvent e) {
+				// TODO Auto-generated method stub
+				if (inGoodFormat_effect(jEditorPane_effect.getText())) {
+					effect_status.setText("Good Format");
+				} else {
+					effect_status.setText("Bad Format");
+				}
+			}
+		});
 		// end of --- common listeners registration=====================================================
 
 	}
@@ -323,7 +410,7 @@ public class Scenario_edit_dialog extends JDialog{
 					break;
 				}
 			} catch (Exception e) {
-				System.out.println("==========");
+				System.out.println("==binding format error==");
 				result = false;
 				break;
 			}
@@ -336,18 +423,66 @@ public class Scenario_edit_dialog extends JDialog{
 		return result;
 	}
 	
-	private boolean inGoodFormat_condition() {
+	private boolean inGoodFormat_condition(String input) {
 		boolean result = false;
+		Condition condition = new Condition();
+		String processingString = input.trim();
+		ExpressionParser expressionParser = new ExpressionParser(processingString, memory);
+		try {
+			Expression expression = expressionParser.parseExpression();
+			if (expression instanceof Predicate) {
+				result = true;
+				condition.addPredicate((Predicate)expression);
+				if (condition.evaluate()) {
+					result = true;
+				} else {
+					result = false;
+				}
+			}
+			else {
+				result = false;
+			}
+		} catch (Exception e) {
+			System.out.println("==condition format error==");
+			result = false;
+		}
 		
-		
-		
+		if (result) {
+			scenario.addCondition(condition);
+		}
 		return result;
 	}
 	
-	private boolean inGoodFormat_effect() {
+	private boolean inGoodFormat_effect(String input) {
 		boolean result = false;
 		
+		Effect effect = new Effect();
+		String[] singleLineStrings = input.split("\n");
+		for (String singleLine : singleLineStrings) {
+			String processingString = singleLine.trim();
+			ExpressionParser expressionParser = new ExpressionParser(processingString, memory);
+			try {
+				Assignment assignment = expressionParser.parseAssignment();
+				if (assignment!=null) {
+					result = true;
+					effect.addAssignment(assignment);
+					effect.execute();
+				}
+				else {
+					result = false;
+					break;
+				}
+			} catch (Exception e) {
+				System.out.println("==effect format error==");
+				result = false;
+				break;
+			}
+			
+		}
 		
+		if (result) {
+			scenario.addEffect(effect);
+		}
 		
 		return result;
 	}
