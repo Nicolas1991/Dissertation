@@ -42,9 +42,9 @@ public class Scenario_edit_dialog extends JDialog{
 	private JLabel nameJLabel;
 	private JButton ok;
 	private JButton cancel;
-	private JButton bindingButton;
-	private JButton conditionButton;
-	private JButton effectButton;
+	private JButton saveBinding;
+	private JButton saveCondition;
+	private JButton saveEffect;
 	private JLabel binding_status;
 	private JLabel condition_status;
 	private JLabel effect_status;
@@ -62,7 +62,6 @@ public class Scenario_edit_dialog extends JDialog{
 	
 	public Scenario_edit_dialog(Memory memory){
 		super();
-		scenario_info = new Scenario_info();
 		scenario = new Scenario();
 		this.memory = memory;
 		this.scenario_name = "";
@@ -85,7 +84,7 @@ public class Scenario_edit_dialog extends JDialog{
 				} else {
 					scenario_name = name_scenario.getText();
 					scenario.setName(scenario_name);
-					if (scenario_name.compareToIgnoreCase("")==0) {
+					if (scenario_name.compareToIgnoreCase("")!=0) {
 						scenario_info = new Scenario_info(
 								scenario_name,
 								jEditorPane_binding.getText(),
@@ -119,9 +118,9 @@ public class Scenario_edit_dialog extends JDialog{
 		panel.add(name_scenario);
 		panel.add(ok);
 		panel.add(cancel);
-		panel.add(bindingButton);
-		panel.add(conditionButton);
-		panel.add(effectButton);
+		panel.add(saveBinding);
+		panel.add(saveCondition);
+		panel.add(saveEffect);
 		panel.add(binding_status);
 		panel.add(condition_status);
 		panel.add(effect_status);
@@ -135,10 +134,11 @@ public class Scenario_edit_dialog extends JDialog{
 		container.add(panel);
 	}
 	
-	public Scenario_edit_dialog(Scenario scenario,Memory memory){
+	public Scenario_edit_dialog(Scenario scenario,Memory memory,Scenario_info scenario_info){
 		super();
 		this.scenario = scenario;
 		this.memory = memory;
+		this.scenario_info = scenario_info;
 		this.scenario_name = scenario.getName();
 		init();
 
@@ -154,13 +154,13 @@ public class Scenario_edit_dialog extends JDialog{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 	
-				if (name_scenario.getText().compareToIgnoreCase("")==0) {
+				if (name_scenario2.getText().compareToIgnoreCase("")==0) {
 					Warning_dialog.showWarning("Scenario name can't be null");
 				} else {
-					scenario_name = name_scenario.getText();
+					scenario_name = name_scenario2.getText();
 					Scenario_edit_dialog.this.scenario.setName(scenario_name);
-					if (scenario_name.compareToIgnoreCase("")==0) {
-						scenario_info = new Scenario_info(
+					if (scenario_name.compareToIgnoreCase("")!=0) {
+						Scenario_edit_dialog.this.scenario_info = new Scenario_info(
 								scenario_name,
 								jEditorPane_binding.getText(),
 								jEditorPane_condition.getText(),
@@ -188,14 +188,16 @@ public class Scenario_edit_dialog extends JDialog{
 		jScrollPane_condition.setViewportView(jEditorPane_condition);
 		jScrollPane_effect.setViewportView(jEditorPane_effect);
 		
-		
+		jEditorPane_binding.setText(scenario_info.getBindingString());
+		jEditorPane_condition.setText(scenario_info.getConditionString());
+		jEditorPane_effect.setText(scenario_info.getEffectString());
 		panel.add(nameJLabel);
 		panel.add(name_scenario2);
 		panel.add(ok);
 		panel.add(cancel);
-		panel.add(bindingButton);
-		panel.add(conditionButton);
-		panel.add(effectButton);
+		panel.add(saveBinding);
+		panel.add(saveCondition);
+		panel.add(saveEffect);
 		panel.add(binding_status);
 		panel.add(condition_status);
 		panel.add(effect_status);
@@ -218,9 +220,9 @@ public class Scenario_edit_dialog extends JDialog{
 		nameJLabel = new JLabel("Name:");
 		ok = new JButton("OK");
 		cancel = new JButton("Cancel");
-		bindingButton = new JButton("Save Binding");
-		conditionButton = new JButton("Save Condition");
-		effectButton = new JButton("Save Effect");
+		saveBinding = new JButton("Save Binding");
+		saveCondition = new JButton("Save Condition");
+		saveEffect = new JButton("Save Effect");
 		binding_status = new JLabel("unchecked");
 		condition_status = new JLabel("unchecked");
 		effect_status = new JLabel("unchecked");
@@ -235,7 +237,8 @@ public class Scenario_edit_dialog extends JDialog{
 		effectLabel = new JLabel("Effect");
 		
 		name_scenario2.setText(scenario_name);
-		jEditorPane_binding.setText("test");
+		
+
 		
 		//size and location settings 
 		nameJLabel.setSize(40,28);
@@ -243,9 +246,9 @@ public class Scenario_edit_dialog extends JDialog{
 		name_scenario2.setSize(150,28);
 		ok.setSize(75, 30);
 		cancel.setSize(75, 30);
-		bindingButton.setSize(150, 50);
-		conditionButton.setSize(150, 50);
-		effectButton.setSize(150, 50);
+		saveBinding.setSize(150, 50);
+		saveCondition.setSize(150, 50);
+		saveEffect.setSize(150, 50);
 		binding_status.setSize(100, 50);
 		condition_status.setSize(100, 30);
 		effect_status.setSize(100, 30);
@@ -265,9 +268,9 @@ public class Scenario_edit_dialog extends JDialog{
 		name_scenario2.setLocation(150,30);
 		ok.setLocation(700, 520);
 		cancel.setLocation(600, 520);
-		bindingButton.setLocation(500, 130);
-		conditionButton.setLocation(500, 280);
-		effectButton.setLocation(500, 430);
+		saveBinding.setLocation(500, 130);
+		saveCondition.setLocation(500, 280);
+		saveEffect.setLocation(500, 430);
 		binding_status.setLocation(700, 130);
 		condition_status.setLocation(700, 290);
 		effect_status.setLocation(700, 440);
@@ -296,6 +299,11 @@ public class Scenario_edit_dialog extends JDialog{
 
 	}
 	
+	/**
+	 * check availability 
+	 * @param input
+	 * @return
+	 */
 	private boolean inGoodFormat_binding(String input) {
 		boolean result = false;
 		Binding current_binding = new Binding();

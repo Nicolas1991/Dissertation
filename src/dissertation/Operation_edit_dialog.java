@@ -71,6 +71,7 @@ public class Operation_edit_dialog extends JDialog{
 			Memory memory,
 			Operation_info operation_info){
 		super();
+		setTitle("Operation: "+operation_name);
 		this.operation = operation;
 		this.operation_info = operation_info;
 		this.memory = memory;
@@ -494,12 +495,13 @@ public class Operation_edit_dialog extends JDialog{
 		String scenario_name = ((JButton)evt.getSource()).getName();
 		Scenario_edit_dialog scenario_edit_dialog = new Scenario_edit_dialog(
 				scenarios.get(scenario_name),
-				memory);
+				memory,
+				operation_info.getScenario_info(scenario_name));
 		scenario_edit_dialog.setLocationRelativeTo(null);
 		scenario_edit_dialog.setVisible(true);
 		// actions------------------------------------------------------
 		// modify model
-		if (scenario_edit_dialog.isModified()) {
+		if (scenario_edit_dialog.isCreated()) {
 			Scenario scenario = scenario_edit_dialog.getScenario();
 			scenarios.replace(scenario_name, scenario);
 			operation_info.addScenario_info(scenario_edit_dialog.getScenario_info());

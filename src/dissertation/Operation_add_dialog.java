@@ -389,12 +389,15 @@ public class Operation_add_dialog extends JDialog{
 	private void modify_scenario(java.awt.event.ActionEvent evt){
 		System.out.println("editing scenario--");
 		String scenario_name = ((JButton)evt.getSource()).getName();
-		Scenario_edit_dialog scenario_edit_dialog = new Scenario_edit_dialog(scenarios.get(scenario_name),memory);
+		Scenario_edit_dialog scenario_edit_dialog = new Scenario_edit_dialog(
+				scenarios.get(scenario_name),
+				memory,
+				operation_info.getScenario_info(scenario_name));
 		scenario_edit_dialog.setLocationRelativeTo(null);
 		scenario_edit_dialog.setVisible(true);
 		// actions------------------------------------------------------
 		// modify model
-		if (scenario_edit_dialog.isModified()) {
+		if (scenario_edit_dialog.isCreated()) {
 			Scenario scenario = scenario_edit_dialog.getScenario();
 			scenarios.replace(scenario_name, scenario);
 			operation_info.addScenario_info(scenario_edit_dialog.getScenario_info());

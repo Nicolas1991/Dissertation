@@ -10,9 +10,7 @@ public class Scenario_info {
 	private String condition_String = "";
 	private String effect_String = "";
 		
-	public Scenario_info(){
-		this.scenario = new Scenario();
-	}
+	
 	
 	public Scenario_info(String name){
 		this.scenario_name = name;
