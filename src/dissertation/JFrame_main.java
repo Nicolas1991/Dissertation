@@ -450,20 +450,23 @@ public class JFrame_main extends javax.swing.JFrame {
     	variable_add_dialog.setLocationRelativeTo(jButton_add_variable);
     	variable_add_dialog.setVisible(true);
     	
-    	JButton jButton = variable_add_dialog.get_generated_button();
-    	JLabel jLabel = variable_add_dialog.get_generated_label();
-    	jButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				jButton_added_edit_variableActionPerformed(e);
-			}
-		});
-    	this.buttons_variable.add(jButton);
-    	this.labels_variable.add(jLabel);
+    	if (variable_add_dialog.isCreated()) {
+    		JButton jButton = variable_add_dialog.get_generated_button();
+        	JLabel jLabel = variable_add_dialog.get_generated_label();
+        	jButton.addActionListener(new ActionListener() {
+    			
+    			@Override
+    			public void actionPerformed(ActionEvent e) {
+    				// TODO Auto-generated method stub
+    				jButton_added_edit_variableActionPerformed(e);
+    			}
+    		});
+        	this.buttons_variable.add(jButton);
+        	this.labels_variable.add(jLabel);
+        	
+        	reload_variable_panel();
+		}
     	
-    	reload_variable_panel();
     }
     
     private void jButton_importActionPerformed(java.awt.event.ActionEvent evt) {                                               

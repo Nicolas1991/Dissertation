@@ -537,7 +537,10 @@ public class Operation_edit_dialog extends JDialog{
 			Output output = outputs.get(keyString);
 			result.addParameter(output);		
 		}
-		
+		Set<Scenario> scenarios = operation_info.getOperation().getScenarios();
+		for (Scenario scenario : scenarios) {
+			result.addScenario(scenario);
+		}
 		return result;
 	}
 	

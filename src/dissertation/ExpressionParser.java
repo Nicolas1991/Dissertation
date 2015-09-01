@@ -41,6 +41,8 @@ public class ExpressionParser {
 		typeMap.put("implies", "Proposition");
 		//typeMap.put("equals", "Proposition");
 
+		
+		typeMap.put("＝", "Proposition");
 
 		
 		typeMap.put("lessThan", "Comparison");
@@ -116,10 +118,10 @@ public class ExpressionParser {
 			}
 			return function;
 		}
-		else if (lastChar == 0) {
-			System.out.println("Bad format---from parser");
-			throw new NullPointerException();
-		}
+//		else if (lastChar == 0) {
+//			System.out.println("Bad format---from parser");
+//			throw new NullPointerException();
+//		}
 		else {
 			// This is just some kind of parameter.
 			return getParameter(name);
@@ -179,6 +181,9 @@ public class ExpressionParser {
 		// Looks up the parameter with the given name from
 		// elsewhere in your model -- complete this yourself
 		param = memory.getParameter(name);
+		if (param==null) {
+			throw new NullPointerException();
+		}
 		return param;
 	}
 	

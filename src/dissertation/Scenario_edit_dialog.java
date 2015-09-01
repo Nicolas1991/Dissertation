@@ -433,11 +433,11 @@ public class Scenario_edit_dialog extends JDialog{
 			if (expression instanceof Predicate) {
 				result = true;
 				condition.addPredicate((Predicate)expression);
-				if (condition.evaluate()) {
-					result = true;
-				} else {
-					result = false;
-				}
+//				if (condition.evaluate()) {
+//					result = true;
+//				} else {
+//					result = false;
+//				}
 			}
 			else {
 				result = false;

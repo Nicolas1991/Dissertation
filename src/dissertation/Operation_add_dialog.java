@@ -148,8 +148,8 @@ public class Operation_add_dialog extends JDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				added = true;
 				operation_name = name_input.getText();
+				added = true;
 				dispose();
 				
 			}
@@ -447,7 +447,10 @@ public class Operation_add_dialog extends JDialog{
 			result.addParameter(output);		
 		}
 		
-		
+		Set<Scenario> scenarios = operation_info.getOperation().getScenarios();
+		for (Scenario scenario : scenarios) {
+			result.addScenario(scenario);
+		}
 		return result;
 	}
 	
