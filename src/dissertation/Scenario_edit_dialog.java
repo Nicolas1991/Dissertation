@@ -95,6 +95,7 @@ public class Scenario_edit_dialog extends JDialog{
 								jEditorPane_condition.getText(),
 								jEditorPane_effect.getText());
 					}
+					scenario_info.setScenario(scenario);
 					added = true;
 					dispose();
 				}
@@ -169,6 +170,7 @@ public class Scenario_edit_dialog extends JDialog{
 								jEditorPane_binding.getText(),
 								jEditorPane_condition.getText(),
 								jEditorPane_effect.getText());
+						Scenario_edit_dialog.this.scenario_info.setScenario(Scenario_edit_dialog.this.scenario);
 					}
 					added = true;
 					dispose();

@@ -1,5 +1,6 @@
 package dissertation;
 import info.Operation_info;
+import info.Scenario_info;
 
 import java.awt.Container;
 import java.awt.Dimension;
@@ -537,9 +538,10 @@ public class Operation_edit_dialog extends JDialog{
 			Output output = outputs.get(keyString);
 			result.addParameter(output);		
 		}
-		Set<Scenario> scenarios = operation_info.getOperation().getScenarios();
-		for (Scenario scenario : scenarios) {
-			result.addScenario(scenario);
+		Map<String,Scenario_info> scenarios = operation_info.getScenario_infos();
+		Set<String> keySet2 = scenarios.keySet();
+		for (String key : keySet2) {
+			result.addScenario(scenarios.get(key).getScenario());
 		}
 		return result;
 	}
