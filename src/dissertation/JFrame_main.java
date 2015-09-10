@@ -19,7 +19,10 @@ import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 
 import org.jast.ast.ASTWriter;
 
@@ -105,11 +108,15 @@ public class JFrame_main extends javax.swing.JFrame {
             }
         });
 
-        jTextField_protocol_name.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_protocol_nameActionPerformed(evt);
-            }
-        });
+        jTextField_protocol_name.addCaretListener(new CaretListener() {
+			
+			@Override
+			public void caretUpdate(CaretEvent e) {
+				// TODO Auto-generated method stub
+				jTextField_protocol_nameActionPerformed(e);
+				
+			}
+		});
 
         jLabel_memory.setText("Memory:");
 
@@ -362,11 +369,21 @@ public class JFrame_main extends javax.swing.JFrame {
 		}
 
         try {
-        	
-    		File xFile = new File("/Users/zhangyan/Documents/workspace/ADissertation/src/test/1.xml");
-    		ASTWriter writer = new ASTWriter(xFile);
-    		writer.writeDocument(protocol);
-    		writer.close();
+        	JFileChooser jFileChooser = new JFileChooser();
+        	jFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        	int v = jFileChooser.showSaveDialog(null);
+        	if (v==JFileChooser.APPROVE_OPTION) {
+				File selectedFile = jFileChooser.getSelectedFile();
+				String path = selectedFile.getAbsolutePath();
+				File xFile = new File(path+"/testingFile.xml");
+	    		ASTWriter writer = new ASTWriter(xFile);
+	    		writer.writeDocument(protocol);
+	    		writer.close();
+			}
+        	else {
+				Warning_dialog.showWarning("Wrong directory");
+			}
+    		
     	} catch (Exception e) {
     		// TODO: handle exception
     		System.out.println("Protocol Object Error");
@@ -374,10 +391,11 @@ public class JFrame_main extends javax.swing.JFrame {
      
     }                                                   
 
-    private void jTextField_protocol_nameActionPerformed(java.awt.event.ActionEvent evt) {                                                         
+    private void jTextField_protocol_nameActionPerformed(CaretEvent evt) {                                                         
         // TODO add your handling code here:
     	protocol_name = jTextField_protocol_name.getText();
     	protocol.addMemory(memory);
+    	System.out.println(protocol_name);
     }                                                        
 
     private void jButton_add_constantActionPerformed(java.awt.event.ActionEvent evt) {                                                     

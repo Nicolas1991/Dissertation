@@ -123,9 +123,9 @@ public class Scenario_edit_dialog extends JDialog{
 		panel.add(name_scenario);
 		panel.add(ok);
 		panel.add(cancel);
-		panel.add(saveBinding);
-		panel.add(saveCondition);
-		panel.add(saveEffect);
+//		panel.add(saveBinding);
+//		panel.add(saveCondition);
+//		panel.add(saveEffect);
 		panel.add(binding_status);
 		panel.add(condition_status);
 		panel.add(effect_status);
